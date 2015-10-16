@@ -10,6 +10,8 @@
 		<module>esa</module>
 		<module>taxonomy</module>
 		<module>repository</module>
+		<module>competence</module>
+		<module>competence-inference</module>
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
