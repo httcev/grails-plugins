@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd" default-lazy-init="true">
+
+	<context:annotation-config />
+
+	<bean id="language_de" class="edu.kit.aifb.nlp.Language" factory-method="getLanguage">
+		<constructor-arg value="de" />
+	</bean>
+
+	<!-- ESA -->
+	<bean id="concept_index_de" class="edu.kit.aifb.terrier.concept.TerrierESAIndex" init-method="readIndex">
+		<property name="language" ref="language_de" />
+		<property name="indexId" value="wikipedia" />
+		<property name="weightingModel">
+<!--
+			<bean class="edu.kit.aifb.terrier.model.RtfIdfModel" />
+-->
+			<bean class="de.httc.plugins.esa.EsaWeightingModel" />
+		</property>
+		<property name="conceptVectorBuilder">
+			<bean class="edu.kit.aifb.concept.builder.FixedSizeConceptVectorBuilder">
+				<property name="size" value="10000" />
+			</bean>
+		</property>
+	</bean>
+
+
+<!-- 
+	<bean id="concept_index_de" class="edu.kit.aifb.terrier.concept.TerrierConceptModelIndex" init-method="readIndex">
+		<property name="language" ref="language_de" />
+		<property name="indexId" value="wikipedia" />
+		<property name="weightingModel">
+			<bean class="edu.kit.aifb.terrier.model.RtfIdfModel" />
+		</property>
+		<property name="conceptVectorBuilder">
+			<bean class="edu.kit.aifb.concept.builder.FixedSizeConceptVectorBuilder">
+				<property name="size" value="10000" />
+			</bean>
+		</property>
+		<property name="conceptModel">
+			<bean class="edu.uka.aifb.concept.model.RtfIdfFixedSizeConceptModel">
+				<property name="size" value="10000" />
+			</bean>
+		</property>
+	</bean>
+-->
+ 
+	<!-- Wikipedia database -->
+	<bean id="wikipedia_database_de" class="edu.kit.aifb.wikipedia.sql.WikipediaDatabase">
+		<property name="language" ref="language_de" />
+		<property name="database" value="wikipedia_german" />
+	</bean>
+	<bean id="wikipedia_full_collection_de" class="edu.kit.aifb.wikipedia.sql.WikipediaCollection" init-method="readArticles">
+		<property name="wikipediaDatabase" ref="wikipedia_database_de" />
+		<property name="articleIdTable" value="page" />
+		<property name="articleIdColumn" value="page_id" />
+	</bean>
+	<bean id="concept_description_de" class="edu.kit.aifb.wikipedia.sql.WikipediaPageDescription">
+		<property name="wikipediaDatabase" ref="wikipedia_database_de" />
+	</bean>
+</beans>

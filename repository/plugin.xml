@@ -1,0 +1,14 @@
+<plugin name='repository' version='1.0.0-SNAPSHOT' grailsVersion='2.4 &gt; *'>
+  <author>Your name</author>
+  <title>Repository Plugin</title>
+  <description>Brief summary/description of the plugin.
+</description>
+  <documentation>http://grails.org/plugin/repository</documentation>
+  <type>RepositoryGrailsPlugin</type>
+  <resources>
+    <resource>de.httc.plugins.repository.RepositoryController</resource>
+    <resource>de.httc.plugins.repository.admin.RepositoryController</resource>
+    <resource>de.httc.plugins.repository.Asset</resource>
+    <resource>de.httc.plugins.repository.RepositoryService</resource>
+  </resources>
+</plugin>

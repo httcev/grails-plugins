@@ -1,0 +1,10 @@
+<plugin name='esa' version='1.0.0-SNAPSHOT' grailsVersion='2.4 &gt; *'>
+  <author>Your name</author>
+  <title>ESA Plugin</title>
+  <description>Brief summary/description of the plugin.</description>
+  <documentation>http://grails.org/plugin/esa</documentation>
+  <type>EsaGrailsPlugin</type>
+  <resources>
+    <resource>de.httc.plugins.esa.EsaService</resource>
+  </resources>
+</plugin>
