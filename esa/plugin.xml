@@ -1,4 +1,4 @@
-<plugin name='esa' version='1.0.0-SNAPSHOT' grailsVersion='2.4 &gt; *'>
+<plugin name='esa' version='2.0.0-SNAPSHOT' grailsVersion='2.4 &gt; *'>
   <author>Your name</author>
   <title>ESA Plugin</title>
   <description>Brief summary/description of the plugin.</description>
