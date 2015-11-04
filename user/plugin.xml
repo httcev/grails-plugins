@@ -1,0 +1,19 @@
+<plugin name='user' version='2.0.0-SNAPSHOT' grailsVersion='2.4 &gt; *'>
+  <author>Your name</author>
+  <title>User Plugin</title>
+  <description>Brief summary/description of the plugin.
+</description>
+  <documentation>http://grails.org/plugin/user</documentation>
+  <type>UserGrailsPlugin</type>
+  <resources>
+    <resource>BootStrap</resource>
+    <resource>UserDefaultConfig</resource>
+    <resource>de.httc.plugins.user.RegisterController</resource>
+    <resource>de.httc.plugins.user.admin.UserController</resource>
+    <resource>de.httc.plugins.user.Profile</resource>
+    <resource>de.httc.plugins.user.Role</resource>
+    <resource>de.httc.plugins.user.User</resource>
+    <resource>de.httc.plugins.user.UserRole</resource>
+    <resource>de.httc.plugins.user.ImageService</resource>
+  </resources>
+</plugin>

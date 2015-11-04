@@ -23,7 +23,7 @@
 		<table>
 			<thead>
 				<tr>
-					<g:sortableColumn property="label" title="${message(code: 'taxonomy.label.label', default: 'Name')}" />
+					<g:sortableColumn property="label" namespace="admin" title="${message(code: 'taxonomy.label.label', default: 'Name')}" />
 				</tr>
 			</thead>
 			<tbody>
@@ -36,6 +36,8 @@
 			</g:each>
 			</tbody>
 		</table>
-		<g:paginate total="${competenceCount ?: 0}" namespace="admin" />
+		<g:if test="${params.max < competenceCount}">
+			<g:paginate total="${competenceCount ?: 0}" namespace="admin" />
+		</g:if>
 	</body>
 </html>
