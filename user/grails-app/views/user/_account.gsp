@@ -17,22 +17,18 @@
 			<label><g:checkBox name="termsOfUseAccepted" value="${user?.termsOfUseAccepted}"/> <g:message code="de.httc.plugin.user.termsOfUseAccepted" /></label>
 		</div>
 	</div>
-</div>
-<%--
-<div class="form-group ${hasErrors(bean: user, field: 'accountExpired', 'error')}">
-	<div class="col-sm-offset-2 col-sm-10">
-		<div class="checkbox">
-			<label><g:checkBox name="accountExpired" value="${user?.accountExpired}"/> <g:message code="de.httc.plugin.user.accountExpired" /></label>
-		</div>
-	</div>
-</div>
---%>
-<div class="form-group ${hasErrors(bean: user, field: 'accountLocked', 'error')}">
 	<div class="col-sm-offset-2 col-sm-10">
 		<div class="checkbox">
 			<label><g:checkBox name="accountLocked" value="${user?.accountLocked}"/> <g:message code="de.httc.plugin.user.accountLocked" /></label>
 		</div>
 	</div>
+<%--
+	<div class="col-sm-offset-2 col-sm-10">
+		<div class="checkbox">
+			<label><g:checkBox name="accountExpired" value="${user?.accountExpired}"/> <g:message code="de.httc.plugin.user.accountExpired" /></label>
+		</div>
+	</div>
+--%>
 </div>
 <div class="form-group">
 	<label class="col-sm-2 control-label"><g:message code="de.httc.plugin.user.roles" />:</label>

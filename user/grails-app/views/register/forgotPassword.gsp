@@ -9,11 +9,14 @@
 			<div class="panel-heading">
 				<h1 class="panel-title"><b><g:message code="de.httc.plugin.user.forgotPassword" /></b></h1>
 			</div>
-			<g:if test="${flash.message}">
-				<div class="message alert alert-danger" role="status">${flash.message}</div>
-			</g:if>
-			<form action="forgotPassword" method="POST" role="form" autocomplete="off">
+			<g:form url="[controller:'register', action:'forgotPassword']" method="POST" role="form" autocomplete="off">
 				<div class="panel-body">
+					<g:if test="${flash.message}">
+						<div class="message alert alert-success" role="status">${flash.message}</div>
+					</g:if>
+					<g:if test="${flash.error}">
+						<div class="message alert alert-danger" role="status">${flash.error}</div>
+					</g:if>
 					<g:if test="${emailSent}">
 						<div class="alert alert-success">
 							<g:message code="de.httc.plugin.user.forgotPassword.sent"/>
@@ -32,7 +35,7 @@
 						<button type="submit" class="btn btn-default"><g:message code="de.httc.plugin.user.forgotPassword.button" /></button>
 					</div>
 				</g:if>
-			</form>
+			</g:form>
 		</div>
 	</div>
 </body>

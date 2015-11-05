@@ -9,9 +9,9 @@
 	<div class="col-sm-10"><g:textField name="profile.lastName" required="" value="${user?.profile?.lastName}" class="form-control"/></div>
 </div>
 <div class="form-group ${hasErrors(bean: user.profile, field: 'company', 'error')} required">
-	<label for="company" class="col-sm-2 control-label"><g:message code="de.httc.plugin.user.company" /><span class="required-indicator">*</span>:</label>
+	<label for="company" class="col-sm-2 control-label"><g:message code="de.httc.plugin.user.company" />:</label>
 	<div class="col-sm-10">
-		<input type="text" list="companies" name="profile.company" value="${user?.profile?.company}" class="form-control" required="">
+		<input type="text" list="companies" name="profile.company" value="${user?.profile?.company}" class="form-control">
 		<datalist id="companies">
 			<g:each in="${Profile.executeQuery("select distinct p.company from Profile p")}">
 				<option value="${it}">

@@ -24,6 +24,7 @@
 						<g:sortableColumn property="profile.lastName" namespace="admin" title="${message(code: 'de.httc.plugin.user.lastName')}" />
 						<g:sortableColumn property="profile.firstName" namespace="admin" title="${message(code: 'de.httc.plugin.user.firstName')}" />
 						<g:sortableColumn property="enabled" namespace="admin" title="${message(code: 'de.httc.plugin.user.enabled')}" />
+						<g:sortableColumn property="accountLocked" namespace="admin" title="${message(code: 'de.httc.plugin.user.accountNotLocked')}" />
 					</tr>
 				</thead>
 				<tbody>
@@ -33,6 +34,7 @@
 						<td>${fieldValue(bean: userInstance.profile, field: "lastName")}</td>
 						<td>${fieldValue(bean: userInstance.profile, field: "firstName")}</td>
 						<td><i class="fa fa-lg fa-${userInstance.enabled ? 'check text-success' : 'minus text-warning'}"></i></td>
+						<td><i class="fa fa-lg fa-${userInstance.accountLocked ? 'minus text-warning' : 'check text-success'}"></i></td>
 					</tr>
 				</g:each>
 				</tbody>

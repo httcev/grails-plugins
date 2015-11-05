@@ -23,14 +23,14 @@
 						<label for="password" class="control-label"><g:message code="de.httc.plugin.user.password" /></label>
 						<input name="j_password" type="password" class="form-control" id="password" placeholder="<g:message code="de.httc.plugin.user.password"/>">
 					</div>
+					<g:link class="pull-right" controller="register" action="forgotPassword"><g:message code="de.httc.plugin.user.forgotPassword.link"/></g:link>
+				</div>
+				<div class="panel-footer text-center">
 					<div class="form-group">
 						<div class="checkbox">
 							<label><input type="checkbox" name="${rememberMeParameter}" <g:if test='${hasCookie}'>checked='checked'</g:if>> <g:message code="springSecurity.login.remember.me.label" /></label>
 						</div>
 					</div>
-					<g:link class="pull-right" controller="register" action="forgotPassword"><g:message code="de.httc.plugin.user.forgotPassword.link"/></g:link>
-				</div>
-				<div class="panel-footer text-center">
 					<button type="submit" class="btn btn-default"><g:message code="springSecurity.login.button" /></button>
 				</div>
 			</form>
