@@ -7,7 +7,7 @@
 	</head>
 	<body>
 		<ol class="breadcrumb">
-			<li><a class="home" href="${createLink(uri: '/')}"><g:message code="de.httc.plugin.home"/></a></li>
+			<li><g:link uri="/admin"><g:message code="default.admin.label" default="Administration" /></g:link></li>
 			<li><g:link class="index" action="index" namespace="admin">${entitiesName}</g:link></li>
 			<li class="active"><g:message code="default.edit.label" args="[entityName]" /></li>
 		</ol>

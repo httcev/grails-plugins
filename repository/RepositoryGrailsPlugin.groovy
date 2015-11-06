@@ -41,7 +41,10 @@ Brief summary/description of the plugin.
     }
 
     def doWithSpring = {
-        // TODO Implement runtime spring config (optional)
+        repoDir(java.io.File) { bean ->
+            println "--- using repo dir '${application.config.de.httc.plugins.repository.directory}'"
+            bean.constructorArgs = [ application.config.de.httc.plugins.repository.directory ]
+        }
     }
 
     def doWithDynamicMethods = { ctx ->
@@ -50,6 +53,12 @@ Brief summary/description of the plugin.
 
     def doWithApplicationContext = { ctx ->
         // TODO Implement post initialization spring config (optional)
+        File repoDir = new File(application.config.de.httc.plugins.repository.directory)
+        if (!repoDir.exists()) {
+            if (!repoDir.mkdirs()) {
+                println "--- creating repository dir failed"
+            }
+        }
     }
 
     def onChange = { event ->

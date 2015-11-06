@@ -47,4 +47,4 @@ grails.project.dependency.resolution = {
         }
     }
 }
-//grails.plugin.location."taxonomy" = "../taxonomy"
+grails.plugin.location."taxonomy" = "../taxonomy"

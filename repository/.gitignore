@@ -1,9 +1,7 @@
-.classpath
-.project
-.settings
-target
-target-eclipse
-plugins
-logs
+/.classpath
+/.project
+/.settings
+/target-eclipse/
+/logs
+/plugins/
 /target/
-/bin/

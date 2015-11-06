@@ -19,14 +19,12 @@
 			<artifactId>research-esa</artifactId>
 			<version>2.0</version>
 			<exclusions>
-				<!-- exclude hsql db (pulled in by research esa -> apache hadoop) since 
-					we're using a newer version -->
+				<!-- exclude hsql db (pulled in by research esa -> apache hadoop) since we're using a newer version -->
 				<exclusion>
 					<groupId>hsqldb</groupId>
 					<artifactId>hsqldb</artifactId>
 				</exclusion>
-				<!-- exclude rhino js because otherwise the "less" compiler fails at 
-					runtime -->
+				<!-- exclude rhino js because otherwise the "less" compiler fails at runtime -->
 				<exclusion>
 					<groupId>rhino</groupId>
 					<artifactId>js</artifactId>
