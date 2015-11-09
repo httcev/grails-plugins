@@ -18,8 +18,11 @@ class TaxonomiesController {
     }
 
     def list(Integer max) {
+        params.offset = params.offset ? (params.offset as int) : 0
         params.max = Math.min(max ?: 10, 100)
-        [taxonomyInstanceList: Taxonomy.list(params), taxonomyInstanceTotal: Taxonomy.count()]
+        params.sort = params.sort ?: "label"
+        params.order = params.order ?: "asc"
+        [taxonomyInstanceList: Taxonomy.list(params), taxonomyInstanceCount: Taxonomy.count()]
     }
 
     def create() {
@@ -62,14 +65,14 @@ class TaxonomiesController {
             return
         }
 
-        flash.message = message(code: 'default.created.message', args: [message(code: 'taxonomy.label', default: 'Taxonomy'), taxonomyInstance.id])
+        flash.message = message(code: 'default.created.message', args: [message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy'), taxonomyInstance.id])
         redirect(action: "show", id: taxonomyInstance.id)
     }
 
     def show(String id) {
         def taxonomyInstance = Taxonomy.get(id)
         if (!taxonomyInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'taxonomy.label', default: 'Taxonomy'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy'), id])
             redirect(action: "list")
             return
         }
@@ -83,7 +86,7 @@ class TaxonomiesController {
     def edit(String id) {
         def taxonomyInstance = Taxonomy.get(id)
         if (!taxonomyInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'taxonomy.label', default: 'Taxonomy'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy'), id])
             redirect(action: "list")
             return
         }
@@ -94,14 +97,14 @@ class TaxonomiesController {
     def update(String id, Long version) {
         def taxonomyInstance = Taxonomy.get(id)
         if (!taxonomyInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'taxonomy.label', default: 'Taxonomy'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy'), id])
             redirect(action: "list")
             return
         }
         if (version != null) {
             if (taxonomyInstance.version > version) {
                 taxonomyInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                          [message(code: 'taxonomy.label', default: 'Taxonomy')] as Object[],
+                          [message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy')] as Object[],
                           "Another user has updated this Taxonomy while you were editing")
                 render(view: "edit", model: [taxonomyInstance: taxonomyInstance])
                 return
@@ -125,25 +128,25 @@ class TaxonomiesController {
             return
         }
 
-        flash.message = message(code: 'default.updated.message', args: [message(code: 'taxonomy.label', default: 'Taxonomy'), taxonomyInstance.id])
+        flash.message = message(code: 'default.updated.message', args: [message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy'), taxonomyInstance.id])
         redirect(action: "show", id: taxonomyInstance.id)
     }
 
     def delete(String id) {
         def taxonomyInstance = Taxonomy.get(id)
         if (!taxonomyInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'taxonomy.label', default: 'Taxonomy'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy'), id])
             redirect(action: "list")
             return
         }
 
         try {
             taxonomyInstance.delete(flush: true)
-            flash.message = message(code: 'default.deleted.message', args: [message(code: 'taxonomy.label', default: 'Taxonomy'), id])
+            flash.message = message(code: 'default.deleted.message', args: [message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy'), id])
             redirect(action: "list")
         }
         catch (DataIntegrityViolationException e) {
-            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'taxonomy.label', default: 'Taxonomy'), id])
+            flash.error = message(code: 'default.not.deleted.message', args: [message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy'), id])
             redirect(action: "show", id: id)
         }
     }

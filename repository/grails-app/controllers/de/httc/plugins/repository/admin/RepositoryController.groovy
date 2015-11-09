@@ -113,7 +113,7 @@ class RepositoryController {
                 assetInstance.errors.allErrors.each { println it }
 
                 if (assetInstance.save(true)) {
-                    RequestContextHolder.currentRequestAttributes().flashScope.message = message(code: 'default.created.message', args: [message(code: 'kola.asset', default: 'Asset'), assetInstance.name])
+                    RequestContextHolder.currentRequestAttributes().flashScope.message = message(code: 'default.created.message', args: [message(code: 'de.httc.plugin.repository.asset', default: 'Asset'), assetInstance.name])
                     // need to clear the flow's persistence context, otherwise we get a NotSerializableException for the newly saved Asset
                     flow.persistenceContext.clear()
                     return success()
@@ -180,7 +180,7 @@ class RepositoryController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'kola.asset', default: 'Asset'), assetInstance.name])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'de.httc.plugin.repository.asset', default: 'Asset'), assetInstance.name])
                 redirect action:"show", id:assetInstance.id
             }
             '*'{ respond assetInstance, [status: OK] }
@@ -197,7 +197,7 @@ class RepositoryController {
 
         assetInstance.deleted = true
         assetInstance.save flush:true
-        flash.message = message(code: 'default.deleted.message', args: [message(code: 'kola.asset', default: 'Asset'), assetInstance.name])
+        flash.message = message(code: 'default.deleted.message', args: [message(code: 'de.httc.plugin.repository.asset', default: 'Asset'), assetInstance.name])
         redirect action:"index", method:"GET"
     }
 
@@ -282,7 +282,7 @@ class RepositoryController {
     }
 
     protected void notFound() {
-        flash.message = message(code: 'default.not.found.message', args: [message(code: 'kola.asset', default: 'Asset'), params.id])
+        flash.message = message(code: 'default.not.found.message', args: [message(code: 'de.httc.plugin.repository.asset', default: 'Asset'), params.id])
         redirect action: "index", method: "GET"
     }
 

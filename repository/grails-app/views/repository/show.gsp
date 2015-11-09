@@ -1,35 +1,60 @@
-
+<%@ page import="de.httc.plugins.repository.Asset" %>
+<g:set var="repositoryService" bean="repositoryService"/>
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta name="layout" content="admin">
-		<g:set var="entityName" value="${message(code: 'taxonomy.label', default: 'Taxonomy')}" />
+		<g:set var="currentNamespace" value="${grailsApplication.getArtefactByLogicalPropertyName('Controller', controllerName).namespace}" />
+		<g:if test="${currentNamespace == 'admin'}">
+			<meta name="layout" content="admin">
+		</g:if>
+		<g:else>
+			<meta name="layout" content="main">
+		</g:else>
+		<g:set var="entityName" value="${message(code: 'de.httc.plugin.repository.asset')}" />
+		<g:set var="entitiesName" value="${message(code: 'de.httc.plugin.repository.assets')}" />
 		<title><g:message code="default.show.label" args="[entityName]" /></title>
 	</head>
 	<body>
 		<ol class="breadcrumb">
 			<li><g:link uri="/admin"><g:message code="default.admin.label" default="Administration" /></g:link></li>
-			<li><g:link class="list" action="list" namespace="admin"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
+			<li><g:link class="list" action="list" namespace="admin">${entitiesName}</g:link></li>
 			<li class="active"><g:message code="default.show.label" args="[entityName]" /></li>
 		</ol>
-		<form action="${createLink(action:'delete', id:taxonomyInstance?.id, namespace:'admin')}" method="post" class="taxonomy-show">
-			<h1 class="page-header">
-				<g:message code="default.show.label" args="[entityName]" />
+		<g:if test="${flash.message}">
+			<div class="message alert alert-success" role="status">${flash.message}</div>
+		</g:if>
+		<h1 class="page-header clearfix">
+			${assetInstance?.name}
+			<sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_REPOSITORY_ADMIN">
 				<div class="buttons pull-right">
-					<g:link class="edit btn btn-default" action="edit" id="${taxonomyInstance?.id}" namespace="admin"><i class="fa fa-edit fa-lg"></i> <g:message code="default.button.edit.label" default="Edit" /></g:link>
-					<button class="delete btn btn-danger" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"><i class="fa fa-trash-o fa-lg"></i> <g:message code="default.button.delete.label" default="Delete" /></button>
+					<g:link class="delete btn btn-danger" namespace="admin" action="delete" id="${assetInstance.id}" title="${message(code: 'default.button.delete.label', args:[entityName])}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"><i class="fa fa-times"></i></g:link>
+					<g:link class="edit btn btn-primary" namespace="admin" 	action="edit" id="${assetInstance.id}" title="${message(code: 'default.button.edit.label', args:[entityName])}"><i class="fa fa-pencil"></i></g:link>
 				</div>
-			</h1>
-			<div id="taxonomy">
-				<table class="table table-condensed table-bordered">
-					<tbody>
-						<tr><td><g:message code="taxonomy.label.label" default="Name" />:</td><td><b><g:fieldValue bean="${taxonomyInstance}" field="label"/></b></td></tr>
-						<tr><td><g:message code="default.lastModified.label" default="Last modified" />:</td><td><g:fieldValue bean="${taxonomyInstance}" field="lastUpdated"/></td></tr>
-						<tr><td><g:message code="taxonomy.knowledgeDomain.label" default="Knowledge Domain" />:</td><td><g:fieldValue bean="${taxonomyInstance}" field="knowledgeDomain"/></td></tr>
-					</tbody>
-				</table>
-				<g:render template="terms" model="${[terms:taxonomyInstance?.terms]}" />
-			</div>
-		</form>
+			</sec:ifAnyGranted>
+		</h1>
+		<g:if test='${assetInstance?.props?."${Asset.PROP_DESCRIPTION}"}'>
+			<p>${assetInstance.props."${Asset.PROP_DESCRIPTION}"}</p>
+		</g:if>
+		<div class="row">
+			<div class="col-sm-2"><label><g:message code="de.httc.plugin.repository.asset.mimeType" />:</label></div>
+			<div class="col-sm-10"><code>${assetInstance?.mimeType}</code></div>
+		</div>
+		<div class="row">
+			<div class="col-sm-2"><label><g:message code="de.httc.plugin.repository.asset.lastUpdated" />:</label></div>
+			<div class="col-sm-10"><g:formatDate date="${assetInstance?.lastUpdated}" type="datetime" style="LONG" timeStyle="SHORT"/></div>
+		</div>
+		<g:each in="${assetInstance?.props?.sort { it.key }}" var="prop">
+			<g:if test="${prop.key != Asset.PROP_DESCRIPTION}">
+				<div class="row">
+					<div class="col-sm-2"><label><g:message code="de.httc.plugin.repository.asset.'$prop.key'" default="${prop.key}"/>:</label></div>
+					<div class="col-sm-10">${prop.value}</div>
+				</div>
+			</g:if>
+		</g:each>
+		<div class="row">
+			<div class="col-sm-2"><label><g:message code="de.httc.plugin.repository.asset.link" />:</label></div>
+			<g:set var="url" value="${repositoryService.createEncodedLink(assetInstance)}" />
+			<div class="col-sm-10"><a href="${url}" target="_blank"><i class="fa fa-external-link"></i> ${url}</a></div>
+		</div>
 	</body>
 </html>
