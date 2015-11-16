@@ -6,6 +6,7 @@
   <documentation>http://grails.org/plugin/repository</documentation>
   <type>RepositoryGrailsPlugin</type>
   <resources>
+    <resource>BootStrap</resource>
     <resource>de.httc.plugins.repository.RepositoryController</resource>
     <resource>de.httc.plugins.repository.admin.RepositoryController</resource>
     <resource>de.httc.plugins.repository.Asset</resource>

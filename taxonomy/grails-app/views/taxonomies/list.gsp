@@ -5,7 +5,7 @@
 		<meta name="layout" content="admin">
 		<g:set var="entityName" value="${message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy')}" />
 		<g:set var="entitiesName" value="${message(code: 'de.httc.plugin.taxonomy.taxonomies', default: 'Taxonomies')}" />
-		<title><g:message code="default.list.label" args="[entityName]" /></title>
+		<title>${entitiesName}</title>
 	</head>
 	<body>
 		<ol class="breadcrumb">

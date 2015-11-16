@@ -13,8 +13,8 @@ class TaxonomyTerm implements EsaComparable {
     static hasMany = [children:TaxonomyTerm]
     static transients = ["esaVector"]
     static mapping = {
-		parent cascade:"all-delete-orphan", nullable:true
-		children cascade:"all-delete-orphan"
+		//parent cascade:"all-delete-orphan", nullable:true
+		//children cascade:"all-delete-orphan"
 		id (generator: "assigned")	// this is needed to import taxonomies and terms from sharepoint and keeping the foreign ids.
 		label type:"text"
     }

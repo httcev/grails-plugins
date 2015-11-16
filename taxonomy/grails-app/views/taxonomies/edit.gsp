@@ -2,13 +2,14 @@
 <html>
 	<head>
 		<meta name="layout" content="admin">
-		<g:set var="entityName" value="${message(code: 'taxonomy.label', default: 'Taxonomy')}" />
+		<g:set var="entityName" value="${message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy')}" />
+		<g:set var="entitiesName" value="${message(code: 'de.httc.plugin.taxonomy.taxonomies', default: 'Taxonomies')}" />
 		<title><g:message code="default.edit.label" args="[entityName]" /></title>
 	</head>
 	<body>
 		<ol class="breadcrumb">
 			<li><g:link uri="/admin"><g:message code="default.admin.label" default="Administration" /></g:link></li>
-			<li><g:link class="list" action="list" namespace="admin"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
+			<li><g:link class="list" action="list" namespace="admin">${entitiesName}</g:link></li>
 			<li class="active"><g:message code="default.edit.label" args="[entityName]" /></li>
 		</ol>
 		<form action="${createLink(action:'update', id:taxonomyInstance?.id, namespace:'admin')}" method="post" role="form" class="taxonomy-edit form-horizontal">

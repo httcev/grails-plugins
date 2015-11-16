@@ -5,30 +5,27 @@
 <head>
 	<meta name="layout" content="admin">
 	<g:set var="entityName" value="${message(code: 'competence.label', default: 'Competence')}" />
-	<title><g:message code="default.list.label" args="[entityName]" /></title>
+	<g:set var="entitiesName" value="${message(code: 'admin.competences.label', default: 'Competences')}" />
+	<title>${entitiesName}</title>
 </head>
 <body>
 	<ol class="breadcrumb">
-		<li><g:link uri="/admin">
-				<g:message code="default.admin.label" default="Administration" />
-			</g:link></li>
-		<li class="active"><g:message code="default.list.label" args="[entityName]" /></li>
+		<li><g:link uri="/admin"><g:message code="default.admin.label" default="Administration" /></g:link></li>
+		<li class="active">${entitiesName}</li>
 	</ol>
 	<h1 class="page-header">
-		<g:message code="default.list.label" args="[entityName]" />
-		<g:link class="create btn btn-default btn-sm pull-right" action="create" namespace="admin" title="${message(code: 'default.new.label', args:[entityName])}">
-			<span class="fa-stack"> <i class="fa fa-user fa-stack-2x"></i> <i class="fa fa-plus fa-stack-1x text-primary"></i>
-			</span>
-		</g:link>
+		${entitiesName}
+		<g:link class="create btn btn-primary pull-right" action="create" controller="competences" namespace="admin" title="${message(code: 'default.new.label', args:[entityName])}"><i class="fa fa-plus"></i> <g:message code="default.button.create.label" /></g:link>
 	</h1>
 	<g:if test="${competenceList?.size() > 0}">
+		<p class="margin text-muted small"><g:message code="app.search.hits.displaying" default="Showing {0} {1}-{2} of {3}" args="${[entitiesName, params.offset + 1, Math.min(params.offset + params.max, competenceCount), competenceCount]}" />:</p>
 		<table class="table">
 			<thead>
 				<tr>
 					<g:sortableColumn property="userId" title="${message(code: 'competence.userId.label', default: 'User Id')}" namespace="admin"/>
-					<g:sortableColumn property="level" title="${message(code: 'competence.level.label', default: 'Level')}" />
-					<g:sortableColumn property="primaryTermLabel" title="${message(code: 'competence.primaryTermId.label', default: 'Primary Term')}" />
-					<g:sortableColumn property="source" title="${message(code: 'competence.source.label', default: 'Source')}" />
+					<g:sortableColumn property="level" title="${message(code: 'competence.level.label', default: 'Level')}" namespace="admin"/>
+					<g:sortableColumn property="primaryTermLabel" title="${message(code: 'competence.primaryTermId.label', default: 'Primary Term')}" namespace="admin"/>
+					<g:sortableColumn property="source" title="${message(code: 'competence.source.label', default: 'Source')}" namespace="admin"/>
 				</tr>
 			</thead>
 			<tbody>
@@ -46,7 +43,12 @@
 				</g:each>
 			</tbody>
 		</table>
-		<g:paginate total="${competenceCount ?: 0}" namespace="admin" />
+		<g:if test="${params.max < competenceCount}">
+			<g:paginate total="${competenceCount ?: 0}" namespace="admin" />
+		</g:if>
 	</g:if>
+	<g:else>
+		<div class="alert alert-danger margin"><g:message code="app.filter.empty" args="${[entitiesName]}" default="No {0} found."/></div>
+	</g:else>
 </body>
 </html>

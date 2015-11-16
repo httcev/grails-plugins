@@ -12,9 +12,9 @@
 			<li class="active"><g:message code="default.create.label" args="[entityName]" /></li>
 		</ol>
 		<h1 class="page-header"><g:message code="default.create.label" args="[entityName]" /></h1>
-		<g:hasErrors bean="${competence}">
+		<g:hasErrors bean="${competenceInstance}">
 			<ul class="errors alert alert-danger" role="alert">
-				<g:eachError bean="${userInstance}" var="error">
+				<g:eachError bean="${competenceInstance}" var="error">
 				<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
 				</g:eachError>
 			</ul>

@@ -21,12 +21,10 @@ class UserController {
         params.max = Math.min(max ?: 10, 100)
         params.sort = params.sort ?: "username"
         params.order = params.order ?: "asc"
-        println "--- " + User.list(params)
         [userList:User.list(params), userInstanceCount: User.count()]
     }
 
     def create() {
-        println "--- create"
         params.passwordExpired = true
         [user: new User(params)]
     }

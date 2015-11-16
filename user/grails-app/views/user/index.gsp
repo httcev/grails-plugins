@@ -8,7 +8,7 @@
 	<body>
 		<ol class="breadcrumb">
 			<li><g:link uri="/admin"><g:message code="default.admin.label" default="Administration" /></g:link></li>
-			<li>${entitiesName}</li>
+			<li class="active">${entitiesName}</li>
 		</ol>
 		<h1 class="page-header clearfix">
 			${entitiesName}
@@ -46,7 +46,7 @@
 		</div>
 		<g:if test="${params.max < userInstanceCount}">
 			<div class="pagination pull-right">
-				<g:paginate total="${userInstanceCount ?: 0}" />
+				<g:paginate total="${userInstanceCount ?: 0}" namespace="admin" />
 			</div>
 		</g:if>
 	</body>

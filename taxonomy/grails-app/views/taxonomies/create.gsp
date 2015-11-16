@@ -2,13 +2,14 @@
 <html>
 	<head>
 		<meta name="layout" content="admin">
-		<g:set var="entityName" value="${message(code: 'taxonomy.label', default: 'Taxonomy')}" />
+		<g:set var="entityName" value="${message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy')}" />
+		<g:set var="entitiesName" value="${message(code: 'de.httc.plugin.taxonomy.taxonomies', default: 'Taxonomies')}" />
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
 	</head>
 	<body>
 		<ol class="breadcrumb">
 			<li><g:link uri="/admin"><g:message code="default.admin.label" default="Administration" /></g:link></li>
-			<li><g:link class="list" action="list" namespace="admin"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
+			<li><g:link class="list" action="list" namespace="admin">${entitiesName}</g:link></li>
 			<li class="active"><g:message code="default.create.label" args="[entityName]" /></li>
 		</ol>
 		<h1 class="page-header"><g:message code="default.create.label" args="[entityName]" /></h1>
@@ -22,7 +23,7 @@
 		<form action="${createLink(action:'save', namespace:'admin')}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data">
 			<g:render template="form" />
 			<div class="form-group">
-				<label for="file" class="col-sm-2 control-label"><g:message code="taxonomy.import.label" default="Import" /></label>
+				<label for="file" class="col-sm-2 control-label"><g:message code="de.httc.plugin.taxonomy.import" default="Import" /></label>
 				<div class="col-sm-10"><input type="file" id="file" name="file" class="form-control"/></div>
 			</div>
 			<div class="buttons pull-right">

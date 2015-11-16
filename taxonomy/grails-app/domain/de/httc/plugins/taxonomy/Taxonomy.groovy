@@ -9,7 +9,7 @@ class Taxonomy {
     	id bindable:true	// this is needed to import taxonomies from sharepoint and keeping the foreign ids.
     }	
     static mapping = { 
-    	terms cascade:"all-delete-orphan"
+    	//terms cascade:"all-delete-orphan"
     	id (generator: "assigned")	// this is needed to import taxonomies and terms from sharepoint and keeping the foreign ids.
     	label type:"text"
     }

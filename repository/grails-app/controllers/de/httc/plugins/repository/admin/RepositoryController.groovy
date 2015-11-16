@@ -34,7 +34,6 @@ class RepositoryController {
         params.sort = params.sort ?: "lastUpdated"
         params.order = params.order ?: "desc"
         def query = Asset.where { deleted == false }
-        println "--- ASSSETS: " + query.list(params)
         respond query.list(params), model:[assetInstanceCount: query.count()]
     }
 
@@ -125,7 +124,6 @@ class RepositoryController {
             }.to "finish"
         }
         finish {
-            redirect(action:"index")
         }
     }
 /*

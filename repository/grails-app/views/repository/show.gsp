@@ -17,7 +17,7 @@
 	<body>
 		<ol class="breadcrumb">
 			<li><g:link uri="/admin"><g:message code="default.admin.label" default="Administration" /></g:link></li>
-			<li><g:link class="list" action="list" namespace="admin">${entitiesName}</g:link></li>
+			<li><g:link class="list" action="index" namespace="admin">${entitiesName}</g:link></li>
 			<li class="active"><g:message code="default.show.label" args="[entityName]" /></li>
 		</ol>
 		<g:if test="${flash.message}">

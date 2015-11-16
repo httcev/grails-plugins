@@ -17,7 +17,10 @@ class CompetencesController {
     }
 
 	def list(Integer max) {
-		params.max = Math.min(max ?: 10, 100)
+        params.offset = params.offset ? (params.offset as int) : 0
+        params.max = Math.min(max ?: 10, 100)
+//        params.sort = params.sort ?: "username"
+        params.order = params.order ?: "asc"
 		[competenceList: Competence.list(params), competenceCount: Competence.count()]
 	}
 

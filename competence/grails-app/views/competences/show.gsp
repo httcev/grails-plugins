@@ -9,20 +9,12 @@
 </head>
 <body>
 	<ol class="breadcrumb">
-		<li><g:link uri="/admin">
-				<g:message code="default.admin.label" default="Administration" />
-			</g:link></li>
-		<li><g:link class="list" action="list" namespace="admin">
-				<g:message code="default.list.label" args="[entityName]" />
-			</g:link></li>
+		<li><g:link uri="/admin"><g:message code="default.admin.label" default="Administration" /></g:link></li>
+		<li><g:link class="list" action="list" namespace="admin"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
 		<li class="active"><g:message code="default.show.label" args="[entityName]" /></li>
 	</ol>
 	<h1 class="page-header">
 		<g:message code="default.show.label" args="[entityName]" />
-		<g:link class="create btn btn-default btn-sm pull-right" action="create" namespace="admin" title="${message(code: 'default.new.label', args:[entityName])}">
-			<span class="fa-stack"> <i class="fa fa-user fa-stack-2x"></i> <i class="fa fa-plus fa-stack-1x text-primary"></i>
-			</span>
-		</g:link>
 	</h1>
 	<ul class="property-list list-group competence">
 		<g:if test="${competence?.userId}">

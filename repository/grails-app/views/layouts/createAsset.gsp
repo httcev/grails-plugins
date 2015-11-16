@@ -1,8 +1,8 @@
 <g:applyLayout name="admin">
 <html>
 	<head>
-		<g:set var="entityName" value="${message(code: 'kola.asset')}" />
-		<g:set var="entitiesName" value="${message(code: 'kola.assets')}" />
+		<g:set var="entityName" value="${message(code: 'de.httc.plugin.repository.asset')}" />
+		<g:set var="entitiesName" value="${message(code: 'de.httc.plugin.repository.assets')}" />
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
 	</head>
 	<body>

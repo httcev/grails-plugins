@@ -25,12 +25,12 @@
 				<div class="message alert alert-success" role="status">${flash.message}</div>
 			</g:if>
 			<div id="taxonomy">
-			<g:if test="${flash.error}">
-				<div class="message alert alert-danger" role="status">${flash.error}</div>
-			</g:if>
+				<g:if test="${flash.error}">
+					<div class="message alert alert-danger" role="status">${flash.error}</div>
+				</g:if>
 				<table class="table table-condensed table-bordered">
 					<tbody>
-						<tr><td><g:message code="de.httc.plugin.taxonomy.taxonomy.label" default="Name" />:</td><td><b><g:fieldValue bean="${taxonomyInstance}" field="label"/></b></td></tr>
+						<tr><td><g:message code="de.httc.plugin.taxonomy.label" default="Name" />:</td><td><b><g:fieldValue bean="${taxonomyInstance}" field="label"/></b></td></tr>
 						<tr><td><g:message code="de.httc.plugin.taxonomy.lastUpdated" default="Last updated" />:</td><td><g:fieldValue bean="${taxonomyInstance}" field="lastUpdated"/></td></tr>
 						<tr><td><g:message code="de.httc.plugin.taxonomy.type" default="Type" />:</td><td><g:fieldValue bean="${taxonomyInstance}" field="type"/></td></tr>
 					</tbody>

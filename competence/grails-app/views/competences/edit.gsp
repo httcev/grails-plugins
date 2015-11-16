@@ -14,21 +14,18 @@
 		<h1 class="page-header">
 			<g:message code="default.edit.label" args="[entityName]" />
 			<g:link class="create btn btn-default btn-sm pull-right" action="create" namespace="admin" title="${message(code: 'default.new.label', args:[entityName])}">
-				<span class="fa-stack">
-				  <i class="fa fa-user fa-stack-2x"></i>
-				  <i class="fa fa-plus fa-stack-1x text-primary"></i>
-				</span>
+				  <i class="fa fa-plus"></i>
 			</g:link>
 		</h1>
 		<g:hasErrors bean="${competence}">
 			<ul class="errors alert alert-danger" role="alert">
-				<g:eachError bean="${userInstance}" var="error">
+				<g:eachError bean="${competence}" var="error">
 				<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
 				</g:eachError>
 			</ul>
 		</g:hasErrors>
 		<form action="${createLink(action:'update', id:competence?.id, namespace:'admin')}" method="post" role="form" class="form-horizontal">
-			<g:hiddenField name="version" value="${userInstance?.version}" />
+			<g:hiddenField name="version" value="${competence?.version}" />
 			<input type="hidden" name="_method" value="PUT" id="_method">
 			<g:render template="form"/>
 			<div class="buttons pull-right">

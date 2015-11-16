@@ -17,7 +17,7 @@
 	<body>
 		<ol class="breadcrumb">
 			<li><g:link uri="/admin"><g:message code="default.admin.label" default="Administration" /></g:link></li>
-			<li>${entitiesName}</li>
+			<li class="active">${entitiesName}</li>
 		</ol>
 		<h1 class="page-header clearfix">
 			${entitiesName}
@@ -28,6 +28,7 @@
 		<g:if test="${flash.message}">
 			<div class="message alert alert-success" role="status">${flash.message}</div>
 		</g:if>
+<!--		
 		<g:form controller="search" method="GET" class="form-horizontal">
 			<input type="hidden" name="hideFilter" value="true">
 			<input type="hidden" name="type" value="asset">
@@ -41,6 +42,7 @@
 				</div>
 			</div>
 		</g:form>
+-->
 		<g:if test="${assetInstanceList?.size() > 0}">
 			<p class="margin text-muted small"><g:message code="app.search.hits.displaying" default="Showing {0} {1}-{2} of {3}" args="${[entitiesName, params.offset + 1, Math.min(params.offset + params.max, assetInstanceCount), assetInstanceCount]}" />:</p>
 			<div class="table-responsive">
@@ -67,7 +69,7 @@
 			</div>
 			<g:if test="${params.max < assetInstanceCount}">
 				<div class="pagination pull-right">
-					<g:paginate total="${assetInstanceCount ?: 0}" />
+					<g:paginate total="${assetInstanceCount ?: 0}" namespace="admin" />
 				</div>
 			</g:if>
 		</g:if>
