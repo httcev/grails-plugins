@@ -1,3 +1,4 @@
+<%@ page import="de.httc.plugins.repository.Asset" %>
 <html>
 	<head>
 		<meta name="layout" content="createAsset">
@@ -15,7 +16,7 @@
 				<g:message code="de.httc.plugin.repository.asset.description" />
 				<span class="required-indicator">*</span>:
 			</label>
-			<div class="col-sm-10"><g:textArea name="description" class="form-control" rows="10" required="" value="${cmd?.description}"/></div>
+			<div class="col-sm-10"><g:textArea id="description" name="props['$Asset.PROP_DESCRIPTION']" class="form-control" rows="10" required="" value='${cmd?.props?."${Asset.PROP_DESCRIPTION}"}'/></div>
 		</div>
 		<div class="form-group ${hasErrors(bean: cmd, field: 'mimeType', 'error')}">
 			<div class="col-sm-2">
@@ -23,12 +24,14 @@
 			</div>
 			<div class="col-sm-10">${cmd?.mimeType}</div>
 		</div>
-		<g:if test="${cmd?.anchor}">
-			<div class="form-group ${hasErrors(bean: cmd, field: 'anchor', 'error')}">
+		<g:if test="${false}">
+			<div class="form-group">
 				<div class="col-sm-2">
 					<label class="pull-right"><g:message code="de.httc.plugin.repository.asset.anchor" />:</label>
 				</div>
+				<%--
 				<div class="col-sm-10">${cmd?.anchor}</div>
+				--%>
 			</div>
 		</g:if>
 		<div class="buttons pull-right">

@@ -39,7 +39,8 @@ class RepositoryService {
             if (!asset.content) {
                 return null
             }
-    		if (asset.mimeType == "application/zip" && asset.anchor) {
+            def anchor = asset.props?."${Asset.PROP_ANCHOR}"
+    		if (asset.mimeType == "application/zip" && anchor) {
 				ZipInputStream zin = new ZipInputStream(new BufferedInputStream(new ByteArrayInputStream(asset.content)))
 				ZipUtil.unzip(zin, file)
     		}

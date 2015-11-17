@@ -4,16 +4,13 @@ import grails.transaction.Transactional
 import org.apache.tika.mime.MediaType
 import org.apache.tika.metadata.Metadata
 import org.apache.tika.config.TikaConfig
-import org.apache.tika.metadata.TikaCoreProperties;
-import org.apache.tika.parser.AutoDetectParser;
-import org.apache.tika.parser.html.BoilerpipeContentHandler;
-import org.apache.tika.sax.BodyContentHandler;
-import org.apache.tika.sax.WriteOutContentHandler;
-import org.xml.sax.ContentHandler;
-import java.io.RandomAccessFile;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-import java.nio.file.Files;
+import org.apache.tika.metadata.TikaCoreProperties
+import org.apache.tika.parser.AutoDetectParser
+import org.apache.tika.parser.html.BoilerpipeContentHandler
+import org.apache.tika.sax.BodyContentHandler
+import org.apache.tika.sax.WriteOutContentHandler
+import org.xml.sax.ContentHandler
+import java.util.zip.ZipInputStream
 import org.springframework.security.access.annotation.Secured
 import org.springframework.web.context.request.RequestContextHolder
 import de.httc.plugins.repository.ZipUtil
@@ -23,7 +20,6 @@ import de.httc.plugins.repository.Asset
 @Secured(['ROLE_ADMIN', 'ROLE_REPOSITORY_ADMIN'])
 class RepositoryController {
     static namespace = "admin"
-    def repositoryService
 
     //static allowedMethods = [save: "POST", update: ["PUT", "POST"], delete: "DELETE"]
 
@@ -50,6 +46,8 @@ class RepositoryController {
         initiliaze {
             action {
                 flow.cmd = new CreateAssetCommand()
+//                flow.cmd.props =  MapUtils.lazyMap([:], FactoryUtils.constantFactory(''))
+//                flow.cmd.props = [:]
             }
             on("success").to "uploadOrLink"
             on(Exception).to "error"
@@ -58,9 +56,9 @@ class RepositoryController {
         uploadOrLink {
             on("submit") {
                 bindData(flow.cmd, params)
-                if (!flow.cmd.content && !flow.cmd.externalUrl) {
+                if (!flow.cmd.content && !flow.cmd.props?."${Asset.PROP_EXTERNAL_URL}") {
                     flow.cmd.errors.rejectValue('content', 'nullable')
-                    flow.cmd.errors.rejectValue('externalUrl', 'nullable')
+                    flow.cmd.errors.rejectValue('props', 'nullable')
                     error()
                 }
             }.to "checkUploadOrLink"
@@ -81,9 +79,10 @@ class RepositoryController {
                     return metadata()
                 }
                 catch(e) {
+                    println e
                     log.error e
-                    if (flow.cmd.externalUrl) {
-                        flow.cmd.errors.rejectValue('externalUrl', 'urlNotValid')
+                    if (flow.cmd.props?."${Asset.PROP_EXTERNAL_URL}") {
+                        flow.cmd.errors.rejectValue('props', 'urlNotValid')
                     }
                     return error()
                 }
@@ -105,9 +104,6 @@ class RepositoryController {
                 }
                 def assetInstance = new Asset()
                 assetInstance.properties = flow.cmd
-                //println "---saved instance: " + assetInstance.indexText
-
-
                 assetInstance.validate()
                 assetInstance.errors.allErrors.each { println it }
 
@@ -126,32 +122,7 @@ class RepositoryController {
         finish {
         }
     }
-/*
-    @Transactional
-    def save(Asset assetInstance) {
-        if (assetInstance == null) {
-            notFound()
-            return
-        }
 
-        enrichAsset(assetInstance)
-
-        if (assetInstance.hasErrors()) {
-            respond assetInstance.errors, view:'create'
-            return
-        }
-
-        assetInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'asset.label', default: 'Asset'), assetInstance.id])
-                redirect action:"show", id:assetInstance.id
-            }
-            '*' { respond assetInstance, [status: CREATED] }
-        }
-    }
-*/
     def edit(Asset assetInstance) {
         if (assetInstance == null) {
             notFound()
@@ -199,86 +170,6 @@ class RepositoryController {
         redirect action:"index", method:"GET"
     }
 
-    @Secured(['permitAll'])
-    def viewAsset(String id, String file) {
-        def asset = assetService.readAsset(id)
-        if (!asset) {
-            println "--- no asset with id " + id
-            response.sendError(404)
-            return
-        }
-
-        if (asset.externalUrl) {
-            // external asset
-            response.sendRedirect(asset.externalUrl)
-            return
-        }
-        // local asset
-        def repoFile = assetService.getOrCreateRepositoryFile(asset)
-        if (!repoFile) {
-            println "--- no content for attachment with id " + id
-            response.sendError(404)
-            return
-        }
-        if (repoFile.isDirectory()) {
-            // handle special case: zip files
-            viewZipFile(asset, file, repoFile)
-            return
-        }
-        renderFile(repoFile, asset.mimeType)
-    }
-
-    protected void viewZipFile(Asset asset, String file, File repoFile) {
-        if (!file) {
-            log.debug "redirecting to anchor " + asset.anchor
-            redirect(url: assetService.createEncodedLink(asset, asset.anchor))
-            return
-        }
-        File zipEntry = new File(repoFile, file)
-        if (!zipEntry.exists()) {
-            render status: NOT_FOUND
-            return
-        }
-        renderFile(zipEntry, Files.probeContentType(zipEntry.toPath()))
-    }
-
-    protected void renderFile(File file, String contentType) {
-        response.setHeader("Accept-Ranges", "bytes")
-        String range = request.getHeader("range")
-        if (range != null && range.length() > 0) {
-            def matcher = range =~ /bytes=(\d+)-(\d*)/
-            def start = matcher[0][1].toInteger()
-            def end = matcher[0][2]
-            def fileLength = file.length()
-            if (!end) {
-                end = fileLength - 1
-            }
-            else {
-                end = end.toInteger()
-            }
-            // check bounds and conditionally return status 416 ("Requested Range not satisfiable")
-            if (end < start || start < 0 || end < 0 || end >= fileLength) {
-                response.status = 416
-                return
-            }
-            def length = end - start + 1
-            response.status = 206
-            response.contentLength = length
-            response.setHeader("Content-Range", "bytes " + start + "-" + end + "/" + fileLength)
-            // TODO: try to not allocate array in memory
-            RandomAccessFile raf = new RandomAccessFile(file, "r")
-            raf.seek(start)
-            byte[] buf = new byte[length]
-            raf.readFully(buf)
-
-            //response.outputStream << buf
-            render(file:buf, contentType:contentType)
-        }
-        else {
-            render(file:file, contentType:contentType)
-        }
-    }
-
     protected void notFound() {
         flash.message = message(code: 'default.not.found.message', args: [message(code: 'de.httc.plugin.repository.asset', default: 'Asset'), params.id])
         redirect action: "index", method: "GET"
@@ -288,21 +179,22 @@ class RepositoryController {
         def detector = TikaConfig.getDefaultConfig().getDetector();
         Metadata metadata = new Metadata()
         def inputStream
-        if (assetOrCommand.content || assetOrCommand.externalUrl) {
+        def externalUrl = assetOrCommand.props."${Asset.PROP_EXTERNAL_URL}"
+        if (assetOrCommand.content || externalUrl) {
             try {
                 if (assetOrCommand.content) {
                     // remove externalUrl since we're now expecting a local asset
-                    assetOrCommand.externalUrl = null
+                    assetOrCommand.props[Asset.PROP_EXTERNAL_URL] = null
                     def uploadFile = request.getFile("content")
                     if (uploadFile) {
-                        assetOrCommand.filename = uploadFile.getOriginalFilename()
+                        assetOrCommand.props."${Asset.PROP_FILENAME}" = uploadFile.getOriginalFilename()
                     }
 
                     inputStream = new ByteArrayInputStream(assetOrCommand.content)
-                    metadata.add(Metadata.RESOURCE_NAME_KEY, assetOrCommand.filename)
+                    metadata.add(Metadata.RESOURCE_NAME_KEY, assetOrCommand.props."${Asset.PROP_FILENAME}")
                 }
                 else {
-                    inputStream = new BufferedInputStream(new URL(assetOrCommand.externalUrl).openStream())
+                    inputStream = new BufferedInputStream(new URL(externalUrl).openStream())
                 }
 
                 MediaType mediaType = detector.detect(inputStream, metadata)
@@ -355,27 +247,19 @@ class CreateAssetCommand implements Serializable {
     static constraints = {
         // Limit upload file size to 100MB
         content maxSize: 1024 * 1024 * 100, nullable:true
-        externalUrl nullable: true
-        anchor nullable: true
         name blank:false
-        description blank:false
-        filename nullable: true
         indexText nullable: true
     }
 
     String name
-    String description
     String mimeType
-    String subType = "learning-resource"
-
-    // only external assets
-    String externalUrl
-
-    // only local assets
-    byte[] content
-    String filename
-    // only for local zip files
-    String anchor
-
     String indexText
+    byte[] content
+    // need to define this as HashMap, otherwise grails instantiates a GrailsParameterMap which is not serializable
+    HashMap<String, String> props
+
+
+/*
+    String subType = "learning-resource"
+*/
 }
