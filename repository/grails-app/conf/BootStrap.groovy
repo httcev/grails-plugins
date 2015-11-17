@@ -32,20 +32,20 @@ class BootStrap {
 
                 def numMicrolearnings = 1
                 for (i in 1..numMicrolearnings) {
-                    def ml = new Asset(name:"Lernmodul "+i, mimeType:"text/html", props:[(Asset.PROP_TYPE):"microlearning", (Asset.PROP_EXTERNAL_URL):"https://www.youtube.com/embed/jEYaD9MbjVw","goal":"Verstehen", "topic" : "Das Lernthema ist..."])
+                    def ml = new Asset(name:"Lernmodul "+i, mimeType:"text/html", type:"microlearning", props:[(Asset.PROP_EXTERNAL_URL):"https://www.youtube.com/embed/jEYaD9MbjVw","goal":"Verstehen", "topic" : "Das Lernthema ist..."])
                     if (!ml.save(flush:true)) {
                         ml.errors.allErrors.each {
                             println it
                         }
                     }
                 }
-                def asset = new Asset(name:"Fehlerbericht 1", mimeType:"text/plain", props:[(Asset.PROP_TYPE):"errorreport", (Asset.PROP_DESCRIPTION):"Beschreibung des Berichts","cause":"Ursache","solution":"Lösung..."])
+                def asset = new Asset(name:"Fehlerbericht 1", mimeType:"text/plain", type:"errorreport", props:[(Asset.PROP_DESCRIPTION):"Beschreibung des Berichts","cause":"Ursache","solution":"Lösung..."])
                 if (!asset.save(flush:true)) {
                     asset.errors.allErrors.each {
                         println it
                     }
                 }
-                new Asset(name:"Fehlerbericht 2", mimeType:"text/plain", props:[(Asset.PROP_TYPE):"errorreport", (Asset.PROP_DESCRIPTION):"Der Fehler tritt auf wenn","cause":"Ursachenforschung muss noch betrieben werden.","solution":"och keine Lösung in Sicht."]).save(flush:true)
+                new Asset(name:"Fehlerbericht 2", mimeType:"text/plain", type:"errorreport", props:[(Asset.PROP_DESCRIPTION):"Der Fehler tritt auf wenn","cause":"Ursachenforschung muss noch betrieben werden.","solution":"och keine Lösung in Sicht."]).save(flush:true)
                 println "--- ASSETS CREATED."
 
                 assert Asset.count() == 2 + numMicrolearnings

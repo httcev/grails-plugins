@@ -8,7 +8,6 @@ class Asset {
 	static String PROP_FILENAME = "_filename"
 	static String PROP_ANCHOR = "_anchor"
     static String PROP_EXTERNAL_URL = "_externalUrl"
-    static String PROP_TYPE = "_type"
     static String PROP_DESCRIPTION = "_description"
 
     static hasMany = [categories:TaxonomyTerm]
@@ -18,7 +17,7 @@ class Asset {
 
 	static searchable = {
 		//all = [analyzer: 'german']
-        only = ['name', 'mimeType', 'indexText', 'deleted']
+        only = ['name', 'mimeType', 'indexText', 'deleted', 'type']
         //name boost:3.0
         //description boost:2.0
 //        props index:"not_analyzed"
@@ -32,6 +31,7 @@ class Asset {
 //        filename nullable: true
         indexText nullable: true
         creator nullable:true
+        type nullable:true
     }
     static mapping = {
         id generator: "assigned"
@@ -42,6 +42,7 @@ class Asset {
     String id = UUID.randomUUID().toString()
     String name
     String mimeType
+    String type
     boolean deleted
     Map<String, String> props
     byte[] content

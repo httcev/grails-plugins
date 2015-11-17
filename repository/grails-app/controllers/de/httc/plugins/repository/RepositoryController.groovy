@@ -6,26 +6,35 @@ import java.io.RandomAccessFile
 import java.nio.file.Files
 import org.springframework.security.access.annotation.Secured
 import static org.springframework.http.HttpStatus.*
+import de.httc.plugins.repository.Asset
 
 @Secured(["IS_AUTHENTICATED_FULLY"])
 class RepositoryController {
 	def repositoryService 
-/*	
+	
 	def list() {
 //		Thread.sleep(1000);
 		println "--- type='" + params.type + "'"
-		def filter = [:]
-		filter.offset = params["start"] ?: 0
-		filter.max = Math.min(params.max?.toInteger() ?: 100, 1000)
-		filter.type = params.containsKey("type") ? params.type : null
+		params.offset = params.offset ? (params.offset as int) : 0
+		params.max = Math.min(params.max?.toInteger() ?: 100, 1000)
+		params.type = params.containsKey("type") ? params.type : null
+        params.sort = params.sort ?: "lastUpdated"
+        params.order = params.order ?: "desc"
 
-		return [model:repositoryService.list(filter)]
+        def result = Asset.createCriteria().list(max:params.max, offset:params.offset) {
+            if (params.type) {
+                eq("type", params.type)
+            }
+            order(params.sort, params.order)
+        }
+        println "--- result -> " + result
+        respond result, model:[assetInstanceCount: result.totalCount]
 	}
 
-	def show(Long id) {
-		return [model:repositoryService.get(id)]
+	def show(String id) {
+		return [model:repositoryService.readAsset(id)]
 	}
-*/	
+	
     @Secured(['permitAll'])
     def viewAsset(String id, String file) {
         def asset = repositoryService.readAsset(id)
