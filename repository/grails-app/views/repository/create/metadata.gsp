@@ -18,6 +18,12 @@
 			</label>
 			<div class="col-sm-10"><g:textArea id="description" name="props['$Asset.PROP_DESCRIPTION']" class="form-control" rows="10" required="" value='${cmd?.props?."${Asset.PROP_DESCRIPTION}"}'/></div>
 		</div>
+		<div class="form-group ${hasErrors(bean: cmd, field: 'type', 'error')}">
+			<label for="type" class="col-sm-2 control-label">
+				<g:message code="de.httc.plugin.repository.asset.type" />:
+			</label>
+			<div class="col-sm-10"><g:textField name="type" class="form-control" value="${cmd?.type}"/></div>
+		</div>
 		<div class="form-group ${hasErrors(bean: cmd, field: 'mimeType', 'error')}">
 			<div class="col-sm-2">
 				<label class="pull-right"><g:message code="de.httc.plugin.repository.asset.mimeType" />:</label>

@@ -36,6 +36,10 @@
 			<p>${assetInstance.props."${Asset.PROP_DESCRIPTION}"}</p>
 		</g:if>
 		<div class="row">
+			<div class="col-sm-2"><label><g:message code="de.httc.plugin.repository.asset.type" />:</label></div>
+			<div class="col-sm-10"><code>${assetInstance?.type}</code></div>
+		</div>
+		<div class="row">
 			<div class="col-sm-2"><label><g:message code="de.httc.plugin.repository.asset.mimeType" />:</label></div>
 			<div class="col-sm-10"><code>${assetInstance?.mimeType}</code></div>
 		</div>
