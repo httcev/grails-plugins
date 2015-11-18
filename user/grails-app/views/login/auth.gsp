@@ -35,6 +35,6 @@
 				</div>
 			</form>
 		</div>
-		Neuer Nutzer? <g:link controller="register" action="index">Account anlegen</g:link>
+		<g:message code="de.httc.plugin.user.auth.new" /> <g:link controller="register" action="index"><g:message code="de.httc.plugin.user.auth.create" /></g:link>
 	</div>
 </body>

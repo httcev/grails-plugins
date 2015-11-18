@@ -3,7 +3,7 @@
 <div class="form-group">
 	<label for="label" class="col-sm-2 control-label"><g:message code="de.httc.plugin.taxonomy.label" default="Name" /></label>
 	<div class="col-sm-10">
-		<g:textField name="label" value="${taxonomyInstance?.label}" class="form-control" />
+		<g:textField name="label" value="${taxonomyInstance?.label}" class="form-control" required=""/>
 	</div>
 </div>
 <div class="form-group">
