@@ -1,0 +1,1 @@
+de.httc.plugin.repository.directory = "./repo"
