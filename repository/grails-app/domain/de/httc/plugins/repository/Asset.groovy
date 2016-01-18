@@ -26,9 +26,6 @@ class Asset {
     static constraints = {
     	// Limit upload file size to 100MB
         content maxSize: 1024 * 1024 * 100, nullable:true
-//        externalUrl nullable: true
-//        anchor nullable: true
-//        filename nullable: true
         indexText nullable: true
         creator nullable:true
         type nullable:true
@@ -46,7 +43,6 @@ class Asset {
     boolean deleted
     Map<String, String> props
     byte[] content
-
     String indexText
 
     User creator

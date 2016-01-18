@@ -35,6 +35,8 @@
 				</div>
 			</form>
 		</div>
-		<g:message code="de.httc.plugin.user.auth.new" /> <g:link controller="register" action="index"><g:message code="de.httc.plugin.user.auth.create" /></g:link>
+		<g:if test="${grailsApplication.mergedConfig.de.httc.plugin.user.selfRegistrationEnabled}">
+			<g:message code="de.httc.plugin.user.auth.new" /> <g:link controller="register" action="index"><g:message code="de.httc.plugin.user.auth.create" /></g:link>
+		</g:if>
 	</div>
 </body>

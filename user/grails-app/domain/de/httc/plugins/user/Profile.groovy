@@ -21,4 +21,11 @@ class Profile {
     byte[] photo
     Date lastUpdated
 
+    def getDisplayName() {
+        firstName + " " + lastName
+    }
+
+    def getDisplayNameFormal() {
+        lastName + ", " + firstName
+    }
 }

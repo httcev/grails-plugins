@@ -5,3 +5,5 @@
 /logs
 /plugins/
 /target/
+/application.properties
+

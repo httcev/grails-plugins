@@ -21,6 +21,7 @@ log4j = {
            'net.sf.ehcache.hibernate'
 }
 
+// Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'de.httc.plugins.user.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'de.httc.plugins.user.UserRole'
@@ -31,8 +32,6 @@ grails.plugin.springsecurity.failureHandler.exceptionMappings = [
    'org.springframework.security.authentication.CredentialsExpiredException': '/user/passwordExpired'
 ]
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
-    '/user/**':   ['ROLE_ADMIN'],
-    '/register/**':     ['permitAll']
 ]
 //grails.plugin.springsecurity.rejectIfNoRule = false
 //grails.plugin.springsecurity.fii.rejectPublicInvocations = false

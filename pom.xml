@@ -13,6 +13,7 @@
 		<module>repository</module>
 		<module>competence</module>
 		<module>competence-inference</module>
+		<module>push-notification</module>
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -125,7 +126,7 @@
 			<artifactId>hibernate</artifactId>
 			<version>3.6.10.19</version>
 			<type>zip</type>
-			<scope>runtime</scope>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.ehcache</groupId>

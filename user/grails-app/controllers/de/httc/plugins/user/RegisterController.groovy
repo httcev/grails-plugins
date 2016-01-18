@@ -8,11 +8,16 @@ import grails.plugin.springsecurity.SpringSecurityUtils
 
 class RegisterController extends grails.plugin.springsecurity.ui.RegisterController {
         def index() {
+                if (!grailsApplication.mergedConfig.de.httc.plugin.user.selfRegistrationEnabled) {
+                        render status:404
+                        return
+                }
+
                 def copy = [:] + (flash.chainedParams ?: [:])
                 copy.remove 'controller'
                 copy.remove 'action'
                 copy.remove 'format'
-                [command: new RegisterCommand(copy)]
+                [command: new de.httc.plugins.user.RegisterCommand(copy)]
         }
 
 	/**
@@ -23,27 +28,26 @@ class RegisterController extends grails.plugin.springsecurity.ui.RegisterControl
 	}
 
         def register(RegisterCommand command) {
-println "--- 1"
+                if (!grailsApplication.mergedConfig.de.httc.plugin.user.selfRegistrationEnabled) {
+                        render status:404
+                        return
+                }
                 if (command.hasErrors()) {
                         render view: 'index', model: [command: command]
                         return
                 }
-println "--- 2"
 
                 String salt = saltSource instanceof NullSaltSource ? null : command.username
                 def user = lookupUserClass().newInstance(email: command.email, username: command.username, profile:[firstName:command.profile.firstName, lastName:command.profile.lastName],
                                 accountLocked: true, enabled: true)
                 user.save()
-println "--- 3"
 
                 RegistrationCode registrationCode = springSecurityUiService.register(user, command.password, salt)
-println "--- 3.1"
                 if (registrationCode == null || registrationCode.hasErrors()) {
-println "--- 3.2"
 
-user.errors.allErrors.each {
-	println it
-}
+                        user.errors.allErrors.each {
+                        	println it
+                        }
 
                         // null means problem creating the user
                         flash.error = message(code: 'spring.security.ui.register.miscError')
@@ -51,7 +55,6 @@ user.errors.allErrors.each {
                         redirect action: 'index'
                         return
                 }
-println "--- 4"
 
                 String url = generateLink('verifyRegistration', [t: registrationCode.token])
 
@@ -73,7 +76,6 @@ println "html: ${body.toString()}"
                         subject conf.ui.register.emailSubject
                         html body.toString()
                 }
-println "--- 6"
 
                 render view: 'index', model: [emailSent: true]
         }

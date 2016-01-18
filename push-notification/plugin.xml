@@ -1,0 +1,13 @@
+<plugin name='push-notification' version='2.0.0-SNAPSHOT' grailsVersion='2.4 &gt; *'>
+  <author>Stephan Tittel</author>
+  <title>Push Notification Plugin</title>
+  <description>Brief summary/description of the plugin.
+</description>
+  <type>PushNotificationGrailsPlugin</type>
+  <resources>
+    <resource>BootStrap</resource>
+    <resource>de.httc.plugins.pushNotification.PushTokenController</resource>
+    <resource>de.httc.plugins.pushNotification.PushToken</resource>
+    <resource>de.httc.plugins.pushNotification.PushNotificationService</resource>
+  </resources>
+</plugin>

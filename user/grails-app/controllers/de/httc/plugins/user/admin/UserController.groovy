@@ -2,7 +2,7 @@ package de.httc.plugins.user.admin
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
-import grails.plugin.springsecurity.annotation.Secured
+import org.springframework.security.access.annotation.Secured
 
 import de.httc.plugins.user.User
 import de.httc.plugins.user.UserRole
