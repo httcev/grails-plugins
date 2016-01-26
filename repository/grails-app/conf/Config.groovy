@@ -21,8 +21,6 @@ log4j = {
            'net.sf.ehcache.hibernate'
 }
 
-de.httc.plugins.repository.directory = "./repo"
-
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'de.httc.plugins.user.User'

@@ -43,6 +43,11 @@ class UserController {
             userInstance.profile.photo = null
         }
 
+        if (!userInstance.profile?.validate() || !userInstance.validate()) {
+            respond userInstance.errors, view:'create'
+            return
+        }
+
         userInstance.save flush:true
         if (userInstance.hasErrors() || userInstance.profile?.hasErrors()) {
             respond userInstance.errors, view:'create'
@@ -78,7 +83,7 @@ class UserController {
 
         userInstance.save flush:true
         if (userInstance.hasErrors() || userInstance.profile?.hasErrors()) {
-            respond userInstance.errors, view:'edit'
+            render view: 'edit', model: [user: userInstance]
             return
         }
         updateRoles(userInstance)

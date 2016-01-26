@@ -51,7 +51,6 @@ Brief summary/description of the plugin.
 
     def doWithApplicationContext = { ctx ->
         // TODO Implement post initialization spring config (optional)
-        println "--- INIT USER PLUGIN"
     }
 
     def onChange = { event ->

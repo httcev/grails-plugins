@@ -6,6 +6,15 @@ import groovy.json.JsonBuilder
 class PushNotificationService {
 	def grailsApplication
 
+	/**
+	    def msg = [
+	            "title":messageSource.getMessage("kola.push.assigned.title", null, Locale.GERMAN),
+	            "message":task.name,
+	            "style":"inbox",
+	            "collapse_key":"assigned_tasks",
+	            "summaryText":messageSource.getMessage("kola.push.assigned.summaryText", null, Locale.GERMAN)
+	    ]
+	**/
 	def sendPushNotification(User target, message) {
 		// decouple from current thead
 		PushToken.async.task {
@@ -19,11 +28,11 @@ class PushNotificationService {
 				pushToken.properties?.each {
 					log.info it
 				}
-				URL url = new URL(grailsApplication.config.de.httc.plugins.pushNotification.gcmUrl);
+				URL url = new URL(grailsApplication.mergedConfig.de.httc.plugin.pushNotification.gcmUrl);
 			    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			    conn.setRequestMethod("POST")
 			    conn.setRequestProperty("Accept", "application/json");
-			    conn.setRequestProperty("Authorization", "key=" + grailsApplication.config.de.httc.plugins.pushNotification.gcmApiKey);
+			    conn.setRequestProperty("Authorization", "key=" + grailsApplication.mergedConfig.de.httc.plugin.pushNotification.gcmApiKey);
 			    conn.setRequestProperty("Content-Type", "application/json");
 			    conn.setDoOutput(true);
 			    conn.setDoInput(true);

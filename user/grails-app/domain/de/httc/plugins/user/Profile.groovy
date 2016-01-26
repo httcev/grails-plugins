@@ -2,7 +2,7 @@ package de.httc.plugins.user
 
 class Profile {
 	static constraints = {
-		firstName blank: false//, unique: "lastName"
+		firstName blank: false, unique: "lastName"
         lastName blank: false
 		company nullable: true
 		phone nullable: true
