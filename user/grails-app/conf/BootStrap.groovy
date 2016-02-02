@@ -5,7 +5,6 @@ import de.httc.plugins.user.UserRole
 class BootStrap {
 
     def init = { servletContext ->
-
         if (Role.count() == 0) {
             def adminRole = new Role(authority: 'ROLE_ADMIN').save(flush: true)
             assert Role.count() == 1

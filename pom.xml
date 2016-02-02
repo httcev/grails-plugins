@@ -14,6 +14,7 @@
 		<module>competence</module>
 		<module>competence-inference</module>
 		<module>push-notification</module>
+		<module>qaa</module>
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -93,7 +94,7 @@
 		<dependency>
 			<groupId>org.spockframework</groupId>
 			<artifactId>spock-core</artifactId>
-			<version>0.7-groovy-2.0</version>
+			<version>1.0-groovy-2.4</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -105,34 +106,42 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>3.1.0</version>
+			<version>3.0.1</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.grails.plugins</groupId>
 			<artifactId>tomcat</artifactId>
-			<version>7.0.54</version>
+			<version>7.0.50</version>
 			<scope>provided</scope>
 			<type>zip</type>
 		</dependency>
 		<dependency>
 			<groupId>org.grails.plugins</groupId>
 			<artifactId>spring-security-core</artifactId>
-			<version>2.0-RC5</version>
+			<version>2.0.0</version>
 			<type>zip</type>
-		</dependency>
+			<exclusions>
+				<exclusion>
+					<groupId>net.sf.ehcache</groupId>
+					<artifactId>ehcache</artifactId>
+				</exclusion>
+			</exclusions> 
+  		</dependency>
 		<dependency>
 			<groupId>org.grails.plugins</groupId>
 			<artifactId>hibernate</artifactId>
-			<version>3.6.10.19</version>
+			<version>3.6.10.18</version>
 			<type>zip</type>
-			<scope>test</scope>
+			<scope>runtime</scope>
 		</dependency>
+<!--		
 		<dependency>
 			<groupId>net.sf.ehcache</groupId>
 			<artifactId>ehcache</artifactId>
 			<version>2.10.1</version>
 		</dependency>
+-->		
 <!--
 		<dependency>
 			<groupId>org.grails.plugins</groupId>
@@ -141,12 +150,13 @@
 			<type>zip</type>
 			<scope>runtime</scope>
 		</dependency>
--->
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>4.1.5.RELEASE</version>
 		</dependency>
+-->
 		<dependency>
 			<groupId>org.grails.plugins</groupId>
 			<artifactId>plugin-config</artifactId>
@@ -242,7 +252,7 @@
 				<artifactId>grails-maven-plugin</artifactId>
 				<version>2.4.6</version>
 				<configuration>
-					<fork>true</fork>
+					<fork>false</fork>
 					<grailsVersion>${grails.version}</grailsVersion>
     			</configuration>
 				<extensions>true</extensions>

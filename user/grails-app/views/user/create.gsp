@@ -11,16 +11,17 @@
 			<li><g:link action="index" namespace="admin">${entitiesName}</g:link></li>
 			<li class="active"><g:message code="default.create.label" args="[entityName]" /></li>
 		</ol>
-		<g:form url="[resource:userInstance, action:'save', namespace:'admin']" class="form-horizontal" autocomplete="off" enctype="multipart/form-data">
+
+		<g:form url="[resource:user, action:'save', namespace:'admin']" class="form-horizontal" autocomplete="off" enctype="multipart/form-data">
 			<h1 class="page-header clearfix">
 				<g:message code="default.create.label" args="[entityName]" />
 				<div class="buttons pull-right">
 					<button class="save btn btn-success"><i class="fa fa-save"></i> <g:message code="default.button.create.label" default="Create" /></button>
 				</div>
 			</h1>
-			<g:hasErrors bean="${userInstance}">
+			<g:hasErrors bean="${user}">
 				<ul class="errors alert alert-danger" role="alert">
-					<g:eachError bean="${userInstance}" var="error">
+					<g:eachError bean="${user}" var="error">
 					<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
 					</g:eachError>
 				</ul>

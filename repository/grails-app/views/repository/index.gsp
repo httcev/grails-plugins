@@ -15,10 +15,6 @@
 		<title>${entitiesName}</title>
 	</head>
 	<body>
-		<ol class="breadcrumb">
-			<li><g:link uri="/admin"><g:message code="default.admin.label" default="Administration" /></g:link></li>
-			<li class="active">${entitiesName}</li>
-		</ol>
 		<h1 class="page-header clearfix">
 			${entitiesName}
 			<sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_REPOSITORY_ADMIN">
@@ -44,7 +40,7 @@
 		</g:form>
 -->
 		<g:if test="${assetInstanceList?.size() > 0}">
-			<p class="margin text-muted small"><g:message code="app.search.hits.displaying" default="Showing {0} {1}-{2} of {3}" args="${[entitiesName, params.offset + 1, Math.min(params.offset + params.max, assetInstanceCount), assetInstanceCount]}" />:</p>
+			<p class="margin text-muted small"><g:message code="de.httc.search.hits.displaying" default="Showing {0} {1}-{2} of {3}" args="${[entitiesName, params.offset + 1, Math.min(params.offset + params.max, assetInstanceCount), assetInstanceCount]}" />:</p>
 			<div class="table-responsive">
 				<table class="table">
 					<thead>

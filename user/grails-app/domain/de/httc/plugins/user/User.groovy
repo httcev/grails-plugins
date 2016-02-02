@@ -3,7 +3,17 @@ package de.httc.plugins.user
 class User implements Serializable {
 	private static final long serialVersionUID = 1
 
-	transient springSecurityService
+	def springSecurityService
+
+	static mapping = {
+		password column: 'passwd'
+		profile cascade: 'all'
+	}
+	static constraints = {
+		username blank: false, unique: true
+		password blank: false
+		email email: true, blank: false
+	}
 	static hasOne = [profile:Profile]
 
 	String username
@@ -63,17 +73,5 @@ class User implements Serializable {
 
 	protected void encodePassword() {
 		password = springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
-	}
-
-	static transients = ['springSecurityService']
-
-	static constraints = {
-		username blank: false, unique: true
-		password blank: false
-		email email: true, blank: false
-	}
-
-	static mapping = {
-		password column: 'passwd'
 	}
 }

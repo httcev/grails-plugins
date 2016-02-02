@@ -24,7 +24,14 @@ class PushTokenController {
     	}
 
     	pushToken.token = json.token
-    	pushToken.save()
-    	render(status:204)
+    	if (pushToken.save()) {
+            render(status:204)
+        }
+        else {
+            pushToken.errors.allErrors.each {
+                println it
+            }
+            render(status:500)
+        }
 	}
 }

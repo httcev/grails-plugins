@@ -6,10 +6,12 @@
 		<title>${entitiesName}</title>
 	</head>
 	<body>
+<%--	
 		<ol class="breadcrumb">
 			<li><g:link uri="/admin"><g:message code="default.admin.label" default="Administration" /></g:link></li>
 			<li class="active">${entitiesName}</li>
 		</ol>
+--%>		
 		<h1 class="page-header clearfix">
 			${entitiesName}
 			<g:link class="create btn btn-primary pull-right" action="create" namespace="admin" title="${message(code: 'default.new.label', args:[entityName])}">
@@ -19,7 +21,7 @@
 		<g:if test="${flash.message}">
 			<div class="message alert alert-success" role="status">${flash.message}</div>
 		</g:if>
-		<p class="margin text-muted small"><g:message code="de.httc.search.hits.displaying" args="${[entitiesName, params.offset + 1, Math.min(params.offset + params.max, userInstanceCount), userInstanceCount]}" />:</p>
+		<p class="margin text-muted small"><g:message code="de.httc.search.hits.displaying" args="${[entitiesName, params.offset + 1, Math.min(params.offset + params.max, userCount), userCount]}" />:</p>
 		<div class="table-responsive">
 			<table class="table table-striped">
 				<thead>
@@ -27,26 +29,28 @@
 						<g:sortableColumn property="username" namespace="admin" title="${message(code: 'de.httc.plugin.user.loginName')}" />
 						<g:sortableColumn property="profile.lastName" namespace="admin" title="${message(code: 'de.httc.plugin.user.lastName')}" />
 						<g:sortableColumn property="profile.firstName" namespace="admin" title="${message(code: 'de.httc.plugin.user.firstName')}" />
+						<g:sortableColumn property="profile.company" namespace="admin" title="${message(code: 'de.httc.plugin.user.company')}" />
 						<g:sortableColumn property="enabled" namespace="admin" title="${message(code: 'de.httc.plugin.user.enabled')}" />
 						<g:sortableColumn property="accountLocked" namespace="admin" title="${message(code: 'de.httc.plugin.user.accountNotLocked')}" />
 					</tr>
 				</thead>
 				<tbody>
-				<g:each in="${userList}" var="userInstance">
+				<g:each in="${userList}" var="user">
 					<tr>
-						<td><g:link action="edit" namespace="admin" id="${userInstance.id}">${fieldValue(bean: userInstance, field: "username")}</g:link></td>
-						<td>${fieldValue(bean: userInstance.profile, field: "lastName")}</td>
-						<td>${fieldValue(bean: userInstance.profile, field: "firstName")}</td>
-						<td><i class="fa fa-lg fa-${userInstance.enabled ? 'check text-success' : 'minus text-warning'}"></i></td>
-						<td><i class="fa fa-lg fa-${userInstance.accountLocked ? 'minus text-warning' : 'check text-success'}"></i></td>
+						<td><g:link action="edit" namespace="admin" id="${user.id}">${fieldValue(bean: user, field: "username")}</g:link></td>
+						<td>${fieldValue(bean: user.profile, field: "lastName")}</td>
+						<td>${fieldValue(bean: user.profile, field: "firstName")}</td>
+						<td>${fieldValue(bean: user.profile, field: "company")}</td>
+						<td><i class="fa fa-lg fa-${user.enabled ? 'check text-success' : 'minus text-warning'}"></i></td>
+						<td><i class="fa fa-lg fa-${user.accountLocked ? 'minus text-warning' : 'check text-success'}"></i></td>
 					</tr>
 				</g:each>
 				</tbody>
 			</table>
 		</div>
-		<g:if test="${params.max < userInstanceCount}">
+		<g:if test="${params.max < userCount}">
 			<div class="pagination pull-right">
-				<g:paginate total="${userInstanceCount ?: 0}" namespace="admin" />
+				<g:paginate total="${userCount ?: 0}" namespace="admin" />
 			</div>
 		</g:if>
 	</body>

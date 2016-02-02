@@ -6,13 +6,13 @@ class Profile {
         lastName blank: false
 		company nullable: true
 		phone nullable: true
-		mobile nullable: true
+        mobile nullable: true
         lastUpdated nullable: true // needed for downward compatibility
 		// photo max size 2 MB
 		photo maxSize: 1024 * 1024 * 2, nullable: true
 	}
+    static belongsTo = [user:User]
 
-    User user
    	String firstName
     String lastName
     String company
@@ -25,7 +25,7 @@ class Profile {
         firstName + " " + lastName
     }
 
-    def getDisplayNameFormal() {
+    def getDisplayNameReverse() {
         lastName + ", " + firstName
     }
 }

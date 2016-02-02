@@ -21,12 +21,12 @@ class UserController {
         params.max = Math.min(max ?: 10, 100)
         params.sort = params.sort ?: "username"
         params.order = params.order ?: "asc"
-        [userList:User.list(params), userInstanceCount: User.count()]
+        respond User.list(params), model:[userCount: User.count()]
     }
 
     def create() {
         params.passwordExpired = true
-        [user: new User(params)]
+        respond new User(params)
     }
 
     @Transactional
@@ -43,19 +43,14 @@ class UserController {
             userInstance.profile.photo = null
         }
 
-        if (!userInstance.profile?.validate() || !userInstance.validate()) {
+        if (!userInstance.save(true)) {
             respond userInstance.errors, view:'create'
             return
         }
 
-        userInstance.save flush:true
-        if (userInstance.hasErrors() || userInstance.profile?.hasErrors()) {
-            respond userInstance.errors, view:'create'
-            return
-        }
         updateRoles(userInstance)
 
-        flash.message = message(code: 'default.created.message', args: [message(code: 'de.httc.plugin.user.user', default: 'User'), userInstance.id])
+        flash.message = message(code: 'default.created.message', args: [message(code: 'de.httc.plugin.user.user', default: 'User'), userInstance.profile.displayName])
         redirect action:"index", method:"GET"
     }
 
@@ -64,7 +59,7 @@ class UserController {
             notFound()
             return
         }
-        [user:userInstance]
+        respond userInstance
     }
 
     @Transactional
@@ -83,12 +78,12 @@ class UserController {
 
         userInstance.save flush:true
         if (userInstance.hasErrors() || userInstance.profile?.hasErrors()) {
-            render view: 'edit', model: [user: userInstance]
+            respond userInstance.errors, view:'edit'
             return
         }
         updateRoles(userInstance)
 
-        flash.message = message(code: 'default.updated.message', args: [message(code: 'de.httc.plugin.user.user', default: 'User'), userInstance.id])
+        flash.message = message(code: 'default.updated.message', args: [message(code: 'de.httc.plugin.user.user', default: 'User'), userInstance.profile.displayName])
         redirect action:"index", method:"GET"
     }
 
@@ -101,7 +96,7 @@ class UserController {
 
         userInstance.delete flush:true
 
-        flash.message = message(code: 'default.deleted.message', args: [message(code: 'de.httc.plugin.user.user', default: 'User'), userInstance.id])
+        flash.message = message(code: 'default.deleted.message', args: [message(code: 'de.httc.plugin.user.user', default: 'User'), userInstance.profile.displayName])
         redirect action:"index", method:"GET"
     }
 

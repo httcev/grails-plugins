@@ -23,25 +23,6 @@ class RepositoryController {
 
     //static allowedMethods = [save: "POST", update: ["PUT", "POST"], delete: "DELETE"]
 
-    @Secured(['IS_AUTHENTICATED_FULLY'])
-    def index(Integer max) {
-        params.offset = params.offset ? (params.offset as int) : 0
-        params.max = Math.min(max ?: 10, 100)
-        params.sort = params.sort ?: "lastUpdated"
-        params.order = params.order ?: "desc"
-        def query = Asset.where { deleted == false }
-        respond query.list(params), model:[assetInstanceCount: query.count()]
-    }
-
-    @Secured(['IS_AUTHENTICATED_FULLY'])
-    def show(Asset assetInstance) {
-        if (assetInstance == null) {
-            notFound()
-            return
-        }
-        respond assetInstance
-    }
-
     def createFlow = {
         initiliaze {
             action {
@@ -104,6 +85,7 @@ class RepositoryController {
                 }
                 def assetInstance = new Asset()
                 assetInstance.properties = flow.cmd
+                
                 assetInstance.validate()
                 assetInstance.errors.allErrors.each { println it }
 
@@ -120,6 +102,7 @@ class RepositoryController {
             }.to "finish"
         }
         finish {
+            redirect(action:"index")
         }
     }
 
