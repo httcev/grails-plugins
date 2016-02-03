@@ -39,8 +39,8 @@
 			</div>
 		</g:form>
 -->
-		<g:if test="${assetInstanceList?.size() > 0}">
-			<p class="margin text-muted small"><g:message code="de.httc.search.hits.displaying" default="Showing {0} {1}-{2} of {3}" args="${[entitiesName, params.offset + 1, Math.min(params.offset + params.max, assetInstanceCount), assetInstanceCount]}" />:</p>
+		<g:if test="${assetList?.size() > 0}">
+			<p class="margin text-muted small"><g:message code="de.httc.search.hits.displaying" default="Showing {0} {1}-{2} of {3}" args="${[entitiesName, params.offset + 1, Math.min(params.offset + params.max, assetCount), assetCount]}" />:</p>
 			<div class="table-responsive">
 				<table class="table">
 					<thead>
@@ -52,20 +52,20 @@
 						</tr>
 					</thead>
 					<tbody>
-					<g:each in="${assetInstanceList}" var="assetInstance">
+					<g:each in="${assetList}" var="asset">
 						<tr>
-							<td><g:link controller="repository" namespace="${currentNamespace}" action="show" id="${assetInstance.id}">${fieldValue(bean: assetInstance, field: "name")}</g:link></td>
-							<td>${assetInstance.props?."${Asset.PROP_DESCRIPTION}"}</td>
-							<td><g:formatDate date="${assetInstance.lastUpdated}" type="date"/></td>
-							<td>${fieldValue(bean: assetInstance, field: "mimeType")}</td>
+							<td><g:link controller="repository" namespace="${currentNamespace}" action="show" id="${asset.id}">${fieldValue(bean: asset, field: "name")}</g:link></td>
+							<td>${asset.props?."${Asset.PROP_DESCRIPTION}"}</td>
+							<td><g:formatDate date="${asset.lastUpdated}" type="date"/></td>
+							<td>${fieldValue(bean: asset, field: "mimeType")}</td>
 						</tr>
 					</g:each>
 					</tbody>
 				</table>
 			</div>
-			<g:if test="${params.max < assetInstanceCount}">
+			<g:if test="${params.max < assetCount}">
 				<div class="pagination pull-right">
-					<g:paginate total="${assetInstanceCount ?: 0}" namespace="admin" />
+					<g:paginate total="${assetCount ?: 0}" namespace="admin" />
 				</div>
 			</g:if>
 		</g:if>

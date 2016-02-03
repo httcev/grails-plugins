@@ -21,15 +21,15 @@ class CompetencesController {
         params.max = Math.min(max ?: 10, 100)
 //        params.sort = params.sort ?: "username"
         params.order = params.order ?: "asc"
-		[competenceList: Competence.list(params), competenceCount: Competence.count()]
+		respond Competence.list(params), model:[competenceCount: Competence.count()]
 	}
 
 	def show(Competence competence) {
-		[competence:competence]
+		respond competence
 	}
 
 	def create() {
-		[competence:new Competence(params)]
+		respond new Competence(params)
 	}
 
 	@Transactional
@@ -59,7 +59,7 @@ class CompetencesController {
 	}
 
 	def edit(Competence competence) {
-		[competence:competence]
+		respond competence
 	}
 
 	@Transactional

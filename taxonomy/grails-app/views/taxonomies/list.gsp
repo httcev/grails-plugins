@@ -21,8 +21,8 @@
 		<g:if test="${flash.message}">
 			<div class="message alert alert-success" role="status">${flash.message}</div>
 		</g:if>
-		<g:if test="${taxonomyInstanceList?.size() > 0}">
-			<p class="margin text-muted small"><g:message code="de.httc.search.hits.displaying" args="${[entitiesName, params.offset + 1, Math.min(params.offset + params.max, taxonomyInstanceCount), taxonomyInstanceCount]}" />:</p>
+		<g:if test="${taxonomyList?.size() > 0}">
+			<p class="margin text-muted small"><g:message code="de.httc.search.hits.displaying" args="${[entitiesName, params.offset + 1, Math.min(params.offset + params.max, taxonomyCount), taxonomyCount]}" />:</p>
 			<div class="table-responsive">
 				<table class="table table-striped">
 					<thead>
@@ -34,19 +34,19 @@
 						</tr>
 					</thead>
 					<tbody>
-					<g:each in="${taxonomyInstanceList}" status="i" var="taxonomyInstance">
+					<g:each in="${taxonomyList}" status="i" var="taxonomy">
 						<tr>
-							<td><g:link action="show" id="${taxonomyInstance.id}" namespace="admin">${fieldValue(bean: taxonomyInstance, field: "label")}</g:link></td>
-							<td>${taxonomyInstance.terms?.size()}</td>
-							<td>${fieldValue(bean: taxonomyInstance, field: "type")}</td>
-							<td><g:formatDate date="${taxonomyInstance.lastUpdated}" type="date"/></td>
+							<td><g:link action="show" id="${taxonomy.id}" namespace="admin">${fieldValue(bean: taxonomy, field: "label")}</g:link></td>
+							<td>${taxonomy.terms?.size()}</td>
+							<td>${fieldValue(bean: taxonomy, field: "type")}</td>
+							<td><g:formatDate date="${taxonomy.lastUpdated}" type="date"/></td>
 						</tr>
 					</g:each>
 					</tbody>
 				</table>
 			</div>
-			<g:if test="${params.max < taxonomyInstanceCount}">
-				<g:paginate total="${taxonomyInstanceCount ?: 0}" namespace="admin" />
+			<g:if test="${params.max < taxonomyCount}">
+				<g:paginate total="${taxonomyCount ?: 0}" namespace="admin" />
 			</g:if>
 		</g:if>
 		<g:else>

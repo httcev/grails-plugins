@@ -28,7 +28,7 @@ class RepositoryController {
             order(params.sort, params.order)
         }
         println "--- result -> " + result
-        respond result, model:[assetInstanceCount: result.totalCount]
+        respond result, model:[assetCount: result.totalCount]
 	}
 
 	def show(String id) {

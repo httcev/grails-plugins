@@ -22,11 +22,11 @@ class TaxonomiesController {
         params.max = Math.min(max ?: 10, 100)
         params.sort = params.sort ?: "label"
         params.order = params.order ?: "asc"
-        [taxonomyInstanceList: Taxonomy.list(params), taxonomyInstanceCount: Taxonomy.count()]
+        respond Taxonomy.list(params), model:[taxonomyCount: Taxonomy.count()]
     }
 
     def create() {
-        [taxonomyInstance: new Taxonomy(params)]
+        respond new Taxonomy(params)
     }
 
     def save() {
@@ -61,7 +61,7 @@ class TaxonomiesController {
 		}
 		
         if (!taxonomyInstance.save(flush: true)) {
-            render(view: "create", model: [taxonomyInstance: taxonomyInstance])
+            respond taxonomyInstance.errors, view:'create'
             return
         }
 
@@ -77,7 +77,7 @@ class TaxonomiesController {
             return
         }
 		withFormat {
-			html { [taxonomyInstance: taxonomyInstance] }
+			html { respond taxonomyInstance }
 			json { render taxonomyInstance as JSON }
 			xml { render taxonomyInstance as XML }
 		}
@@ -91,7 +91,7 @@ class TaxonomiesController {
             return
         }
 
-        [taxonomyInstance: taxonomyInstance]
+        respond taxonomyInstance
     }
 
     def update(String id, Long version) {
@@ -124,7 +124,7 @@ class TaxonomiesController {
 			
 		}
         if (!taxonomyInstance.save(flush: true)) {
-            render(view: "edit", model: [taxonomyInstance: taxonomyInstance])
+            respond taxonomyInstance.errors, view:'edit'
             return
         }
 

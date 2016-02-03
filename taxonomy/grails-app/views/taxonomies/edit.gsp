@@ -12,23 +12,23 @@
 			<li><g:link class="list" action="list" namespace="admin">${entitiesName}</g:link></li>
 			<li class="active"><g:message code="default.edit.label" args="[entityName]" /></li>
 		</ol>
-		<form action="${createLink(action:'update', id:taxonomyInstance?.id, namespace:'admin')}" method="post" role="form" class="taxonomy-edit form-horizontal">
+		<form action="${createLink(action:'update', id:taxonomy?.id, namespace:'admin')}" method="post" role="form" class="taxonomy-edit form-horizontal">
 			<h1 class="page-header">
 				<g:message code="default.edit.label" args="[entityName]" />
 				<button class="save btn btn-success pull-right" onclick="saveTaxonomy()"><i class="fa fa-cloud-upload"></i> <g:message code="default.button.update.label" default="Update" /></button>
 			</h1>
-			<g:hasErrors bean="${taxonomyInstance}">
+			<g:hasErrors bean="${taxonomy}">
 				<ul class="errors alert alert-danger" role="alert">
-					<g:eachError bean="${taxonomyInstance}" var="error">
+					<g:eachError bean="${taxonomy}" var="error">
 					<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
 					</g:eachError>
 				</ul>
 			</g:hasErrors>
-			<g:hiddenField name="version" value="${taxonomyInstance?.version}" />
+			<g:hiddenField name="version" value="${taxonomy?.version}" />
 			<input type="hidden" name="data" id="data">
 			<g:render template="form" />
 		</form>
-		<g:render template="terms" model="${[terms:taxonomyInstance?.terms, mode:'edit']}" />
+		<g:render template="terms" model="${[terms:taxonomy?.terms, mode:'edit']}" />
 
 		<asset:stylesheet src="jstree-3.0.1.min.css"/>
 		<asset:javascript src="jstree-3.0.1.min.js"/>
