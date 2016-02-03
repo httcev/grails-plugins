@@ -48,6 +48,10 @@ class User implements Serializable {
 	}
 
 	Set<Role> getAuthorities() {
+		// findAllByUser with a non-persisted user object produces error messages, so early-out here.
+		if (!id) {
+			return null
+		}
 		try {
 			return UserRole.findAllByUser(this)*.role
 		}
