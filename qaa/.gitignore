@@ -1,0 +1,8 @@
+/.classpath
+/.project
+/.settings
+/target-eclipse/
+/logs
+/plugins/
+/target/
+/application.properties
