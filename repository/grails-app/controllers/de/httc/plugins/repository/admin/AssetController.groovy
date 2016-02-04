@@ -119,14 +119,19 @@ class AssetController {
         }
 
         assetInstance.save flush:true
-
+/*
         request.withFormat {
-            form multipartForm {
+            html {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'de.httc.plugin.repository.asset', default: 'Asset'), assetInstance.name])
                 redirect action:"show", id:assetInstance.id
             }
-            '*'{ respond assetInstance, [status: OK] }
+            '*' {
+                respond assetInstance, [status: 200]
+            }
         }
+        */
+        flash.message = message(code: 'default.updated.message', args: [message(code: 'de.httc.plugin.repository.asset', default: 'Asset'), assetInstance.name])
+        redirect action:"show", id:assetInstance.id
     }
 
     @Transactional

@@ -54,7 +54,7 @@
 					<g:each in="${assetList}" var="asset">
 						<tr>
 							<td><g:link controller="asset" namespace="${currentNamespace}" action="show" id="${asset.id}">${fieldValue(bean: asset, field: "name")}</g:link></td>
-							<td>${asset.props?."${Asset.PROP_DESCRIPTION}"}</td>
+							<td>${asset.props?."${Asset.PROP_DESCRIPTION}"?.take(150)}</td>
 							<td><g:formatDate date="${asset.lastUpdated}" type="date"/></td>
 							<td>${fieldValue(bean: asset, field: "mimeType")}</td>
 						</tr>

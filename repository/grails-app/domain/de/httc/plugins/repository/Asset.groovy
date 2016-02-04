@@ -35,6 +35,7 @@ class Asset {
         id generator: "assigned"
 		content lazy: true
         indexText lazy: true, type:"text"
+        props type:"text"
     }
 
     String id = UUID.randomUUID().toString()
