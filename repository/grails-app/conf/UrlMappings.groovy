@@ -1,19 +1,13 @@
 class UrlMappings {
 
 	static mappings = {
-        "/admin/$controller/$action?/$id?(.$format)?" { namespace = "admin" }
-        "/repository/create" { 
-            namespace = "admin"
-            controller = "repository"
-            action = "create"
-        }
         "/$controller/$action?/$id?(.$format)?"{
             constraints {
                 // apply constraints here
             }
         }
 
-        "/"(view:"/index")
+        "/"(view:"/asset/index")
         "500"(view:'/error')
 	}
 }

@@ -10,8 +10,8 @@
 	<artifactId>repository</artifactId>
 	<packaging>grails-plugin</packaging>
 
-	<name>httc repository plugin</name>
-	<description />
+	<name>repository</name>
+	<description>httc repository plugin</description>
 
 	<dependencies>
 		<dependency>

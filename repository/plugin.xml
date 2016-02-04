@@ -8,8 +8,9 @@
   <resources>
     <resource>BootStrap</resource>
     <resource>RepositoryDefaultConfig</resource>
-    <resource>de.httc.plugins.repository.RepositoryController</resource>
-    <resource>de.httc.plugins.repository.admin.RepositoryController</resource>
+    <resource>RepositoryUrlMappings</resource>
+    <resource>de.httc.plugins.repository.AssetController</resource>
+    <resource>de.httc.plugins.repository.admin.AssetController</resource>
     <resource>de.httc.plugins.repository.Asset</resource>
     <resource>de.httc.plugins.repository.RepositoryService</resource>
   </resources>

@@ -9,37 +9,32 @@ import static org.springframework.http.HttpStatus.*
 import de.httc.plugins.repository.Asset
 
 @Secured(["IS_AUTHENTICATED_REMEMBERED"])
-class RepositoryController {
+class AssetController {
 	def repositoryService 
 	
 	def index() {
-//		Thread.sleep(1000);
-		println "--- type='" + params.type + "'"
 		params.offset = params.offset ? (params.offset as int) : 0
 		params.max = Math.min(params.max?.toInteger() ?: 100, 1000)
 		params.type = params.containsKey("type") ? params.type : null
         params.sort = params.sort ?: "lastUpdated"
         params.order = params.order ?: "desc"
+        params.type = params.type ?: "learning-resource"
 
         def result = Asset.createCriteria().list(max:params.max, offset:params.offset) {
-            if (params.type) {
-                eq("type", params.type)
-            }
+            eq("type", params.type)
             order(params.sort, params.order)
         }
-        println "--- result -> " + result
         respond result, model:[assetCount: result.totalCount]
 	}
 
 	def show(String id) {
-		return [model:repositoryService.readAsset(id)]
+		respond repositoryService.readAsset(id)
 	}
 	
     @Secured(['permitAll'])
     def viewAsset(String id, String file) {
         def asset = repositoryService.readAsset(id)
         if (!asset) {
-            println "--- no asset with id " + id
             response.sendError(404)
             return
         }
@@ -53,7 +48,6 @@ class RepositoryController {
         // local asset
         def repoFile = repositoryService.getOrCreateRepositoryFile(asset)
         if (!repoFile) {
-            println "--- no content for attachment with id " + id
             response.sendError(404)
             return
         }

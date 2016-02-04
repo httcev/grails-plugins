@@ -7,8 +7,8 @@
 	</head>
 	<body>
 		<ol class="breadcrumb">
-			<li><g:link uri="/admin"><g:message code="default.admin.label" default="Administration" /></g:link></li>
-			<li><g:link action="index" namespace="admin">${entitiesName}</g:link></li>
+			<li><g:link uri="/"><g:message code="app.home" default="Administration" /></g:link></li>
+			<li><g:link action="index">${entitiesName}</g:link></li>
 			<li class="active"><g:message code="default.create.label" args="[entityName]" /></li>
 		</ol>
 		<h1 class="page-header"><g:message code="default.create.label" args="[entityName]" /></h1>
@@ -25,7 +25,7 @@
 			</g:eachError>
 			</ul>
 		</g:hasErrors>
-		<g:form url="[controller:'repository', action:'create', namespace:'admin']" class="form-horizontal" autocomplete="off" enctype="multipart/form-data">
+		<g:form url="[controller:'asset', action:'create', namespace:'admin']" class="form-horizontal" autocomplete="off" enctype="multipart/form-data">
 			<g:layoutBody />
 		</g:form>
 	</body>

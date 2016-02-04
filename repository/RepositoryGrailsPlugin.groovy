@@ -42,8 +42,9 @@ Brief summary/description of the plugin.
 
     def doWithSpring = {
         repoDir(java.io.File) { bean ->
-            println "--- using repo dir '${application.mergedConfig.de.httc.plugin.repository.directory}'"
-            bean.constructorArgs = [ application.mergedConfig.de.httc.plugin.repository.directory ]
+            def dir = application.mergedConfig.de.httc.plugin.repository.directory ?: "./repo"
+            log.info "using repository dir '${new File(dir).absolutePath}'"
+            bean.constructorArgs = [ dir ]
         }
     }
 
@@ -53,10 +54,11 @@ Brief summary/description of the plugin.
 
     def doWithApplicationContext = { ctx ->
         // TODO Implement post initialization spring config (optional)
-        File repoDir = new File(application.mergedConfig.de.httc.plugin.repository.directory)
+        def dir = application.mergedConfig.de.httc.plugin.repository.directory?: "./repo"
+        File repoDir = new File(dir)
         if (!repoDir.exists()) {
             if (!repoDir.mkdirs()) {
-                println "--- creating repository dir failed"
+                throw new Exception("creating repository dir '${dir}' failed")
             }
         }
     }

@@ -12,15 +12,16 @@ class Asset {
 
     static hasMany = [categories:TaxonomyTerm]
 
-    def transient repositoryService
-//    def transient imageService
+    def repositoryService
+    def imageService
 
 	static searchable = {
-		//all = [analyzer: 'german']
-        only = ['name', 'mimeType', 'indexText', 'deleted', 'type']
-        //name boost:3.0
+		all = [analyzer: 'german']
+        except = ['content', 'creator', 'dateCreated', 'lastUpdated']
+        name boost:2.0
         //description boost:2.0
-//        props index:"not_analyzed"
+        //props index:"not_analyzed"
+        type alias:"subType"
     }
     
     static constraints = {
@@ -49,7 +50,7 @@ class Asset {
     Date dateCreated
     Date lastUpdated
 
-/*
+
     def beforeInsert() {
         beforeUpdate()
     }
@@ -60,7 +61,6 @@ class Asset {
             content = imageService.removeExifGPS(content)
         }
     }
-*/
 
     def getUrl() {
         repositoryService.createEncodedLink(this)
@@ -68,9 +68,9 @@ class Asset {
 
     def afterInsert() {
         // withNewSession is needed, otherwise hibernate will silently NOT persist. STRANGE behaviour!
-        Asset.withNewSession {
+//        Asset.withNewSession {
             repositoryService.deleteRepositoryFile(this)
-        }
+//        }
     }
 
     def afterUpdate() {
@@ -80,5 +80,4 @@ class Asset {
     def afterDelete() {
         afterInsert()
     }
-
 }

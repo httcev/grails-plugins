@@ -1,9 +1,8 @@
-
 <%@ page import="de.httc.plugins.repository.Asset" %>
 <!DOCTYPE html>
 <html>
 	<head>
-		<g:set var="currentNamespace" value="${grailsApplication.getArtefactByLogicalPropertyName('Controller', controllerName).namespace}" />
+		<g:set var="currentNamespace" value="${grailsApplication.getArtefactByLogicalPropertyName('Controller', controllerName)?.namespace}" />
 		<g:if test="${currentNamespace == 'admin'}">
 			<meta name="layout" content="admin">
 		</g:if>
@@ -16,9 +15,9 @@
 	</head>
 	<body>
 		<h1 class="page-header clearfix">
-			${entitiesName}
+			${entitiesName} ${currentNamespace}
 			<sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_REPOSITORY_ADMIN">
-				<g:link class="create btn btn-primary pull-right" action="create" controller="repository" namespace="admin" title="${message(code: 'default.new.label', args:[entityName])}"><i class="fa fa-plus"></i> <g:message code="default.button.create.label" /></g:link>
+				<g:link class="create btn btn-primary pull-right" action="create" controller="asset" namespace="admin" title="${message(code: 'default.new.label', args:[entityName])}"><i class="fa fa-plus"></i> <g:message code="default.button.create.label" /></g:link>
 			</sec:ifAnyGranted>
 		</h1>
 		<g:if test="${flash.message}">
@@ -54,7 +53,7 @@
 					<tbody>
 					<g:each in="${assetList}" var="asset">
 						<tr>
-							<td><g:link controller="repository" namespace="${currentNamespace}" action="show" id="${asset.id}">${fieldValue(bean: asset, field: "name")}</g:link></td>
+							<td><g:link controller="asset" namespace="${currentNamespace}" action="show" id="${asset.id}">${fieldValue(bean: asset, field: "name")}</g:link></td>
 							<td>${asset.props?."${Asset.PROP_DESCRIPTION}"}</td>
 							<td><g:formatDate date="${asset.lastUpdated}" type="date"/></td>
 							<td>${fieldValue(bean: asset, field: "mimeType")}</td>

@@ -1,4 +1,3 @@
-<%@ page import="de.httc.plugins.repository.Asset" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -9,11 +8,11 @@
 	</head>
 	<body>
 		<ol class="breadcrumb">
-			<li><g:link uri="/admin"><g:message code="default.admin.label" default="Administration" /></g:link></li>
+			<li><g:link uri="/"><g:message code="app.home" /></g:link></li>
 			<li><g:link class="list" action="index" namespace="admin">${entitiesName}</g:link></li>
 			<li class="active"><g:message code="default.edit.label" args="[entityName]" /></li>
 		</ol>
-		<g:form class="form-horizontal" url="[controller:'repository', namespace:'admin', id:asset.id, action:'update']" method="put"  enctype="multipart/form-data">
+		<g:form class="form-horizontal" url="[controller:'asset', namespace:'admin', id:asset.id, action:'update']" method="put"  enctype="multipart/form-data">
 			<h1 class="page-header clearfix">
 				<g:message code="default.edit.label" args="[entityName]" />
 				<div class="buttons pull-right">

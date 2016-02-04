@@ -10,6 +10,7 @@ import org.apache.commons.imaging.formats.jpeg.exif.ExifRewriter;
 import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
 
 class ImageService {
+	static transactional = false
 	def grailsApplication
 
 	def createThumbnailBytes(bytes) {
@@ -45,19 +46,25 @@ class ImageService {
 	}
 
 	def removeExifGPS(final byte[] imageData) throws Exception {
-		def outputSet = Imaging.getMetadata(imageData)?.exif?.outputSet
-		def gpsDirectory = outputSet?.GPSDirectory
-        if (gpsDirectory) {
-        	println "--- REMOVING GPS DATA FROM IMAGE"
-        	GpsTagConstants.ALL_GPS_TAGS.each {
-	 			gpsDirectory.removeField(it)
-        	}
- 			def bos = new ByteArrayOutputStream(imageData.length)
- 			new ExifRewriter().updateExifMetadataLossless(imageData, bos, outputSet);
- 			return bos.toByteArray()
+		try {
+			def outputSet = Imaging.getMetadata(imageData)?.exif?.outputSet
+			def gpsDirectory = outputSet?.GPSDirectory
+	        if (gpsDirectory) {
+	        	println "--- REMOVING GPS DATA FROM IMAGE"
+	        	GpsTagConstants.ALL_GPS_TAGS.each {
+		 			gpsDirectory.removeField(it)
+	        	}
+	 			def bos = new ByteArrayOutputStream(imageData.length)
+	 			new ExifRewriter().updateExifMetadataLossless(imageData, bos, outputSet);
+	 			return bos.toByteArray()
+			}
+			else {
+	        	println "--- image has no gps coordinates"
+				return imageData
+			}
 		}
-		else {
-        	println "--- image has no gps coordinates"
+		catch(e) {
+			log.error "error removing exif gps data from jpg image", error
 			return imageData
 		}
 	}

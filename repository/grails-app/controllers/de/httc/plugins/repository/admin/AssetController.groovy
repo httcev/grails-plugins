@@ -1,34 +1,25 @@
 package de.httc.plugins.repository.admin
 
 import grails.transaction.Transactional
-import org.apache.tika.mime.MediaType
-import org.apache.tika.metadata.Metadata
-import org.apache.tika.config.TikaConfig
-import org.apache.tika.metadata.TikaCoreProperties
-import org.apache.tika.parser.AutoDetectParser
-import org.apache.tika.parser.html.BoilerpipeContentHandler
-import org.apache.tika.sax.BodyContentHandler
-import org.apache.tika.sax.WriteOutContentHandler
-import org.xml.sax.ContentHandler
 import java.util.zip.ZipInputStream
 import org.springframework.security.access.annotation.Secured
 import org.springframework.web.context.request.RequestContextHolder
 import de.httc.plugins.repository.ZipUtil
 import de.httc.plugins.repository.Asset
+import de.httc.plugins.repository.CreateAssetCommand
 
 @Transactional
 @Secured(['ROLE_ADMIN', 'ROLE_REPOSITORY_ADMIN'])
-class RepositoryController {
+class AssetController {
     static namespace = "admin"
+    def repositoryService
 
     //static allowedMethods = [save: "POST", update: ["PUT", "POST"], delete: "DELETE"]
 
     def createFlow = {
-        initiliaze {
+        initialize {
             action {
                 flow.cmd = new CreateAssetCommand()
-//                flow.cmd.props =  MapUtils.lazyMap([:], FactoryUtils.constantFactory(''))
-//                flow.cmd.props = [:]
             }
             on("success").to "uploadOrLink"
             on(Exception).to "error"
@@ -47,7 +38,7 @@ class RepositoryController {
         checkUploadOrLink {
             action {
                 try {
-                    enrichAsset(flow.cmd)
+                    repositoryService.enrichAsset(flow.cmd, request.getFile("content"))
                     if (flow.cmd.content && "application/zip".equals(flow.cmd.mimeType?.toLowerCase())) {
                         ZipInputStream zin = new ZipInputStream(new BufferedInputStream(new ByteArrayInputStream(flow.cmd.content)))
                         def possibleAnchors = ZipUtil.getFilenames(zin, false)
@@ -60,7 +51,6 @@ class RepositoryController {
                     return metadata()
                 }
                 catch(e) {
-                    println e
                     log.error e
                     if (flow.cmd.props?."${Asset.PROP_EXTERNAL_URL}") {
                         flow.cmd.errors.rejectValue('props', 'urlNotValid')
@@ -121,7 +111,7 @@ class RepositoryController {
             return
         }
 
-        enrichAsset(assetInstance)
+        repositoryService.enrichAsset(assetInstance)
 
         if (assetInstance.hasErrors()) {
             respond assetInstance.errors, view:'edit'
@@ -157,94 +147,4 @@ class RepositoryController {
         flash.message = message(code: 'default.not.found.message', args: [message(code: 'de.httc.plugin.repository.asset', default: 'Asset'), params.id])
         redirect action: "index", method: "GET"
     }
-
-    protected void enrichAsset(assetOrCommand) {
-        def detector = TikaConfig.getDefaultConfig().getDetector();
-        Metadata metadata = new Metadata()
-        def inputStream
-        def externalUrl = assetOrCommand.props."${Asset.PROP_EXTERNAL_URL}"
-        if (assetOrCommand.content || externalUrl) {
-            try {
-                if (assetOrCommand.content) {
-                    // remove externalUrl since we're now expecting a local asset
-                    assetOrCommand.props[Asset.PROP_EXTERNAL_URL] = null
-                    def uploadFile = request.getFile("content")
-                    if (uploadFile) {
-                        assetOrCommand.props."${Asset.PROP_FILENAME}" = uploadFile.getOriginalFilename()
-                    }
-
-                    inputStream = new ByteArrayInputStream(assetOrCommand.content)
-                    metadata.add(Metadata.RESOURCE_NAME_KEY, assetOrCommand.props."${Asset.PROP_FILENAME}")
-                }
-                else {
-                    inputStream = new BufferedInputStream(new URL(externalUrl).openStream())
-                }
-
-                MediaType mediaType = detector.detect(inputStream, metadata)
-                assetOrCommand.mimeType = mediaType.toString()
-
-                def titleAndText = extractText(inputStream, assetOrCommand.mimeType)
-                if (titleAndText.title && !assetOrCommand.name) {
-                    assetOrCommand.name = titleAndText.title
-                }
-                if (titleAndText.text) {
-                    assetOrCommand.indexText = titleAndText.text
-                }
-            }
-            finally {
-                if (inputStream) {
-                    inputStream.close()
-                }
-            }
-
-            if (!assetOrCommand.mimeType) {
-                assetOrCommand.mimeType = "application/octet-stream"
-            }
-        }
-    }
-
-    protected Object extractText(InputStream inputStream, String mimeType) {
-        StringWriter writer = new StringWriter();
-        ContentHandler handler;
-        if (mimeType.toLowerCase().indexOf("html") > -1) {
-            // BoilerpipeContentHandler extracts the "main" content from HTML pages
-            handler = new BoilerpipeContentHandler(new BodyContentHandler(writer));
-        }
-        else {
-            handler = new WriteOutContentHandler(writer);
-        }
-
-        Metadata metadata = new Metadata();
-        metadata.add(Metadata.CONTENT_TYPE, mimeType);
-
-        AutoDetectParser parser = new AutoDetectParser();
-        parser.parse(inputStream, handler, metadata);
-        [title:metadata.get(TikaCoreProperties.TITLE), text:writer.toString().trim()]
-    }
-}
-
-@grails.validation.Validateable
-class CreateAssetCommand implements Serializable {
-    private static final long serialVersionUID = 42L;
-
-    static constraints = {
-        // Limit upload file size to 100MB
-        content maxSize: 1024 * 1024 * 100, nullable:true
-        name blank:false
-        indexText nullable: true
-        type nullable: true
-    }
-
-    String name
-    String mimeType
-    String type
-    String indexText
-    byte[] content
-    // need to define this as HashMap, otherwise grails instantiates a GrailsParameterMap which is not serializable
-    HashMap<String, String> props
-
-
-/*
-    String subType = "learning-resource"
-*/
 }

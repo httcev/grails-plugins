@@ -5,12 +5,22 @@ import java.io.File
 import java.util.zip.ZipInputStream
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.IOUtils
+import org.apache.tika.mime.MediaType
+import org.apache.tika.metadata.Metadata
+import org.apache.tika.config.TikaConfig
+import org.apache.tika.metadata.TikaCoreProperties
+import org.apache.tika.parser.AutoDetectParser
+import org.apache.tika.parser.html.BoilerpipeContentHandler
+import org.apache.tika.sax.BodyContentHandler
+import org.apache.tika.sax.WriteOutContentHandler
+import org.xml.sax.ContentHandler
 
-@Transactional(readOnly = true)
 class RepositoryService {
 	def grailsLinkGenerator
 	def repoDir
+    static transactional = false
 
+    @Transactional(readOnly = true)
     def readAsset(encodedId) {
         /*
     	def id = hashIds.decode(encodedId)
@@ -77,5 +87,72 @@ class RepositoryService {
     			file.delete()
     		}
     	}
+    }
+
+    def enrichAsset(assetOrCommand, uploadFile = null) {
+        def detector = TikaConfig.getDefaultConfig().getDetector();
+        Metadata metadata = new Metadata()
+        def inputStream
+        def externalUrl = assetOrCommand.props?."${Asset.PROP_EXTERNAL_URL}"
+
+        if (assetOrCommand.content || externalUrl) {
+            try {
+                if (assetOrCommand.content) {
+                    // remove externalUrl since we're now expecting a local asset
+                    assetOrCommand.props[Asset.PROP_EXTERNAL_URL] = null
+                    if (uploadFile) {
+                        def filename = uploadFile.getOriginalFilename()
+                        assetOrCommand.props."${Asset.PROP_FILENAME}" = filename
+                        if (!assetOrCommand.name) {
+                            assetOrCommand.name = filename?.replaceAll("\\..*", "")
+                        }
+                    }
+
+                    inputStream = new ByteArrayInputStream(assetOrCommand.content)
+                    metadata.add(Metadata.RESOURCE_NAME_KEY, assetOrCommand.props."${Asset.PROP_FILENAME}")
+                }
+                else {
+                    inputStream = new BufferedInputStream(new URL(externalUrl).openStream())
+                }
+
+                MediaType mediaType = detector.detect(inputStream, metadata)
+                assetOrCommand.mimeType = mediaType.toString()
+
+                def titleAndText = extractText(inputStream, assetOrCommand.mimeType)
+                if (titleAndText.title && !assetOrCommand.name) {
+                    assetOrCommand.name = titleAndText.title
+                }
+                if (titleAndText.text) {
+                    assetOrCommand.indexText = titleAndText.text
+                }
+            }
+            finally {
+                if (inputStream) {
+                    inputStream.close()
+                }
+            }
+            if (!assetOrCommand.mimeType) {
+                assetOrCommand.mimeType = "application/octet-stream"
+            }
+        }
+    }
+
+    protected Object extractText(InputStream inputStream, String mimeType) {
+        StringWriter writer = new StringWriter();
+        ContentHandler handler;
+        if (mimeType.toLowerCase().indexOf("html") > -1) {
+            // BoilerpipeContentHandler extracts the "main" content from HTML pages
+            handler = new BoilerpipeContentHandler(new BodyContentHandler(writer));
+        }
+        else {
+            handler = new WriteOutContentHandler(writer);
+        }
+
+        Metadata metadata = new Metadata();
+        metadata.add(Metadata.CONTENT_TYPE, mimeType);
+
+        AutoDetectParser parser = new AutoDetectParser();
+        parser.parse(inputStream, handler, metadata);
+        [title:metadata.get(TikaCoreProperties.TITLE), text:writer.toString().trim()]
     }
 }
