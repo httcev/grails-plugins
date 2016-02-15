@@ -23,21 +23,6 @@
 		<g:if test="${flash.message}">
 			<div class="message alert alert-success" role="status">${flash.message}</div>
 		</g:if>
-<!--		
-		<g:form controller="search" method="GET" class="form-horizontal">
-			<input type="hidden" name="hideFilter" value="true">
-			<input type="hidden" name="type" value="asset">
-			<input type="hidden" name="subType" value="learning-resource">
-			<div class="form-group">
-				<div class="col-xs-8">
-					<input type="search" name="q" class="form-control" placeholder="${message(code:'app.search.for', args:[entitiesName], default:'Search for {0}')}..." autofocus>
-				</div>
-				<div class="col-xs-4">
-					<button type="submit" class="search btn btn-default"><i class="fa fa-search"></i> <g:message code="app.search" default="Search" /></button>
-				</div>
-			</div>
-		</g:form>
--->
 		<g:if test="${assetList?.size() > 0}">
 			<p class="margin text-muted small"><g:message code="de.httc.search.hits.displaying" default="Showing {0} {1}-{2} of {3}" args="${[entitiesName, params.offset + 1, Math.min(params.offset + params.max, assetCount), assetCount]}" />:</p>
 			<div class="table-responsive">

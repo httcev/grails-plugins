@@ -6,6 +6,7 @@ import org.springframework.security.access.annotation.Secured
 import org.springframework.web.context.request.RequestContextHolder
 import de.httc.plugins.repository.ZipUtil
 import de.httc.plugins.repository.Asset
+import de.httc.plugins.repository.AssetContent
 import de.httc.plugins.repository.CreateAssetCommand
 
 @Transactional
@@ -74,11 +75,11 @@ class AssetController {
                     return error()
                 }
                 def assetInstance = new Asset()
-                assetInstance.properties = flow.cmd
-                
-                assetInstance.validate()
-                assetInstance.errors.allErrors.each { println it }
-
+                assetInstance.properties = flow.cmd.properties.findAll { !(it.key in ["content", "errors", "class", "constraints"]) }
+                if (flow.cmd.content?.length > 0) {
+                    assetInstance.content = new AssetContent(data:flow.cmd.content)
+                }
+              
                 if (assetInstance.save(true)) {
                     RequestContextHolder.currentRequestAttributes().flashScope.message = message(code: 'default.created.message', args: [message(code: 'de.httc.plugin.repository.asset', default: 'Asset'), assetInstance.name])
                     // need to clear the flow's persistence context, otherwise we get a NotSerializableException for the newly saved Asset
@@ -86,6 +87,7 @@ class AssetController {
                     return success()
                 }
                 else {
+                    assetInstance.errors.allErrors.each { println it }
                     return error()  
                 }
                 return success()

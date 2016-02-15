@@ -12,6 +12,7 @@
     <resource>de.httc.plugins.repository.AssetController</resource>
     <resource>de.httc.plugins.repository.admin.AssetController</resource>
     <resource>de.httc.plugins.repository.Asset</resource>
+    <resource>de.httc.plugins.repository.AssetContent</resource>
     <resource>de.httc.plugins.repository.RepositoryService</resource>
   </resources>
 </plugin>

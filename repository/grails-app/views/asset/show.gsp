@@ -37,8 +37,8 @@
 		</g:if>
 <%--		
 		<div class="row">
-			<div class="col-sm-2"><label><g:message code="de.httc.plugin.repository.asset.type" />:</label></div>
-			<div class="col-sm-10"><code>${asset?.type}</code></div>
+			<div class="col-sm-2"><label><g:message code="de.httc.plugin.repository.asset.typeLabel" />:</label></div>
+			<div class="col-sm-10"><code>${asset?.typeLabel}</code></div>
 		</div>
 --%>
 		<div class="row">

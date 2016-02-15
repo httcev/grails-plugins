@@ -9,12 +9,12 @@ class CreateAssetCommand implements Serializable {
         content maxSize: 1024 * 1024 * 100, nullable:true
         name blank:false
         indexText nullable: true
-        type nullable: true
+        typeLabel nullable: true
     }
 
     String name
     String mimeType
-    String type = "learning-resource"
+    String typeLabel = "learning-resource"
     String indexText
     byte[] content
     // need to define this as HashMap, otherwise grails instantiates a GrailsParameterMap which is not serializable

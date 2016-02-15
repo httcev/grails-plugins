@@ -14,14 +14,13 @@ class AssetController {
 	
 	def index() {
 		params.offset = params.offset ? (params.offset as int) : 0
-		params.max = Math.min(params.max?.toInteger() ?: 100, 1000)
-		params.type = params.containsKey("type") ? params.type : null
+		params.max = Math.min(params.max?.toInteger() ?: 10, 100)
+		params.typeLabel = params.containsKey("typeLabel") ? params.typeLabel : "learning-resource"
         params.sort = params.sort ?: "lastUpdated"
         params.order = params.order ?: "desc"
-        params.type = params.type ?: "learning-resource"
 
         def result = Asset.createCriteria().list(max:params.max, offset:params.offset) {
-            eq("type", params.type)
+            eq("typeLabel", params.typeLabel)
             order(params.sort, params.order)
         }
         respond result, model:[assetCount: result.totalCount]

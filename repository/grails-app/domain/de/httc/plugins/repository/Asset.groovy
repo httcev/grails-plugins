@@ -11,6 +11,7 @@ class Asset {
     static String PROP_DESCRIPTION = "_description"
 
     static hasMany = [categories:TaxonomyTerm]
+    static hasOne = [content:AssetContent]
 
     def repositoryService
     def imageService
@@ -21,15 +22,15 @@ class Asset {
         name boost:2.0
         //description boost:2.0
         //props index:"not_analyzed"
-        type alias:"subType"
+        typeLabel index:"not_analyzed"
     }
     
     static constraints = {
     	// Limit upload file size to 100MB
-        content maxSize: 1024 * 1024 * 100, nullable:true
+        content nullable:true
         indexText nullable: true
         creator nullable:true
-        type nullable:true
+        typeLabel nullable:true
     }
     static mapping = {
         id generator: "assigned"
@@ -41,16 +42,22 @@ class Asset {
     String id = UUID.randomUUID().toString()
     String name
     String mimeType
-    String type
+    String typeLabel
     boolean deleted
     Map<String, String> props
-    byte[] content
     String indexText
 
     User creator
     Date dateCreated
     Date lastUpdated
 
+    def getDescription() {
+        props?.get(PROP_DESCRIPTION)
+    }
+
+    def getUrl() {
+        repositoryService.createEncodedLink(this)
+    }
 
     def beforeInsert() {
         beforeUpdate()
@@ -58,13 +65,9 @@ class Asset {
 
     def beforeUpdate() {
         // remove GPS tags from EXIF metadata if this is an image
-        if (content?.length && mimeType?.startsWith("image/jp")) {
-            content = imageService.removeExifGPS(content)
+        if (mimeType?.startsWith("image/jp") && content?.data.length > 0) {
+            content.data = imageService.removeExifGPS(content.data)
         }
-    }
-
-    def getUrl() {
-        repositoryService.createEncodedLink(this)
     }
 
     def afterInsert() {

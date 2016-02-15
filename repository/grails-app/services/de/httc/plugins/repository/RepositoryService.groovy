@@ -51,12 +51,12 @@ class RepositoryService {
             }
             def anchor = asset.props?."${Asset.PROP_ANCHOR}"
     		if (asset.mimeType == "application/zip" && anchor) {
-				ZipInputStream zin = new ZipInputStream(new BufferedInputStream(new ByteArrayInputStream(asset.content)))
+				ZipInputStream zin = new ZipInputStream(new BufferedInputStream(new ByteArrayInputStream(asset.content.data)))
 				ZipUtil.unzip(zin, file)
     		}
     		else {
 				// non-zip files
-				def input = new ByteArrayInputStream(asset.content)
+				def input = new ByteArrayInputStream(asset.content.data)
 				def output = new FileOutputStream(file)
 				try {
 					IOUtils.copy(input, output)
@@ -108,7 +108,8 @@ class RepositoryService {
                         }
                     }
 
-                    inputStream = new ByteArrayInputStream(assetOrCommand.content)
+                    def data = (assetOrCommand.content instanceof byte[]) ? assetOrCommand.content : assetOrCommand.content.data
+                    inputStream = new ByteArrayInputStream(data)
                     metadata.add(Metadata.RESOURCE_NAME_KEY, assetOrCommand.props."${Asset.PROP_FILENAME}")
                 }
                 else {

@@ -11,8 +11,8 @@
 </g:if>
 <%--
 <div class="form-group ${hasErrors(bean: asset, field: 'type', 'error')}">
-	<label for="type" class="col-sm-2 control-label"><g:message code="de.httc.plugin.repository.asset.type" />:</label>
-	<div class="col-sm-10"><g:textField name="type" value="${asset?.type}" class="form-control" /></div>
+	<label for="typeLabel" class="col-sm-2 control-label"><g:message code="de.httc.plugin.repository.asset.typeLabel" />:</label>
+	<div class="col-sm-10"><g:textField name="typeLabel" value="${asset?.typeLabel}" class="form-control" /></div>
 </div>
 --%>
 <g:each in="${asset?.props?.sort { it.key }}" var="prop">
