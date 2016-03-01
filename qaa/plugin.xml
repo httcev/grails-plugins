@@ -10,7 +10,8 @@
     <resource>de.httc.plugins.qaa.QuestionController</resource>
     <resource>de.httc.plugins.qaa.Answer</resource>
     <resource>de.httc.plugins.qaa.Comment</resource>
-    <resource>de.httc.plugins.qaa.Metadata</resource>
     <resource>de.httc.plugins.qaa.Question</resource>
+    <resource>de.httc.plugins.qaa.QuestionReference</resource>
+    <resource>de.httc.plugins.qaa.QuestionService</resource>
   </resources>
 </plugin>

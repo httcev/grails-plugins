@@ -10,7 +10,7 @@
 	<artifactId>qaa</artifactId>
 	<packaging>grails-plugin</packaging>
 
-	<name>httc question and answer plugin</name>
+	<name>qaa</name>
 	<description />
 
 	<dependencies>
@@ -29,6 +29,12 @@
 		<dependency>
 			<groupId>de.httc.plugins</groupId>
 			<artifactId>taxonomy</artifactId>
+			<version>${project.version}</version>
+			<type>zip</type>
+		</dependency>
+		<dependency>
+			<groupId>de.httc.plugins</groupId>
+			<artifactId>push-notification</artifactId>
 			<version>${project.version}</version>
 			<type>zip</type>
 		</dependency>

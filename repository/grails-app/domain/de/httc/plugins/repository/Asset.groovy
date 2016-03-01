@@ -65,7 +65,7 @@ class Asset {
 
     def beforeUpdate() {
         // remove GPS tags from EXIF metadata if this is an image
-        if (mimeType?.startsWith("image/jp") && content?.data.length > 0) {
+        if (mimeType?.startsWith("image/jp") && content?.data?.length > 0) {
             content.data = imageService.removeExifGPS(content.data)
         }
     }

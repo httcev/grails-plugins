@@ -32,6 +32,7 @@ grails.plugin.springsecurity.failureHandler.exceptionMappings = [
    'org.springframework.security.authentication.CredentialsExpiredException': '/user/passwordExpired'
 ]
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+    '/dbconsole/**':     ['permitAll']
 ]
 //grails.plugin.springsecurity.rejectIfNoRule = false
 //grails.plugin.springsecurity.fii.rejectPublicInvocations = false

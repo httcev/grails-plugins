@@ -4,7 +4,7 @@ package de.httc.plugins.taxonomy
 import de.httc.plugins.esa.EsaComparable
 import edu.kit.aifb.concept.IConceptVector;
 
-class TaxonomyTerm implements EsaComparable {
+class TaxonomyTerm implements EsaComparable, Comparable {
     def transient esaService
 
     static searchable = { only = ["label"]}
@@ -40,6 +40,13 @@ class TaxonomyTerm implements EsaComparable {
 		if (isDirty('label') || isDirty('parent')) {
 		    updateEsaVector()
 		}
+    }
+
+    /*
+    used in hasMany relationships
+    */
+    int compareTo(obj) {
+        label.compareTo(obj.label)
     }
 
     public IConceptVector getEsaVector() {
