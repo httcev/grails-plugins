@@ -5,7 +5,7 @@ import de.httc.plugins.repository.Asset
 import java.util.UUID
 import java.util.SortedSet
 
-class Answer {
+class Answer extends Commentable {
     def springSecurityService
 /*
     static searchable = {
@@ -22,13 +22,11 @@ class Answer {
     static belongsTo = [question:Question]
     static constraints = { }
     static mapping = {
-        id generator: "assigned"
     	attachments cascade:"all-delete-orphan"
     	comments cascade:"all-delete-orphan"
     	text type:"text"
     }
 
-    String id = UUID.randomUUID().toString()
     String text
     User creator
     boolean deleted

@@ -6,7 +6,7 @@ import de.httc.plugins.repository.Asset
 import java.util.UUID
 import java.util.SortedSet
 
-class Question {
+class Question extends Commentable {
     def springSecurityService
 /*
     static searchable = {
@@ -28,7 +28,6 @@ class Question {
     }
     static hasMany = [attachments:Asset, answers:Answer, comments:Comment, ratingUsers:Long, terms:TaxonomyTerm]
     static mapping = {
-        id generator: "assigned"
     	attachments cascade:"all-delete-orphan"
     	comments cascade:"all-delete-orphan"
     	title type:"text"
@@ -38,7 +37,6 @@ class Question {
         metadata type:"text"
     }
 
-    String id = UUID.randomUUID().toString()
     String title
     String text
     User creator

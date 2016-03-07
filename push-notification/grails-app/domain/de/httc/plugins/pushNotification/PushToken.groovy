@@ -3,11 +3,11 @@ package de.httc.plugins.pushNotification
 import de.httc.plugins.user.User
 
 class PushToken {
-    static belongsTo = User
+    static belongsTo = [user : User]
     static mapping = {
-        id column: "user_id"
+        user column:"id", insertable:false, updateable:false
     }
- 
+
     String token
     Date lastUpdated
 }

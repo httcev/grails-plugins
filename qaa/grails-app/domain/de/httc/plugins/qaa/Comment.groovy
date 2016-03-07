@@ -16,6 +16,7 @@ class Comment implements Comparable {
         id generator: "assigned"
         text type:"text"
     }
+    static belongsTo = [reference:Commentable]
 
     String id = UUID.randomUUID().toString()
     String text
