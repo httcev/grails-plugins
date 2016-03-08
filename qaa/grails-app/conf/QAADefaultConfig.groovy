@@ -1,1 +1,0 @@
-de.httc.plugin.pushNotification.gcmUrl = "https://gcm-http.googleapis.com/gcm/send"
