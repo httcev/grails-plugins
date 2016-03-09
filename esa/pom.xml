@@ -7,7 +7,7 @@
 		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>esa</artifactId>
+	<artifactId>httc-esa</artifactId>
 	<packaging>grails-plugin</packaging>
 
 	<name>httc esa plugin</name>

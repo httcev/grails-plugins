@@ -47,4 +47,4 @@ grails.project.dependency.resolution = {
         }
     }
 }
-//grails.plugin.location."esa" = "../esa"
+//grails.plugin.location."httc-esa" = "../esa"

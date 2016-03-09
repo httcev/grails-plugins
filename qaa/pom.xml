@@ -7,34 +7,42 @@
 		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>qaa</artifactId>
+	<artifactId>httc-qaa</artifactId>
 	<packaging>grails-plugin</packaging>
 
-	<name>qaa</name>
+	<name>httc qaa plugin</name>
 	<description />
 
 	<dependencies>
+<!--
+                <dependency>
+                        <groupId>de.httc.plugins</groupId>
+                        <artifactId>common</artifactId>
+                        <version>${project.version}</version>
+                        <type>zip</type>
+                </dependency>
+-->
 		<dependency>
 			<groupId>de.httc.plugins</groupId>
-			<artifactId>user</artifactId>
+			<artifactId>httc-user</artifactId>
 			<version>${project.version}</version>
 			<type>zip</type>
 		</dependency>
 		<dependency>
 			<groupId>de.httc.plugins</groupId>
-			<artifactId>repository</artifactId>
+			<artifactId>httc-repository</artifactId>
 			<version>${project.version}</version>
 			<type>zip</type>
 		</dependency>
 		<dependency>
 			<groupId>de.httc.plugins</groupId>
-			<artifactId>taxonomy</artifactId>
+			<artifactId>httc-taxonomy</artifactId>
 			<version>${project.version}</version>
 			<type>zip</type>
 		</dependency>
 		<dependency>
 			<groupId>de.httc.plugins</groupId>
-			<artifactId>push-notification</artifactId>
+			<artifactId>httc-push-notification</artifactId>
 			<version>${project.version}</version>
 			<type>zip</type>
 		</dependency>

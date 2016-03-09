@@ -1,10 +1,11 @@
-<plugin name='competence' version='2.0.0-SNAPSHOT' grailsVersion='2.4 &gt; *'>
-  <author>Your name</author>
-  <title>Competence Plugin</title>
+<plugin name='httc-competence' version='2.0.0-SNAPSHOT' grailsVersion='2.4 &gt; *'>
+  <author>Stephan Tittel</author>
+  <authorEmail>stephan.tittel@httc.de</authorEmail>
+  <title>httc competence plugin</title>
   <description>Brief summary/description of the plugin.
 </description>
   <documentation>http://grails.org/plugin/competence</documentation>
-  <type>CompetenceGrailsPlugin</type>
+  <type>HttcCompetenceGrailsPlugin</type>
   <resources>
     <resource>CompetenceDefaultConfig</resource>
     <resource>de.httc.plugins.competence.admin.CompetencesController</resource>

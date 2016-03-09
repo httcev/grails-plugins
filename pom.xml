@@ -7,6 +7,9 @@
 	<name>Parent project for grails plugins</name>
 	<description />
 	<modules>
+<!--
+		<module>common</module>
+-->
 		<module>user</module>
 		<module>esa</module>
 		<module>taxonomy</module>
@@ -18,8 +21,8 @@
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<grails.version>2.5.0</grails.version>
-		<h2.version>1.4.190</h2.version>
+		<grails.version>2.5.3</grails.version>
+		<h2.version>1.4.191</h2.version>
 	</properties>
 	<developers>
 		<developer>

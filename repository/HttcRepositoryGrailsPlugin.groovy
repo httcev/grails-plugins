@@ -1,4 +1,4 @@
-class QAAGrailsPlugin {
+class HttcRepositoryGrailsPlugin {
     // the plugin version
     def version = "2.0.0-SNAPSHOT"
     // the version or versions of Grails the plugin is designed for
@@ -9,15 +9,15 @@ class QAAGrailsPlugin {
     ]
 
     // TODO Fill in these fields
-    def title = "Question and Answer Plugin" // Headline display name of the plugin
+    def title = "httc repository plugin" // Headline display name of the plugin
     def author = "Stephan Tittel"
-    def authorEmail = ""
+    def authorEmail = "stephan.tittel@httc.de"
     def description = '''\
 Brief summary/description of the plugin.
 '''
 
     // URL to the plugin's documentation
-//    def documentation = "http://grails.org/plugin/repository"
+    def documentation = "http://grails.org/plugin/httc-repository"
 
     // Extra (optional) plugin metadata
 
@@ -41,6 +41,11 @@ Brief summary/description of the plugin.
     }
 
     def doWithSpring = {
+        repoDir(java.io.File) { bean ->
+            def dir = application.mergedConfig.de.httc.plugin.repository.directory ?: "./repo"
+            log.info "using repository dir '${new File(dir).absolutePath}'"
+            bean.constructorArgs = [ dir ]
+        }
     }
 
     def doWithDynamicMethods = { ctx ->
@@ -49,6 +54,13 @@ Brief summary/description of the plugin.
 
     def doWithApplicationContext = { ctx ->
         // TODO Implement post initialization spring config (optional)
+        def dir = application.mergedConfig.de.httc.plugin.repository.directory?: "./repo"
+        File repoDir = new File(dir)
+        if (!repoDir.exists()) {
+            if (!repoDir.mkdirs()) {
+                throw new Exception("creating repository dir '${dir}' failed")
+            }
+        }
     }
 
     def onChange = { event ->

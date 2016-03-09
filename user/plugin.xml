@@ -1,10 +1,11 @@
-<plugin name='user' version='2.0.0-SNAPSHOT' grailsVersion='2.4 &gt; *'>
-  <author>Your name</author>
-  <title>User Plugin</title>
+<plugin name='httc-user' version='2.0.0-SNAPSHOT' grailsVersion='2.4 &gt; *'>
+  <author>Stephan Tittel</author>
+  <authorEmail>stephan.tittel@httc.de</authorEmail>
+  <title>httc user plugin</title>
   <description>Brief summary/description of the plugin.
 </description>
-  <documentation>http://grails.org/plugin/user</documentation>
-  <type>UserGrailsPlugin</type>
+  <documentation>http://grails.org/plugin/httc-user</documentation>
+  <type>HttcUserGrailsPlugin</type>
   <resources>
     <resource>BootStrap</resource>
     <resource>UserDefaultConfig</resource>

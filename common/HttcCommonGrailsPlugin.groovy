@@ -1,24 +1,23 @@
-class UserGrailsPlugin {
+class HttcCommonGrailsPlugin {
     // the plugin version
     def version = "2.0.0-SNAPSHOT"
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "2.4 > *"
-    def dependsOn = [springSecurityCore:"2.0.0", springSecurityUi:"1.0-RC2"]
     // resources that are excluded from plugin packaging
     def pluginExcludes = [
         "grails-app/views/error.gsp"
     ]
 
     // TODO Fill in these fields
-    def title = "User Plugin" // Headline display name of the plugin
-    def author = "Your name"
-    def authorEmail = ""
+    def title = "httc common plugin" // Headline display name of the plugin
+    def author = "Stephan Tittel"
+    def authorEmail = "stephan.tittel@httc.de"
     def description = '''\
 Brief summary/description of the plugin.
 '''
 
     // URL to the plugin's documentation
-    def documentation = "http://grails.org/plugin/user"
+    def documentation = "http://grails.org/plugin/httc-common"
 
     // Extra (optional) plugin metadata
 
@@ -67,7 +66,4 @@ Brief summary/description of the plugin.
     def onShutdown = { event ->
         // TODO Implement code that is executed when the application shuts down (optional)
     }
-
-    // this is needed for the controller/view overrides to work
-    def loadBefore = ['springSecurityCore', 'springSecurityUi']
 }

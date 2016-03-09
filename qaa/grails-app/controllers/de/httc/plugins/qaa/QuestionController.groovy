@@ -39,4 +39,22 @@ class QuestionController {
       }
       respond results, model:[questionCount:results.totalCount]
   }
+
+  def show(Question question) {
+      if (question == null) {
+          notFound()
+          return
+      }
+      respond question
+  }
+
+  protected void notFound() {
+	  flash.message = message(code: 'default.not.found.message', args: [message(code:'de.httc.plugin.qaa.question', default: 'Question'), params.id])
+	  redirect action: "index", method: "GET"
+  }
+
+  protected void forbidden() {
+	  flash.message = message(code: 'default.forbidden.message', args: [message(code:'de.httc.plugin.qaa.question', default: 'Question'), params.id])
+	  redirect action: "index", method: "GET"
+  }
 }

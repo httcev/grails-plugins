@@ -47,4 +47,5 @@ grails.project.dependency.resolution = {
         }
     }
 }
-grails.plugin.location."user" = "../user"
+//grails.plugin.location."httc-common" = "../common"
+grails.plugin.location."httc-user" = "../user"

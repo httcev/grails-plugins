@@ -7,7 +7,7 @@
 		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>push-notification</artifactId>
+	<artifactId>httc-push-notification</artifactId>
 	<packaging>grails-plugin</packaging>
 
 	<name>httc push notification plugin</name>
@@ -16,7 +16,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>de.httc.plugins</groupId>
-			<artifactId>user</artifactId>
+			<artifactId>httc-user</artifactId>
 			<version>${project.version}</version>
 			<type>zip</type>
 		</dependency>

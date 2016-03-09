@@ -22,8 +22,6 @@ class Answer extends Commentable {
     static belongsTo = [question:Question]
     static constraints = { }
     static mapping = {
-    	attachments cascade:"all-delete-orphan"
-    	comments cascade:"all-delete-orphan"
     	text type:"text"
     }
 

@@ -1,10 +1,11 @@
-<plugin name='taxonomy' version='2.0.0-SNAPSHOT' grailsVersion='2.4 &gt; *'>
-  <author>Your name</author>
-  <title>Taxonomy Plugin</title>
+<plugin name='httc-taxonomy' version='2.0.0-SNAPSHOT' grailsVersion='2.4 &gt; *'>
+  <author>Stephan Tittel</author>
+  <authorEmail>stephan.tittel@httc.de</authorEmail>
+  <title>httc taxonomy plugin</title>
   <description>Brief summary/description of the plugin.
 </description>
-  <documentation>http://grails.org/plugin/taxonomy</documentation>
-  <type>TaxonomyGrailsPlugin</type>
+  <documentation>http://grails.org/plugin/httc-taxonomy</documentation>
+  <type>HttcTaxonomyGrailsPlugin</type>
   <resources>
     <resource>de.httc.plugins.taxonomy.TaxonomiesController</resource>
     <resource>de.httc.plugins.taxonomy.admin.TaxonomiesController</resource>

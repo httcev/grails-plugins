@@ -28,8 +28,6 @@ class Question extends Commentable {
     }
     static hasMany = [attachments:Asset, answers:Answer, comments:Comment, ratingUsers:Long, terms:TaxonomyTerm]
     static mapping = {
-    	attachments cascade:"all-delete-orphan"
-    	comments cascade:"all-delete-orphan"
     	title type:"text"
     	text type:"text"
     	sort "dateCreated":"desc"

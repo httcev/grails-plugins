@@ -1,12 +1,14 @@
-<plugin name='qaa' version='2.0.0-SNAPSHOT' grailsVersion='2.4 &gt; *'>
+<plugin name='httc-qaa' version='2.0.0-SNAPSHOT' grailsVersion='2.4 &gt; *'>
   <author>Stephan Tittel</author>
-  <title>Question and Answer Plugin</title>
+  <authorEmail>stephan.tittel@httc.de</authorEmail>
+  <title>httc question and answer plugin</title>
   <description>Brief summary/description of the plugin.
 </description>
-  <type>QAAGrailsPlugin</type>
+  <type>HttcQAAGrailsPlugin</type>
   <resources>
     <resource>BootStrap</resource>
     <resource>QAADefaultConfig</resource>
+    <resource>QAAUrlMappings</resource>
     <resource>de.httc.plugins.qaa.QuestionController</resource>
     <resource>de.httc.plugins.qaa.Answer</resource>
     <resource>de.httc.plugins.qaa.Comment</resource>

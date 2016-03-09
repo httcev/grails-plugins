@@ -1,4 +1,4 @@
-class CompetenceGrailsPlugin {
+class HttcCompetenceInferenceGrailsPlugin {
     // the plugin version
     def version = "2.0.0-SNAPSHOT"
     // the version or versions of Grails the plugin is designed for
@@ -9,16 +9,16 @@ class CompetenceGrailsPlugin {
     ]
 
     // TODO Fill in these fields
-    def title = "Competence Plugin" // Headline display name of the plugin
-    def author = "Your name"
-    def authorEmail = ""
+    def title = "httc competence inference plugin" // Headline display name of the plugin
+    def author = "Stephan Tittel"
+    def authorEmail = "stephan.tittel@httc.de"
     def description = '''\
 Brief summary/description of the plugin.
 '''
 
     // URL to the plugin's documentation
-    def documentation = "http://grails.org/plugin/competence"
-	
+    def documentation = "http://grails.org/plugin/httc-competence-inference"
+
     // Extra (optional) plugin metadata
 
     // License: one of 'APACHE', 'GPL2', 'GPL3'
@@ -41,6 +41,7 @@ Brief summary/description of the plugin.
     }
 
     def doWithSpring = {
+        // TODO Implement runtime spring config (optional)
     }
 
     def doWithDynamicMethods = { ctx ->

@@ -1,10 +1,11 @@
-<plugin name='repository' version='2.0.0-SNAPSHOT' grailsVersion='2.4 &gt; *'>
-  <author>Your name</author>
-  <title>Repository Plugin</title>
+<plugin name='httc-repository' version='2.0.0-SNAPSHOT' grailsVersion='2.4 &gt; *'>
+  <author>Stephan Tittel</author>
+  <authorEmail>stephan.tittel@httc.de</authorEmail>
+  <title>httc repository plugin</title>
   <description>Brief summary/description of the plugin.
 </description>
-  <documentation>http://grails.org/plugin/repository</documentation>
-  <type>RepositoryGrailsPlugin</type>
+  <documentation>http://grails.org/plugin/httc-repository</documentation>
+  <type>HttcRepositoryGrailsPlugin</type>
   <resources>
     <resource>BootStrap</resource>
     <resource>RepositoryDefaultConfig</resource>

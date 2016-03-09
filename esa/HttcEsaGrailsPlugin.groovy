@@ -1,4 +1,4 @@
-class EsaGrailsPlugin {
+class HttcEsaGrailsPlugin {
 	// the plugin version
 	def version = "2.0.0-SNAPSHOT"
 	// the version or versions of Grails the plugin is designed for
@@ -9,13 +9,13 @@ class EsaGrailsPlugin {
 	]
 
 	// TODO Fill in these fields
-	def title = "ESA Plugin" // Headline display name of the plugin
-	def author = "Your name"
-	def authorEmail = ""
+	def title = "httc ESA plugin" // Headline display name of the plugin
+	def author = "Stephan Tittel"
+	def authorEmail = "stephan.tittel@httc.de"
 	def description = '''Brief summary/description of the plugin.'''
 
 	// URL to the plugin's documentation
-	def documentation = "http://grails.org/plugin/esa"
+	def documentation = "http://grails.org/plugin/httc-esa"
 
 	// Extra (optional) plugin metadata
 
