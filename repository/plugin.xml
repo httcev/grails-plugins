@@ -8,8 +8,8 @@
   <type>HttcRepositoryGrailsPlugin</type>
   <resources>
     <resource>BootStrap</resource>
-    <resource>RepositoryDefaultConfig</resource>
-    <resource>RepositoryUrlMappings</resource>
+    <resource>HttcRepositoryDefaultConfig</resource>
+    <resource>HttcRepositoryUrlMappings</resource>
     <resource>de.httc.plugins.repository.AssetController</resource>
     <resource>de.httc.plugins.repository.admin.AssetController</resource>
     <resource>de.httc.plugins.repository.Asset</resource>

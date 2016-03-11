@@ -7,7 +7,7 @@
   <type>HttcPushNotificationGrailsPlugin</type>
   <resources>
     <resource>BootStrap</resource>
-    <resource>PushNotificationDefaultConfig</resource>
+    <resource>HttcPushNotificationDefaultConfig</resource>
     <resource>de.httc.plugins.pushNotification.PushTokenController</resource>
     <resource>de.httc.plugins.pushNotification.PushToken</resource>
     <resource>de.httc.plugins.pushNotification.PushNotificationService</resource>

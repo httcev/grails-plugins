@@ -1,4 +1,4 @@
-class RepositoryUrlMappings {
+class HttcRepositoryUrlMappings {
 	static mappings = {
         name viewAsset: "/v/$id"{
             controller = "asset"
@@ -16,14 +16,14 @@ class RepositoryUrlMappings {
         }
         "/asset/$action?/$id?(.$format)?" {
             controller = "asset"
-            plugin = "repository"
+            plugin = "httcRepository"
             constraints {
                 action(matches:/index|show/)
             }
         }
         "/asset/$action?/$id?(.$format)?" {
             controller = "asset"
-            plugin = "repository"
+            plugin = "httcRepository"
             namespace = "admin"
             constraints {
                 action(matches:/create|update|delete|edit/)

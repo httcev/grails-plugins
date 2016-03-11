@@ -10,8 +10,8 @@ import de.httc.plugins.repository.Asset
 
 @Secured(["IS_AUTHENTICATED_REMEMBERED"])
 class AssetController {
-	def repositoryService 
-	
+	def repositoryService
+
 	def index() {
 		params.offset = params.offset ? (params.offset as int) : 0
 		params.max = Math.min(params.max?.toInteger() ?: 10, 100)
@@ -27,9 +27,14 @@ class AssetController {
 	}
 
 	def show(String id) {
-		respond repositoryService.readAsset(id)
+		def asset = repositoryService.readAsset(id)
+		if (!asset) {
+			notFound()
+			return
+		}
+		respond asset
 	}
-	
+
     @Secured(['permitAll'])
     def viewAsset(String id, String file) {
         def asset = repositoryService.readAsset(id)
@@ -108,6 +113,11 @@ class AssetController {
         else {
             render(file:file, contentType:contentType)
         }
+    }
+
+	protected void notFound() {
+        flash.error = message(code: 'default.not.found.message', args: [message(code:'de.httc.plugin.repository.asset', default: 'Asset'), params.id])
+        redirect action: "index", method: "GET"
     }
 /*
 	def afterInterceptor = { data ->

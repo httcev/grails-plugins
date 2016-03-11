@@ -1,4 +1,4 @@
-class QAAUrlMappings {
+class HttcQAAUrlMappings {
 	static mappings = {
 		"/$controller/$action?/$id?(.$format)?"{
 				constraints {

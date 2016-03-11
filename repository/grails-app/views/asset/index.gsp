@@ -20,6 +20,9 @@
 				<g:link class="create btn btn-primary pull-right" action="create" controller="asset" namespace="admin" title="${message(code: 'default.new.label', args:[entityName])}"><i class="fa fa-plus"></i> <g:message code="default.button.create.label" /></g:link>
 			</sec:ifAnyGranted>
 		</h1>
+		<g:if test="${flash.error}">
+			<div class="message alert alert-danger" role="status">${flash.error}</div>
+		</g:if>
 		<g:if test="${flash.message}">
 			<div class="message alert alert-success" role="status">${flash.message}</div>
 		</g:if>

@@ -7,8 +7,8 @@
   <type>HttcQAAGrailsPlugin</type>
   <resources>
     <resource>BootStrap</resource>
-    <resource>QAADefaultConfig</resource>
-    <resource>QAAUrlMappings</resource>
+    <resource>HttcQAADefaultConfig</resource>
+    <resource>HttcQAAUrlMappings</resource>
     <resource>de.httc.plugins.qaa.QuestionController</resource>
     <resource>de.httc.plugins.qaa.Answer</resource>
     <resource>de.httc.plugins.qaa.Comment</resource>

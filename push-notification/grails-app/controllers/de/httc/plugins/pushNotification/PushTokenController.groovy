@@ -9,7 +9,7 @@ import grails.transaction.Transactional
 class PushTokenController {
 	static allowedMethods = [update:"POST"]
     def springSecurityService
- 
+
     def update() {
     	def json = request.JSON
     	if (!(json.token && json.token instanceof String && json.token.length() > 0)) {

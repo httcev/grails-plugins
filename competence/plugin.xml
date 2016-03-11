@@ -7,7 +7,7 @@
   <documentation>http://grails.org/plugin/competence</documentation>
   <type>HttcCompetenceGrailsPlugin</type>
   <resources>
-    <resource>CompetenceDefaultConfig</resource>
+    <resource>HttcCompetenceDefaultConfig</resource>
     <resource>de.httc.plugins.competence.admin.CompetencesController</resource>
     <resource>de.httc.plugins.competence.Competence</resource>
     <resource>de.httc.plugins.competence.CompetenceService</resource>

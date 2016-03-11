@@ -32,6 +32,7 @@ class Question extends Commentable {
     	text type:"text"
     	sort "dateCreated":"desc"
     	answers sort:"dateCreated", "id"
+		comments sort:"dateCreated", "id"
         metadata type:"text"
     }
 

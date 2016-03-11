@@ -48,6 +48,17 @@ class QuestionController {
       respond question
   }
 
+  @Transactional
+  def rate(Question question) {
+      if (question == null) {
+          notFound()
+          return
+      }
+	  question.setRated(!question.getRated())
+	  question.save()
+	  redirect action: "show", id:question.id, method: "GET"
+  }
+
   protected void notFound() {
 	  flash.message = message(code: 'default.not.found.message', args: [message(code:'de.httc.plugin.qaa.question', default: 'Question'), params.id])
 	  redirect action: "index", method: "GET"

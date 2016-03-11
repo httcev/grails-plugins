@@ -20,6 +20,9 @@
 			<li><g:link class="list" action="index" namespace="admin">${entitiesName}</g:link></li>
 			<li class="active"><g:message code="default.show.label" args="[entityName]" /></li>
 		</ol>
+		<g:if test="${flash.error}">
+			<div class="message alert alert-danger" role="status">${flash.error}</div>
+		</g:if>
 		<g:if test="${flash.message}">
 			<div class="message alert alert-success" role="status">${flash.message}</div>
 		</g:if>
@@ -35,7 +38,7 @@
 		<g:if test='${asset?.props?."${Asset.PROP_DESCRIPTION}"}'>
 			<p>${asset.props."${Asset.PROP_DESCRIPTION}"}</p>
 		</g:if>
-<%--		
+<%--
 		<div class="row">
 			<div class="col-sm-2"><label><g:message code="de.httc.plugin.repository.asset.typeLabel" />:</label></div>
 			<div class="col-sm-10"><code>${asset?.typeLabel}</code></div>

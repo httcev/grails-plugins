@@ -23,6 +23,7 @@ class Answer extends Commentable {
     static constraints = { }
     static mapping = {
     	text type:"text"
+		comments sort:"dateCreated", "id"
     }
 
     String text

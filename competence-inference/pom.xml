@@ -15,13 +15,13 @@
 	<dependencies>
 		<dependency>
 			<groupId>de.httc.plugins</groupId>
-			<artifactId>taxonomy</artifactId>
+			<artifactId>httc-taxonomy</artifactId>
 			<version>${project.version}</version>
 			<type>zip</type>
 		</dependency>
 		<dependency>
 			<groupId>de.httc.plugins</groupId>
-			<artifactId>competence</artifactId>
+			<artifactId>httc-competence</artifactId>
 			<version>${project.version}</version>
 			<type>zip</type>
 		</dependency>

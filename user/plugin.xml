@@ -8,7 +8,7 @@
   <type>HttcUserGrailsPlugin</type>
   <resources>
     <resource>BootStrap</resource>
-    <resource>UserDefaultConfig</resource>
+    <resource>HttcUserDefaultConfig</resource>
     <resource>de.httc.plugins.user.RegisterController</resource>
     <resource>de.httc.plugins.user.admin.UserController</resource>
     <resource>de.httc.plugins.user.Profile</resource>

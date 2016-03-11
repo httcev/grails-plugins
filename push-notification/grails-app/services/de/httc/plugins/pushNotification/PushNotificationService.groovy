@@ -24,10 +24,12 @@ class PushNotificationService {
 					log.warn "No push notification token registered for user ${target.username}. Not sending push notification."
 					return
 				}
-				log.info "Sending push notification to user ${target.username}: " + message
-				pushToken.properties?.each {
-					log.info it
+				if (!message.notId && message.collapse_key) {
+					message.notId = message.collapse_key.hashCode()
+					log.debug "Appending notification id to message based on its collapse key: ${message.notId}"
 				}
+				log.info "Sending push notification to user ${target.username}: " + message
+				log.info "Using GCM service url '${grailsApplication.mergedConfig.de.httc.plugin.pushNotification.gcmUrl}'"
 				URL url = new URL(grailsApplication.mergedConfig.de.httc.plugin.pushNotification.gcmUrl);
 			    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			    conn.setRequestMethod("POST")
