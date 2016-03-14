@@ -24,8 +24,8 @@ class QuestionService {
 					"referenceId":question.id
 		        ]
 				// only send notification to user that are able to sync the new question
+				/*
 				def targetCompany = creator.profile?.company
-				println "--- company = " + targetCompany
 				if (targetCompany) {
 					def targetUsers = User.where {
 						profile { company == targetCompany }
@@ -36,6 +36,14 @@ class QuestionService {
 				            pushNotificationService.sendPushNotification(it, msg)
 						}
 			        }
+				}
+				*/
+
+				// for now, send notification to all users (except creator)
+				User.getAll().each { user ->
+					if (user != creator) {
+						pushNotificationService.sendPushNotification(user, msg)
+					}
 				}
 			}
 			catch(e) {
