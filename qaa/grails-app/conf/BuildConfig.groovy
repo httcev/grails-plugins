@@ -48,4 +48,8 @@ grails.project.dependency.resolution = {
     }
 }
 //grails.plugin.location."httc-common" = "../common"
-grails.plugin.location."httc-user" = "../user"
+//grails.plugin.location."httc-user" = "../user"
+//grails.plugin.location."httc-repository" = "../repository"
+//grails.plugin.location."httc-taxonomy" = "../taxonomy"
+//grails.plugin.location."httc-push-notification" = "../push-notification"
+//
