@@ -8,18 +8,16 @@ import java.util.SortedSet
 
 class Question extends Commentable {
     def springSecurityService
-/*
     static searchable = {
-    	except = ["attachments", "version"]
-    	dateCreated index:"not_analyzed"
-    	lastUpdated index:"not_analyzed"
-    	answers component:true
-    	comments component:true
-    	terms component:true
-    	//creator component:true
-    	metadata component:true
+		all = [analyzer: 'german']
+        except = ['creator', 'dateCreated', 'lastUpdated', 'reference', 'acceptedAnswer', 'ratingUsers']
+        title boost:2.0
+        metadata index:"not_analyzed"
+        answers component:true
+        comments component:true
+        attachments component:true
     }
-*/
+
     static constraints = {
     	title blank:false
     	text blank:false
