@@ -40,7 +40,7 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<g:sortableColumn property="title" title="${message(code: 'kola.meta.name')}" params="${sortParams}" />
+							<g:sortableColumn property="title" title="${message(code: 'de.httc.plugin.qaa.question.title')}" params="${sortParams}" />
 							<g:sortableColumn property="cp.lastName" title="${message(code: 'kola.meta.creator')}" params="${sortParams}" />
 							<g:sortableColumn property="cp.company" title="${message(code: 'de.httc.plugin.user.company')}" params="${sortParams}" />
 							<g:sortableColumn property="lastUpdated" title="${message(code: 'kola.meta.lastUpdated')}" params="${sortParams}" />
