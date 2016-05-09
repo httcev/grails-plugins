@@ -16,7 +16,7 @@
 			<h1 class="page-header clearfix">
 				<g:message code="default.edit.label" args="[entityName]" />
 				<div class="buttons pull-right">
-					<g:link class="delete btn btn-danger" action="delete" namespace="admin" id="${user.id}" title="${message(code: 'default.button.delete.label', args:[entityName])}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
+					<g:link class="delete btn btn-danger" action="delete" namespace="admin" id="${user.id}" title="${message(code: 'default.button.delete.label', args:[entityName])}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', args: [entityName])}');">
 						<i class="fa fa-user-times"></i>
 					</g:link>
 					<button class="save btn btn-success"><i class="fa fa-save"></i> <g:message code="default.button.update.label" default="Update" /></button>

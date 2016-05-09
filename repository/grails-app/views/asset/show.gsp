@@ -30,7 +30,7 @@
 			${asset?.name}
 			<sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_REPOSITORY_ADMIN">
 				<div class="buttons pull-right">
-					<g:link class="delete btn btn-danger" namespace="admin" action="delete" id="${asset.id}" title="${message(code: 'default.button.delete.label', args:[entityName])}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"><i class="fa fa-times"></i></g:link>
+					<g:link class="delete btn btn-danger" namespace="admin" action="delete" id="${asset.id}" title="${message(code: 'default.button.delete.label', args:[entityName])}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', args: [entityName])}');"><i class="fa fa-times"></i></g:link>
 					<g:link class="edit btn btn-primary" namespace="admin" action="edit" id="${asset.id}" title="${message(code: 'default.button.edit.label', args:[entityName])}"><i class="fa fa-pencil"></i></g:link>
 				</div>
 			</sec:ifAnyGranted>

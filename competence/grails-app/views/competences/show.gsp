@@ -36,7 +36,7 @@
 			<i class="fa fa-edit fa-lg"></i>
 			<g:message code="default.button.edit.label" default="Edit" />
 		</g:link>
-		<button class="delete btn btn-danger" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
+		<button class="delete btn btn-danger" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', args: [entityName])}');">
 			<i class="fa fa-trash-o fa-lg"></i>
 			<g:message code="default.button.delete.label" default="Delete" />
 		</button>

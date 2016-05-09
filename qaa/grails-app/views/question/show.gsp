@@ -26,7 +26,7 @@
 				${question?.title}
 				<div class="buttons pull-right">
 					<g:if test="${authService.canDelete(question)}">
-						<g:link class="delete btn btn-danger" action="delete" id="${question.id}" title="${message(code: 'default.button.delete.label', args:[entityName])}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"><i class="fa fa-times"></i></g:link>
+						<g:link class="delete btn btn-danger" action="delete" id="${question.id}" title="${message(code: 'default.button.delete.label', args:[entityName])}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', args: [entityName])}');"><i class="fa fa-times"></i></g:link>
 					</g:if>
 					<g:if test="${authService.canEdit(question)}">
 						<button type="button" class="btn btn-default" onclick="$(this).closest('.question-wrapper').hide().next('.form').removeClass('hidden').find('textarea').focus()"><i class="fa fa-pencil"></i> <g:message code="default.button.edit.label" /></button>

@@ -18,7 +18,7 @@
 				<g:message code="default.show.label" args="[entityName]" />
 				<div class="buttons pull-right">
 					<g:link class="edit btn btn-default" action="edit" id="${taxonomy?.id}" namespace="admin"><i class="fa fa-edit fa-lg"></i> <g:message code="default.button.edit.label" default="Edit" /></g:link>
-					<button class="delete btn btn-danger" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"><i class="fa fa-trash-o fa-lg"></i> <g:message code="default.button.delete.label" default="Delete" /></button>
+					<button class="delete btn btn-danger" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', args: [entityName])}');"><i class="fa fa-trash-o fa-lg"></i> <g:message code="default.button.delete.label" default="Delete" /></button>
 				</div>
 			</h1>
 			<g:if test="${flash.message}">
