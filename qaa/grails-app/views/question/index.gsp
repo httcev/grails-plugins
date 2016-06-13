@@ -9,8 +9,8 @@
 	<body>
 		<h1 class="page-header clearfix">
 			${entitiesName}
-			<g:link class="create btn btn-primary pull-right" action="create" title="${message(code: 'default.new.label', args:[entityName])}">
-				<i class="fa fa-plus"></i> <g:message code="default.button.create.label" />
+			<g:link class="create btn btn-primary pull-right" action="create" title="${message(code: 'de.httc.plugin.qaa.question.create')}">
+				<i class="httc-question-add"></i> <g:message code="de.httc.plugin.qaa.question.create" />
 			</g:link>
 		</h1>
 		<g:if test="${flash.error}">
@@ -35,29 +35,11 @@
 		<g:if test="${questionList?.size() > 0}">
 			<p class="margin text-muted small"><g:message code="kola.search.hits.displaying" args="${[entitiesName, params.offset + 1, Math.min(params.offset + params.max, questionCount), questionCount]}" />:</p>
 			<g:set var="filterParams" value="${[own:params.own, ownCompany:params.ownCompany]}" />
-			<g:set var="sortParams" value="${[resetOffset:true] << filterParams}" />
-			<div class="table-responsive">
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<g:sortableColumn property="title" title="${message(code: 'de.httc.plugin.qaa.question.title')}" params="${sortParams}" />
-							<g:sortableColumn property="cp.lastName" title="${message(code: 'kola.meta.creator')}" params="${sortParams}" />
-							<g:sortableColumn property="cp.company" title="${message(code: 'de.httc.plugin.user.company')}" params="${sortParams}" />
-							<g:sortableColumn property="lastUpdated" title="${message(code: 'kola.meta.lastUpdated')}" params="${sortParams}" />
-						</tr>
-					</thead>
-					<tbody>
-					<g:each in="${questionList}" status="i" var="question">
-						<tr>
-							<td><g:link action="show" id="${question.id}">${fieldValue(bean: question, field: "title")}</g:link></td>
-							<td>${fieldValue(bean: question.creator?.profile, field: "displayNameReverse")}</td>
-							<td>${fieldValue(bean: question.creator?.profile, field: "company")}</td>
-							<td><g:formatDate date="${question.lastUpdated}" type="date"/></td>
-						</tr>
-					</g:each>
-					</tbody>
-				</table>
-			</div>
+            <div class="list-group">
+                <g:each in="${questionList}" var="question">
+                    <g:render bean="${question}" var="question" template="questionListItem" plugin="httcQAA" />
+                </g:each>
+            </div>
 			<g:if test="${params.max < questionCount}">
 				<div class="pagination pull-right">
 					<g:paginate total="${questionCount ?: 0}" params="${filterParams}" />
