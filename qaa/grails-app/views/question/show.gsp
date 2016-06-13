@@ -39,7 +39,7 @@
 			<div class="question">
 				<g:render bean="${question}" template="ratingControl" var="rateable" plugin="httcQAA"/>
 				<div class="full-width padding-left">
-					<kola:markdown>${question?.text}</kola:markdown>
+					<httc:markdown>${question?.text}</httc:markdown>
 					<div class="clearfix">
 						<div class="pull-right">
 							<g:render model="${[profile:question?.creator?.profile]}" template="/profile/show" />,

@@ -12,7 +12,7 @@
 		</div>
 		<div class="full-width padding-left">
 			<div class="answer-content">
-				<kola:markdown>${answer?.text}</kola:markdown>
+				<httc:markdown>${answer?.text}</httc:markdown>
 				<div class="clearfix">
 					<div class="pull-right">
 						<g:if test="${authService.canEdit(answer)}">

@@ -42,7 +42,7 @@
 					<g:each in="${assetList}" var="asset">
 						<tr>
 							<td><g:link controller="asset" namespace="${currentNamespace}" action="show" id="${asset.id}">${fieldValue(bean: asset, field: "name")}</g:link></td>
-							<td><kola:abbreviate>${asset.props?."${Asset.PROP_DESCRIPTION}"}</kola:abbreviate></td>
+							<td><httc:abbreviate>${asset.props?."${Asset.PROP_DESCRIPTION}"}</httc:abbreviate></td>
 							<td><g:formatDate date="${asset.lastUpdated}" type="date"/></td>
 							<td>${fieldValue(bean: asset, field: "mimeType")}</td>
 						</tr>
