@@ -12,6 +12,7 @@ class QuestionController {
   def springSecurityService
   def authService
   def questionService
+  def questionContextService
 
   def index(Integer max) {
 	  params.offset = params.offset && !params.resetOffset ? (params.offset as int) : 0
@@ -47,6 +48,15 @@ class QuestionController {
 	  respond results, model:[questionCount:results.totalCount]
   }
 
+  def edit(Question question) {
+	  if (!authService.canEdit(question)) {
+		  forbidden()
+		  return
+	  }
+	  def possibleReferences = question.reference?.id != null ? questionContextService.getPossibleQuestionReferences(question.reference.id) : null
+	  respond question, model:[possibleReferences: possibleReferences]
+  }
+
   def show(Question question) {
 	  if (question == null) {
 		  notFound()
@@ -65,7 +75,8 @@ class QuestionController {
   }
 
   def create() {
-	  respond new Question(params)
+	  def possibleReferences = params.context != null ? questionContextService.getPossibleQuestionReferences(params.context) : null
+	  respond new Question(params), model:[possibleReferences: possibleReferences]
   }
 
   @Transactional

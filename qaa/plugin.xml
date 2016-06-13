@@ -15,6 +15,7 @@
     <resource>de.httc.plugins.qaa.Commentable</resource>
     <resource>de.httc.plugins.qaa.Question</resource>
     <resource>de.httc.plugins.qaa.QuestionReference</resource>
+    <resource>de.httc.plugins.qaa.QuestionContextService</resource>
     <resource>de.httc.plugins.qaa.QuestionService</resource>
   </resources>
 </plugin>

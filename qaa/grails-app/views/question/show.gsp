@@ -29,7 +29,10 @@
 						<g:link class="delete btn btn-danger" action="delete" id="${question.id}" title="${message(code: 'default.button.delete.label', args:[entityName])}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', args: [entityName])}');"><i class="fa fa-times"></i></g:link>
 					</g:if>
 					<g:if test="${authService.canEdit(question)}">
+					<%--
 						<button type="button" class="btn btn-default" onclick="$(this).closest('.question-wrapper').hide().next('.form').removeClass('hidden').find('textarea').focus()"><i class="fa fa-pencil"></i> <g:message code="default.button.edit.label" /></button>
+					--%>
+						<g:link class="btn btn-default" action="edit" id="${question.id}" title="${message(code: 'default.edit.label', args:[entityName])}"><i class="fa fa-pencil"></i> <g:message code="default.button.edit.label" /></g:link>
 					</g:if>
 				</div>
 			</h1>
@@ -46,16 +49,18 @@
 					<g:if test="${question?.attachments?.size() > 0}">
 						<g:render model="${[attachments:question?.attachments]}" template="/task/attachments" />
 					</g:if>
+					<g:render bean="${question}" var="question" template="/question/reference"/>
 					<g:render bean="${question}" template="comments" var="commentable" plugin="httcQAA"/>
 				</div>
 			</div>
 		</div>
+<%--
 		<g:if test="${authService.canEdit(question)}">
 			<g:form class="form hidden" action="update" id="${question.id}" method="PUT" enctype="multipart/form-data">
 				<g:render model="${[question:question]}" template="form" plugin="httcQAA"/>
 			</g:form>
 		</g:if>
-
+--%>
 		<g:if test="${question?.answers?.size() > 0}">
 			<h3><g:message code="de.httc.plugin.qaa.answers"/></h3>
 			<g:each var="answer" in="${sortedAnswers}">

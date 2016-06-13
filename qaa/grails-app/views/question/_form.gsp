@@ -1,3 +1,6 @@
+<g:if test="${possibleReferences?.size() > 0}">
+	<g:render model="${[question:question, possibleReferences:possibleReferences, mode:'edit']}" template="/question/reference" />
+</g:if>
 <div class="form-group">
 	<label for="question-title"><g:message code="de.httc.plugin.qaa.question.title" />:</label>
 	<input type="text" name="title" class="form-control" id="question-title" placeholder="${message(code:'de.httc.plugin.qaa.question.title.placeholder')}" required value="${question.title}">
