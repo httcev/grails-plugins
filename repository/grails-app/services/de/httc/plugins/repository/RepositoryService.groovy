@@ -29,7 +29,11 @@ class RepositoryService {
 	    	return Asset.read(id)
     	}
         */
-        Asset.read(encodedId)
+        def asset = Asset.read(encodedId)
+		if (asset?.deleted) {
+			asset = null
+		}
+		return asset
     }
 
     def createEncodedLink(asset, file=null) {

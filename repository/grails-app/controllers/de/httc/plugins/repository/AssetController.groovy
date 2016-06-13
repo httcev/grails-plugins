@@ -20,6 +20,7 @@ class AssetController {
         params.order = params.order ?: "desc"
 
         def result = Asset.createCriteria().list(max:params.max, offset:params.offset) {
+			eq("deleted", false)
             eq("typeLabel", params.typeLabel)
             order(params.sort, params.order)
         }
