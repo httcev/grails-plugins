@@ -14,14 +14,12 @@
 	<description />
 
 	<dependencies>
-<!--
-                <dependency>
-                        <groupId>de.httc.plugins</groupId>
-                        <artifactId>common</artifactId>
-                        <version>${project.version}</version>
-                        <type>zip</type>
-                </dependency>
--->
+		<dependency>
+			<groupId>de.httc.plugins</groupId>
+			<artifactId>httc-common</artifactId>
+			<version>${project.version}</version>
+			<type>zip</type>
+		</dependency>
 		<dependency>
 			<groupId>de.httc.plugins</groupId>
 			<artifactId>httc-user</artifactId>

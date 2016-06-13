@@ -7,9 +7,7 @@
 	<name>Parent project for grails plugins</name>
 	<description />
 	<modules>
-<!--
 		<module>common</module>
--->
 		<module>user</module>
 		<module>esa</module>
 		<module>taxonomy</module>
@@ -131,7 +129,7 @@
 					<groupId>net.sf.ehcache</groupId>
 					<artifactId>ehcache</artifactId>
 				</exclusion>
-			</exclusions> 
+			</exclusions>
   		</dependency>
 		<dependency>
 			<groupId>org.grails.plugins</groupId>
@@ -147,13 +145,13 @@
 			<scope>runtime</scope>
 		</dependency>
 
-<!--		
+<!--
 		<dependency>
 			<groupId>net.sf.ehcache</groupId>
 			<artifactId>ehcache</artifactId>
 			<version>2.10.1</version>
 		</dependency>
--->		
+-->
 <!--
 		<dependency>
 			<groupId>org.grails.plugins</groupId>
@@ -221,7 +219,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- Disables the Maven surefire plugin for Grails applications, as we 
+			<!-- Disables the Maven surefire plugin for Grails applications, as we
 				have our own test runner -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
