@@ -22,6 +22,13 @@ class AssetController {
         def result = Asset.createCriteria().list(max:params.max, offset:params.offset) {
 			eq("deleted", false)
             eq("typeLabel", params.typeLabel)
+			if (params.key) {
+				or {
+					ilike("name", "%${params.key}%")
+					ilike("props", "%${params.key}%")
+					ilike("indexText", "%${params.key}%")
+				}
+			}
             order(params.sort, params.order)
         }
         respond result, model:[assetCount: result.totalCount]
