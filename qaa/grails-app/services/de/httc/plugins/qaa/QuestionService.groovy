@@ -5,11 +5,11 @@ import de.httc.plugins.user.User
 
 @Transactional
 class QuestionService {
-    def pushNotificationService
-    def springSecurityService
-    def messageSource
+	def pushNotificationService
+	def springSecurityService
+	def messageSource
 
-    def saveQuestion(Question question) {
+	def saveQuestion(Question question) {
 		def isNew = !question.isAttached()
 		def result = question.save()
 		if (result && isNew) {
@@ -21,8 +21,9 @@ class QuestionService {
 					"style":"inbox",
 					"collapse_key":"new_questions",
 					"summaryText":messageSource.getMessage("de.httc.plugin.qaa.push.question.summaryText", null, Locale.GERMAN),
-					"referenceId":question.id
-		        ]
+					"referenceId":question.id,
+					"referenceClass":Question.class.simpleName
+				]
 				// only send notification to user that are able to sync the new question
 				/*
 				def targetCompany = creator.profile?.company
@@ -33,9 +34,9 @@ class QuestionService {
 					targetUsers?.each {
 						println "--- found user in same company = " + it
 						if (it != creator) {
-				            pushNotificationService.sendPushNotification(it, msg)
+							pushNotificationService.sendPushNotification(it, msg)
 						}
-			        }
+					}
 				}
 				*/
 
@@ -50,10 +51,10 @@ class QuestionService {
 				log.warn "failed sending push notifications for new question", e
 			}
 		}
-        return result
-    }
+		return result
+	}
 
-    def saveAnswer(Answer answer) {
+	def saveAnswer(Answer answer) {
 		def isNew = !answer.isAttached()
 		def result = answer.save()
 		if (result && answer.deleted && answer.question) {
@@ -75,30 +76,34 @@ class QuestionService {
 						"style":"inbox",
 						"collapse_key":"new_answers",
 						"summaryText":messageSource.getMessage("de.httc.plugin.qaa.push.answer.summaryText", null, Locale.GERMAN),
-						"referenceId":question.id
-			        ]
-		            pushNotificationService.sendPushNotification(targetUser, msg)
+						"referenceId":question.id,
+						"referenceClass":Question.class.simpleName
+					]
+					pushNotificationService.sendPushNotification(targetUser, msg)
 				}
 				catch(e) {
 					log.warn "failed sending push notifications for new answer", e
 				}
 			}
 		}
-        return result
-    }
+		return result
+	}
 
-    def saveComment(Comment comment) {
+	def saveComment(Comment comment, rootObject = null) {
 		def isNew = !comment.isAttached()
 		def result = comment.save()
 		if (result && isNew) {
 			def creator = comment.creator
 			def targetUser = comment.reference?.creator
 			if (targetUser && targetUser != creator) {
-				def question = comment.reference
-				if (question instanceof Answer) {
-					question = question.question
+				if (!rootObject) {
+					rootObject = comment.reference
+					if (rootObject instanceof Answer) {
+						rootObject = rootObject.question
+					}
 				}
-				println "--- comment refers (indirectly) to question " + question
+				def referenceClass = comment.reference.class.simpleName
+				println "--- comment refers (indirectly) to object " + rootObject + ", referenceClass=" + referenceClass
 				try {
 					def msg = [
 						"title":messageSource.getMessage("de.httc.plugin.qaa.push.comment.title", null, Locale.GERMAN),
@@ -106,15 +111,16 @@ class QuestionService {
 						"style":"inbox",
 						"collapse_key":"new_comments",
 						"summaryText":messageSource.getMessage("de.httc.plugin.qaa.push.comment.summaryText", null, Locale.GERMAN),
-						"referenceId":question.id
-			        ]
-		            pushNotificationService.sendPushNotification(targetUser, msg)
+						"referenceId":rootObject.id,
+						"referenceClass":referenceClass
+					]
+					pushNotificationService.sendPushNotification(targetUser, msg)
 				}
 				catch(e) {
 					log.warn "failed sending push notifications for new comment", e
 				}
 			}
 		}
-        return result
-    }
+		return result
+	}
 }

@@ -237,7 +237,7 @@ class QuestionController {
 	  }
 
 	  def question = comment.reference
-	  if (!(question instanceof Question)) {
+	  if (question instanceof Answer) {
 		  question = question.question
 	  }
 	  flash.message = message(code: 'default.created.message.single', args: [message(code: 'de.httc.plugin.qaa.comment')])
