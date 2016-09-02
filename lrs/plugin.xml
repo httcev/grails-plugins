@@ -1,0 +1,13 @@
+<plugin name='httc-common' version='2.0.0-SNAPSHOT' grailsVersion='2.4 &gt; *'>
+  <author>Stephan Tittel</author>
+  <authorEmail>stephan.tittel@httc.de</authorEmail>
+  <title>httc lrs plugin</title>
+  <description>Brief summary/description of the plugin.
+</description>
+  <documentation>http://grails.org/plugin/httc-lrs</documentation>
+  <type>HttcLrsGrailsPlugin</type>
+  <resources>
+    <resource>BootStrap</resource>
+    <resource>HttcLrsDefaultConfig</resource>
+  </resources>
+</plugin>
