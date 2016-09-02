@@ -9,7 +9,7 @@
 	<body>
 		<ol class="breadcrumb">
 			<li><g:link uri="/admin"><g:message code="default.admin.label" default="Administration" /></g:link></li>
-			<li><g:link class="list" action="list" namespace="admin">${entitiesName}</g:link></li>
+			<li><g:link class="list" action="index" namespace="admin">${entitiesName}</g:link></li>
 			<li class="active"><g:message code="default.create.label" args="[entityName]" /></li>
 		</ol>
 		<h1 class="page-header"><g:message code="default.create.label" args="[entityName]" /></h1>
@@ -20,7 +20,7 @@
 				</g:eachError>
 			</ul>
 		</g:hasErrors>
-		<form action="${createLink(action:'save', namespace:'admin')}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data">
+		<form action="${createLink(action:'save', namespace:'admin', plugin:'httcTaxonomy')}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data">
 			<g:render template="form" />
 			<div class="form-group">
 				<label for="file" class="col-sm-2 control-label"><g:message code="de.httc.plugin.taxonomy.import" default="Import" /></label>

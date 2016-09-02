@@ -9,7 +9,7 @@ class TaxonomyTerm implements EsaComparable, Comparable {
 
     static searchable = { only = ["label"]}
 
-    static belongsTo = [parent:TaxonomyTerm]
+    static belongsTo = [parent:TaxonomyTerm, taxonomy:Taxonomy]
     static hasMany = [children:TaxonomyTerm]
     static transients = ["esaVector"]
     static mapping = {
@@ -17,6 +17,7 @@ class TaxonomyTerm implements EsaComparable, Comparable {
 		//children cascade:"all-delete-orphan"
 		id (generator: "assigned")	// this is needed to import taxonomies and terms from sharepoint and keeping the foreign ids.
 		label type:"text"
+		children cascade: "all-delete-orphan"
     }
     static constraints = {
 		esaVectorData(maxSize:1024*1024*50, nullable:true)

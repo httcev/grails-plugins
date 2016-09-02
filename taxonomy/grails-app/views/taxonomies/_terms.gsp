@@ -1,5 +1,5 @@
 <fieldset>
-	<legend class="text-primary clearfix">
+	<legend class="text-primary clearfix padding-bottom">
 		<g:message code="de.httc.plugin.taxonomy.terms" default="Terms" />
 		<g:if test="${mode=='edit'}">
 			<g:set var="entityName" value="${message(code: 'de.httc.plugin.taxonomy.term', default: 'Term')}" />

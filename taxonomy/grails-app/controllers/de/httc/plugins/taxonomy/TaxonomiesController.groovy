@@ -8,13 +8,13 @@ import org.apache.catalina.connector.ClientAbortException
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.security.access.annotation.Secured
 
-@Secured(['ROLE_USER'])
+@Secured(['IS_AUTHENTICATED_REMEMBERED'])
 class TaxonomiesController {
-	
-	def list() {
+
+	def index() {
 		// "list-mode" toggles short/verbose JSON serialization of Taxonomy objects in BootStrap.groovy
 		request["list-mode"] = true
-		
+
 		def result = Taxonomy.list()
 		withFormat {
 			json { render result as JSON }
@@ -39,11 +39,10 @@ class TaxonomiesController {
 		}
 
 		if (compareDate != null && taxonomy.lastUpdated.compareTo(compareDate) <= 0) {
-			println "--- Taxonomy GET: 304"
 			render(status:304)
 			return
 		}
-		
+
 		withFormat {
 			json { render taxonomy as JSON }
 			xml { render taxonomy as XML }
