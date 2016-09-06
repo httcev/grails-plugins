@@ -5,6 +5,7 @@ import de.httc.plugins.user.User
 
 @Transactional
 class QuestionService {
+	def lrsService
 	def pushNotificationService
 	def springSecurityService
 	def messageSource
@@ -65,6 +66,8 @@ class QuestionService {
 			question.save()
 		}
 		else if (result && isNew) {
+			lrsService.log()
+
 			def question = answer.question
 			def creator = answer.creator
 			def targetUser = question?.creator

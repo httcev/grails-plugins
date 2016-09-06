@@ -7,7 +7,7 @@
   <documentation>http://grails.org/plugin/httc-lrs</documentation>
   <type>HttcLrsGrailsPlugin</type>
   <resources>
-    <resource>BootStrap</resource>
+    <resource>HttcLrsBootStrap</resource>
     <resource>HttcLrsDefaultConfig</resource>
     <resource>de.httc.plugins.lrs.LrsService</resource>
   </resources>

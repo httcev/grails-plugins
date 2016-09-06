@@ -1,10 +1,8 @@
 package de.httc.plugins.competence
 
-import org.springframework.context.ApplicationListener;
+import org.springframework.context.ApplicationListener
 import de.httc.plugins.taxonomy.TaxonomyTerm
 import de.httc.plugins.taxonomy.Taxonomy
-
-import org.springframework.context.ApplicationListener;
 
 import grails.transaction.Transactional
 import de.httc.plugins.competence.Interaction.Verb
@@ -13,9 +11,9 @@ import de.httc.plugins.competence.Interaction.Type
 class CompetenceInferenceService implements ApplicationListener<InteractionEvent> {
     def taxonomyService
     def competenceService
-    
+
     def rules
-    
+
     def setTaxonomyService(taxonomyService) {
 	rules = []
 	rules.add(new CreateAnswerRule(taxonomyService))
@@ -25,7 +23,7 @@ class CompetenceInferenceService implements ApplicationListener<InteractionEvent
 	rules.add(new RateAnswerRule(taxonomyService))
 	rules.add(new AcceptAnswerRule(taxonomyService))
     }
-    
+
     void onApplicationEvent(InteractionEvent event) {
 	//Competence.async.task {
 	 //   withTransaction {
@@ -33,7 +31,7 @@ class CompetenceInferenceService implements ApplicationListener<InteractionEvent
 	    //}
 	//}
     }
-    
+
     def _handleInteraction(interaction) {
 	try {
 	    log.debug "capturing interaction: " + interaction?.properties
@@ -53,5 +51,3 @@ class CompetenceInferenceService implements ApplicationListener<InteractionEvent
 	}
     }
 }
-
-

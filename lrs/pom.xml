@@ -14,6 +14,12 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>de.httc.plugins</groupId>
+			<artifactId>httc-common</artifactId>
+			<version>${project.version}</version>
+			<type>zip</type>
+		</dependency>
+		<dependency>
 			<groupId>gov.adlnet</groupId>
 			<artifactId>jxapi</artifactId>
 			<version>1.0.2</version>
