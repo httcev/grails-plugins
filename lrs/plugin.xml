@@ -1,4 +1,4 @@
-<plugin name='httc-common' version='2.0.0-SNAPSHOT' grailsVersion='2.4 &gt; *'>
+<plugin name='httc-lrs' version='2.0.0-SNAPSHOT' grailsVersion='2.4 &gt; *'>
   <author>Stephan Tittel</author>
   <authorEmail>stephan.tittel@httc.de</authorEmail>
   <title>httc lrs plugin</title>
@@ -9,5 +9,6 @@
   <resources>
     <resource>BootStrap</resource>
     <resource>HttcLrsDefaultConfig</resource>
+    <resource>de.httc.plugins.lrs.LrsService</resource>
   </resources>
 </plugin>

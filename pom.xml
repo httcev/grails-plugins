@@ -9,6 +9,7 @@
 	<modules>
 		<module>common</module>
 		<module>user</module>
+		<module>lrs</module>
 		<module>esa</module>
 		<module>taxonomy</module>
 		<module>repository</module>

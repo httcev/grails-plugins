@@ -10,13 +10,13 @@
 	<packaging>grails-plugin</packaging>
 
 	<name>httc lrs plugin</name>
-	<description />
+	<description/>
 
 	<dependencies>
 		<dependency>
-			<groupId>org.pegdown</groupId>
-			<artifactId>pegdown</artifactId>
-			<version>1.5.0</version>
+			<groupId>gov.adlnet</groupId>
+			<artifactId>jxapi</artifactId>
+			<version>1.0.2</version>
 		</dependency>
 	</dependencies>
 </project>
