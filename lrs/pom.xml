@@ -16,13 +16,13 @@
 		<dependency>
 			<groupId>de.httc.plugins</groupId>
 			<artifactId>httc-common</artifactId>
-			<version>${project.version}</version>
+			<version>${project.parent.version}</version>
 			<type>zip</type>
 		</dependency>
 		<dependency>
 			<groupId>de.httc.plugins</groupId>
 			<artifactId>httc-user</artifactId>
-			<version>${project.version}</version>
+			<version>${project.parent.version}</version>
 			<type>zip</type>
 		</dependency>
 		<dependency>
