@@ -32,4 +32,15 @@
 			</exclusions>
 		</dependency>
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.google.code.maven-replacer-plugin</groupId>
+				<artifactId>replacer</artifactId>
+				<configuration>
+					<file>HttcEsaGrailsPlugin.groovy</file>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

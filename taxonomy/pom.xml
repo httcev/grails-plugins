@@ -21,4 +21,15 @@
 			<type>zip</type>
 		</dependency>
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.google.code.maven-replacer-plugin</groupId>
+				<artifactId>replacer</artifactId>
+				<configuration>
+					<file>HttcTaxonomyGrailsPlugin.groovy</file>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

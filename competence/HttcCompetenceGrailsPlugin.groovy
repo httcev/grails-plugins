@@ -1,6 +1,6 @@
 class HttcCompetenceGrailsPlugin {
     // the plugin version
-    def version = "2.0.0-SNAPSHOT"
+	def version = /* @@VERSION@@ */ "2.0.0-SNAPSHOT" /* @@VERSION@@ */
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "2.4 > *"
     // resources that are excluded from plugin packaging
@@ -18,7 +18,7 @@ Brief summary/description of the plugin.
 
     // URL to the plugin's documentation
     def documentation = "http://grails.org/plugin/competence"
-	
+
     // Extra (optional) plugin metadata
 
     // License: one of 'APACHE', 'GPL2', 'GPL3'
