@@ -1,6 +1,7 @@
 <g:set var="authService" bean="authService"/>
 <g:if test="${!answer.deleted}">
 	<div class="answer clearfix">
+		<a name="${answer.id}"></a>
 		<div class="text-center">
 			<g:render bean="${answer}" template="ratingControl" var="rateable" plugin="httcQAA" />
 			<div>

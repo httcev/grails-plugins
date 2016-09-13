@@ -5,15 +5,19 @@ import de.httc.plugins.user.User
 
 @Transactional
 class QuestionService {
-	def lrsService
 	def pushNotificationService
 	def springSecurityService
 	def messageSource
+	def lrsService
+	def grailsLinkGenerator
 
 	def saveQuestion(Question question) {
 		def isNew = !question.isAttached()
 		def result = question.save()
 		if (result && isNew) {
+			// log to LRS
+			lrsService.log(gov.adlnet.xapi.model.Verbs.asked(), grailsLinkGenerator.link(absolute:true, controller:"question", action:"show", id:question.id))
+
 			def creator = question.creator
 			try {
 				def msg = [
@@ -66,11 +70,13 @@ class QuestionService {
 			question.save()
 		}
 		else if (result && isNew) {
-			lrsService.log()
-
 			def question = answer.question
 			def creator = answer.creator
 			def targetUser = question?.creator
+
+			// log to LRS
+			lrsService.log(gov.adlnet.xapi.model.Verbs.answered(), grailsLinkGenerator.link(absolute:true, controller:"question", action:"show", id:question.id, fragment:answer.id))
+
 			if (targetUser && targetUser != creator) {
 				try {
 					def msg = [
@@ -98,13 +104,18 @@ class QuestionService {
 		if (result && isNew) {
 			def creator = comment.creator
 			def targetUser = comment.reference?.creator
-			if (targetUser && targetUser != creator) {
-				if (!rootObject) {
-					rootObject = comment.reference
-					if (rootObject instanceof Answer) {
-						rootObject = rootObject.question
-					}
+
+			if (!rootObject) {
+				rootObject = comment.reference
+				if (rootObject instanceof Answer) {
+					rootObject = rootObject.question
 				}
+			}
+
+			// log to LRS
+			lrsService.log(gov.adlnet.xapi.model.Verbs.commented(), grailsLinkGenerator.link(absolute:true, controller:"question", action:"show", id:rootObject.id, fragment:comment.id))
+
+			if (targetUser && targetUser != creator) {
 				def referenceClass = comment.reference.class.simpleName
 				println "--- comment refers (indirectly) to object " + rootObject + ", referenceClass=" + referenceClass
 				try {

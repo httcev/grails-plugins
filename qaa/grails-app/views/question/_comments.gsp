@@ -4,6 +4,7 @@
 		<g:each var="comment" in="${commentable?.comments}">
 			<g:if test="${!comment.deleted}">
 				<div class="comment clearfix">
+					<a name="${comment.id}"></a>
 					${comment?.text}
 					<div class="pull-right">
 						<g:render model="${[profile:comment?.creator?.profile, hideImage:true]}" template="/profile/show" />,
