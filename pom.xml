@@ -264,6 +264,15 @@
 					<grailsVersion>${grails.version}</grailsVersion>
 				</configuration>
 				<extensions>true</extensions>
+				<executions>
+					<execution>
+						<id>default-validate-plugin</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>validate-plugin</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
