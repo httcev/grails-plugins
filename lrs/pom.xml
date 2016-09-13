@@ -4,13 +4,13 @@
 	<parent>
 		<groupId>de.httc.plugins</groupId>
 		<artifactId>httc-grails-plugins</artifactId>
-		<version>2.0.0-SNAPSHOT</version>
+		<version>2.0.0</version>
 	</parent>
 	<artifactId>httc-lrs</artifactId>
 	<packaging>grails-plugin</packaging>
 
 	<name>httc lrs plugin</name>
-	<description/>
+	<description />
 
 	<dependencies>
 		<dependency>
