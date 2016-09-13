@@ -64,7 +64,7 @@ class ImageService {
 			}
 		}
 		catch(e) {
-			log.error "error removing exif gps data from jpg image", error
+			log.error "error removing exif gps data from jpg image", e
 			return imageData
 		}
 	}
