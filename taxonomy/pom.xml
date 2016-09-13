@@ -17,6 +17,7 @@
 		<dependency>
 			<groupId>de.httc.plugins</groupId>
 			<artifactId>httc-esa</artifactId>
+			<version>${project.parent.version}</version>
 			<type>zip</type>
 		</dependency>
 	</dependencies>
