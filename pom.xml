@@ -36,6 +36,18 @@
 	<scm>
 		<connection>scm:git:https://dev.kom.e-technik.tu-darmstadt.de/gitlab/tittel/grails-plugins.git</connection>
 	</scm>
+	<distributionManagement>
+		<repository>
+			<id>docendo-maven-repo-releases</id>
+			<name>docendo-maven-repo-releases</name>
+			<url>http://dev.docendo.org/maven/libs-releases-local/</url>
+		</repository>
+		<snapshotRepository>
+			<id>docendo-maven-repo-snapshots</id>
+			<name>docendo-maven-repo-snapshots</name>
+			<url>http://dev.docendo.org/maven/libs-snapshots-local/</url>
+		</snapshotRepository>
+	</distributionManagement>
 	<repositories>
 		<repository>
 			<id>docendo</id>
