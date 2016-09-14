@@ -37,7 +37,7 @@
 			<g:set var="filterParams" value="${[own:params.own, ownCompany:params.ownCompany]}" />
             <div class="list-group">
                 <g:each in="${questionList}" var="question">
-                    <g:render bean="${question}" var="question" template="questionListItem" plugin="httcQAA" />
+                    <g:render bean="${question}" var="question" template="questionListItem" plugin="httcQaa" />
                 </g:each>
             </div>
 			<g:if test="${params.max < questionCount}">

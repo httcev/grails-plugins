@@ -3,7 +3,7 @@
 	<div class="answer clearfix">
 		<a name="${answer.id}"></a>
 		<div class="text-center">
-			<g:render bean="${answer}" template="ratingControl" var="rateable" plugin="httcQAA" />
+			<g:render bean="${answer}" template="ratingControl" var="rateable" plugin="httcQaa" />
 			<div>
 				<g:if test="${question?.acceptedAnswer?.id == answer.id}"><i class="text-success fa fa-check fa-2x"></i></g:if>
 				<g:elseif test="${authService.canEdit(question)}">
@@ -35,7 +35,7 @@
 					<div class="text-right form-padding-all"><button type="submit" class="btn btn-success"><i class="fa fa-save"></i> <g:message code="default.save.label" args="[message(code:'de.httc.plugin.qaa.answer')]" /></button></div>
 				</g:form>
 			</g:if>
-			<g:render bean="${answer}" template="comments" var="commentable" plugin="httcQAA"/>
+			<g:render bean="${answer}" template="comments" var="commentable" plugin="httcQaa"/>
 		</div>
 	</div>
 </g:if>

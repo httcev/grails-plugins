@@ -1,4 +1,4 @@
-class HttcQAAGrailsPlugin {
+class HttcQaaGrailsPlugin {
     // the plugin version
 	def version = /* @@VERSION@@ */ "2.0.1-SNAPSHOT" /* @@VERSION@@ */
     // the version or versions of Grails the plugin is designed for

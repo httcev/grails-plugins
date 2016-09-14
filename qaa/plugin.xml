@@ -4,11 +4,11 @@
   <title>httc question and answer plugin</title>
   <description>Brief summary/description of the plugin.
 </description>
-  <type>HttcQAAGrailsPlugin</type>
+  <type>HttcQaaGrailsPlugin</type>
   <resources>
     <resource>BootStrap</resource>
-    <resource>HttcQAADefaultConfig</resource>
-    <resource>HttcQAAUrlMappings</resource>
+    <resource>HttcQaaDefaultConfig</resource>
+    <resource>HttcQaaUrlMappings</resource>
     <resource>de.httc.plugins.qaa.QuestionController</resource>
     <resource>de.httc.plugins.qaa.Answer</resource>
     <resource>de.httc.plugins.qaa.Comment</resource>

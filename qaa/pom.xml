@@ -51,7 +51,7 @@
 				<groupId>com.google.code.maven-replacer-plugin</groupId>
 				<artifactId>replacer</artifactId>
 				<configuration>
-					<file>HttcQAAGrailsPlugin.groovy</file>
+					<file>HttcQaaGrailsPlugin.groovy</file>
 				</configuration>
 			</plugin>
 		</plugins>

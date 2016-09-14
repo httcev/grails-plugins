@@ -1,4 +1,4 @@
-class HttcQAAUrlMappings {
+class HttcQaaUrlMappings {
 	static mappings = {
 /*
 		"/$controller/$action?/$id?(.$format)?"{

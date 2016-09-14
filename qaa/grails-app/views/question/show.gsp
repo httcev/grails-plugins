@@ -37,7 +37,7 @@
 				</div>
 			</h1>
 			<div class="question">
-				<g:render bean="${question}" template="ratingControl" var="rateable" plugin="httcQAA"/>
+				<g:render bean="${question}" template="ratingControl" var="rateable" plugin="httcQaa"/>
 				<div class="full-width padding-left">
 					<httc:markdown>${question?.text}</httc:markdown>
 					<div class="clearfix">
@@ -50,21 +50,21 @@
 						<g:render model="${[attachments:question?.attachments]}" template="/task/attachments" />
 					</g:if>
 					<g:render bean="${question}" var="question" template="/question/reference"/>
-					<g:render bean="${question}" template="comments" var="commentable" plugin="httcQAA"/>
+					<g:render bean="${question}" template="comments" var="commentable" plugin="httcQaa"/>
 				</div>
 			</div>
 		</div>
 <%--
 		<g:if test="${authService.canEdit(question)}">
 			<g:form class="form hidden" action="update" id="${question.id}" method="PUT" enctype="multipart/form-data">
-				<g:render model="${[question:question]}" template="form" plugin="httcQAA"/>
+				<g:render model="${[question:question]}" template="form" plugin="httcQaa"/>
 			</g:form>
 		</g:if>
 --%>
 		<g:if test="${question?.answers?.size() > 0}">
 			<h3><g:message code="de.httc.plugin.qaa.answers"/></h3>
 			<g:each var="answer" in="${sortedAnswers}">
-				<g:render model="${[answer:answer, question:question]}" template="answer" plugin="httcQAA"/>
+				<g:render model="${[answer:answer, question:question]}" template="answer" plugin="httcQaa"/>
 			</g:each>
 		</g:if>
 		<div class="text-center margin">

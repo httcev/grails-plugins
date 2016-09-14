@@ -20,7 +20,7 @@
 			<div class="message alert alert-success" role="status">${flash.message}</div>
 		</g:if>
 		<g:form class="form" action="save" method="POST" enctype="multipart/form-data">
-			<g:render template="form" plugin="httcQAA"/>
+			<g:render template="form" plugin="httcQaa"/>
 		</g:form>
 	</body>
 </html>
