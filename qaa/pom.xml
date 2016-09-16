@@ -44,6 +44,12 @@
 			<version>${project.parent.version}</version>
 			<type>zip</type>
 		</dependency>
+		<dependency>
+			<groupId>de.httc.plugins</groupId>
+			<artifactId>httc-lrs</artifactId>
+			<version>${project.parent.version}</version>
+			<type>zip</type>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

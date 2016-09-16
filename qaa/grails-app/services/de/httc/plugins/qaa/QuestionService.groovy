@@ -16,7 +16,10 @@ class QuestionService {
 		def result = question.save()
 		if (result && isNew) {
 			// log to LRS
-			lrsService.log(gov.adlnet.xapi.model.Verbs.asked(), grailsLinkGenerator.link(absolute:true, controller:"question", action:"show", id:question.id))
+			def activity = new gov.adlnet.xapi.model.Activity()
+			activity.setId(grailsLinkGenerator.link(absolute:true, controller:"question", action:"show", id:question.id))
+			activity.setDefinition(new gov.adlnet.xapi.model.ActivityDefinition(["de-DE":question.title], ["de-DE":question.text]))
+			lrsService.log(gov.adlnet.xapi.model.Verbs.asked(), activity)
 
 			def creator = question.creator
 			try {
@@ -75,7 +78,10 @@ class QuestionService {
 			def targetUser = question?.creator
 
 			// log to LRS
-			lrsService.log(gov.adlnet.xapi.model.Verbs.answered(), grailsLinkGenerator.link(absolute:true, controller:"question", action:"show", id:question.id, fragment:answer.id))
+			def activity = new gov.adlnet.xapi.model.Activity()
+			activity.setId(grailsLinkGenerator.link(absolute:true, controller:"question", action:"show", id:question.id, fragment:answer.id))
+			activity.setDefinition(new gov.adlnet.xapi.model.ActivityDefinition(["de-DE":answer.text], [:]))
+			lrsService.log(gov.adlnet.xapi.model.Verbs.answered(), activity)
 
 			if (targetUser && targetUser != creator) {
 				try {
@@ -113,11 +119,13 @@ class QuestionService {
 			}
 
 			// log to LRS
-			lrsService.log(gov.adlnet.xapi.model.Verbs.commented(), grailsLinkGenerator.link(absolute:true, controller:"question", action:"show", id:rootObject.id, fragment:comment.id))
+			def activity = new gov.adlnet.xapi.model.Activity()
+			activity.setId(grailsLinkGenerator.link(absolute:true, controller:"question", action:"show", id:rootObject.id, fragment:comment.id))
+			activity.setDefinition(new gov.adlnet.xapi.model.ActivityDefinition(["de-DE":comment.text], [:]))
+			lrsService.log(gov.adlnet.xapi.model.Verbs.commented(), activity)
 
 			if (targetUser && targetUser != creator) {
 				def referenceClass = comment.reference.class.simpleName
-				println "--- comment refers (indirectly) to object " + rootObject + ", referenceClass=" + referenceClass
 				try {
 					def msg = [
 						"title":messageSource.getMessage("de.httc.plugin.qaa.push.comment.title", null, Locale.GERMAN),
