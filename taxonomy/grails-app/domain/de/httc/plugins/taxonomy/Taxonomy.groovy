@@ -2,23 +2,22 @@ package de.httc.plugins.taxonomy
 
 import java.util.UUID;
 
-class Taxonomy {
-    static enum Type { DEFAULT, PRIMARY, SECONDARY }
-    static hasMany = [terms:TaxonomyTerm]
-    static constraints = {
-    	id bindable:true	// this is needed to import taxonomies from sharepoint and keeping the foreign ids.
-		label unique:true
-    }
-    static mapping = {
-    	//terms cascade:"all-delete-orphan"
-    	id (generator: "assigned")	// this is needed to import taxonomies and terms from sharepoint and keeping the foreign ids.
-    	label type:"text"
-		terms cascade: "all-delete-orphan"
-    }
+class Taxonomy extends TaxonomyNode {
+	static enum Type { DEFAULT, PRIMARY, SECONDARY }
+	static constraints = {
+//		parent nullable:true
+	}
 
-    String id = UUID.randomUUID().toString()
-    String label
-    Type type = Type.DEFAULT
-    List<TaxonomyTerm> terms       // defined as list to keep order in which elements got added
-    Date lastUpdated
+	Type type = Type.DEFAULT
+
+	def getTermCount() {
+		return TaxonomyTerm.countByTaxonomy(this)
+	}
+
+	/**
+		Retrieves all terms ids of this taxonomy disregarding the hierarchy
+	**/
+	def getAllTermIds() {
+		return TaxonomyTerm.executeQuery("select t.id from TaxonomyTerm t where t.taxonomy = ?", [this])
+	}
 }

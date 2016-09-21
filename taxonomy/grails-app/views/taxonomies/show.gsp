@@ -10,10 +10,10 @@
 	<body>
 		<ol class="breadcrumb">
 			<li><g:link uri="/admin"><g:message code="default.admin.label" default="Administration" /></g:link></li>
-			<li><g:link class="list" action="index" namespace="admin">${entitiesName}</g:link></li>
+			<li><g:link class="list" action="index" namespace="admin" plugin="httcTaxonomy">${entitiesName}</g:link></li>
 			<li class="active"><g:message code="default.show.label" args="[entityName]" /></li>
 		</ol>
-		<form action="${createLink(action:'delete', id:taxonomy?.id, namespace:'admin')}" method="post" class="taxonomy-show">
+		<form action="${createLink(action:'delete', id:taxonomy?.id, namespace:'admin', plugin:'httcTaxonomy')}" method="post" class="taxonomy-show">
 			<h1 class="page-header clearfix">
 				<g:message code="default.show.label" args="[entityName]" />
 				<div class="buttons pull-right">
@@ -30,12 +30,12 @@
 				</g:if>
 				<table class="table table-condensed table-bordered">
 					<tbody>
-						<tr><td><g:message code="de.httc.plugin.taxonomy.label" default="Name" />:</td><td><b><g:fieldValue bean="${taxonomy}" field="label"/></b></td></tr>
+						<tr><td><g:message code="de.httc.plugin.taxonomy.label" default="Name" />:</td><td><b><g:message code="de.httc.plugin.taxonomy.label.${taxonomy.label}" default="${taxonomy.label}"/></b></td></tr>
 						<tr><td><g:message code="de.httc.plugin.taxonomy.lastUpdated" default="Last updated" />:</td><td><g:fieldValue bean="${taxonomy}" field="lastUpdated"/></td></tr>
 						<tr><td><g:message code="de.httc.plugin.taxonomy.type" default="Type" />:</td><td><g:fieldValue bean="${taxonomy}" field="type"/></td></tr>
 					</tbody>
 				</table>
-				<g:render template="terms" model="${[terms:taxonomy?.terms]}" />
+				<g:render template="terms" model="${[taxonomy:taxonomy]}" />
 			</div>
 		</form>
 	</body>

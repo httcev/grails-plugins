@@ -36,8 +36,8 @@
 					<tbody>
 					<g:each in="${taxonomyList}" status="i" var="taxonomy">
 						<tr>
-							<td><g:link action="show" id="${taxonomy.id}" namespace="admin">${fieldValue(bean: taxonomy, field: "label")}</g:link></td>
-							<td>${taxonomy.terms?.size()}</td>
+							<td><g:link action="show" id="${taxonomy.id}" namespace="admin" plugin="httcTaxonomy"><g:message code="de.httc.plugin.taxonomy.label.${taxonomy.label}" default="${taxonomy.label}"/></g:link></td>
+							<td>${taxonomy.termCount}</td>
 							<td>${fieldValue(bean: taxonomy, field: "type")}</td>
 							<td><g:formatDate date="${taxonomy.lastUpdated}" type="date"/></td>
 						</tr>

@@ -11,12 +11,7 @@ import de.httc.plugins.taxonomy.TaxonomyTerm
 @Secured(['ROLE_ADMIN'])
 class TaxonomiesController {
 	static namespace = "admin"
-	//static allowedMethods = [save: "POST", update: "POST", delete: "POST", list:"GET", index:"GET"]
-/*
-	def index() {
-		redirect(action: "list", controller:"taxonomies", namespace:"admin", plugin:"httcTaxonomy", params: params)
-	}
-*/
+
 	def index(Integer max) {
 		params.offset = params.offset ? (params.offset as int) : 0
 		params.max = Math.min(max ?: 10, 100)
@@ -29,9 +24,7 @@ class TaxonomiesController {
 		respond new Taxonomy(params)
 	}
 
-	def save() {
-		def taxonomyInstance = new Taxonomy(params)
-
+	def save(Taxonomy taxonomyInstance) {
 		// import uploaded file
 		def f = request.getFile("file")
 		if (f && !f.empty) {
@@ -46,10 +39,10 @@ class TaxonomiesController {
 
 					def parent = taxonomyInstance
 					if (level <=0) {
-						parent.addToTerms(termInstance)
+						parent.addToChildren(termInstance)
 					}
 					else {
-						def children = parent.terms
+						def children = parent.children
 						while (level-- > 0) {
 							parent = children.get(children.size() - 1)
 							children = parent.children
@@ -60,7 +53,7 @@ class TaxonomiesController {
 			}
 		}
 
-		if (!taxonomyInstance.save(flush: true)) {
+		if (!taxonomyInstance.save(flush:true)) {
 			respond taxonomyInstance.errors, view:'create'
 			return
 		}
@@ -69,11 +62,10 @@ class TaxonomiesController {
 		redirect(action:"show", id:taxonomyInstance.id, namespace:"admin", plugin:"httcTaxonomy")
 	}
 
-	def show(String id) {
-		def taxonomyInstance = Taxonomy.get(id)
+	def show(Taxonomy taxonomyInstance) {
 		if (!taxonomyInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy'), id])
-			redirect(action: "index")
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy'), params.id])
+			redirect(action: "index", namespace:"admin", plugin:"httcTaxonomy")
 			return
 		}
 		withFormat {
@@ -83,22 +75,20 @@ class TaxonomiesController {
 		}
 	}
 
-	def edit(String id) {
-		def taxonomyInstance = Taxonomy.get(id)
+	def edit(Taxonomy taxonomyInstance) {
 		if (!taxonomyInstance) {
 			flash.message = message(code: 'default.not.found.message', args: [message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy'), id])
-			redirect(action: "index")
+			redirect(action: "index", plugin:"httcTaxonomy")
 			return
 		}
 
 		respond taxonomyInstance
 	}
 
-	def update(String id, Long version) {
-		def taxonomyInstance = Taxonomy.get(id)
+	def update(Taxonomy taxonomyInstance, Long version) {
 		if (!taxonomyInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy'), id])
-			redirect(action: "index")
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy'), params.id])
+			redirect(action: "index", plugin:"httcTaxonomy")
 			return
 		}
 		if (version != null) {
@@ -110,69 +100,70 @@ class TaxonomiesController {
 				return
 			}
 		}
-		if (params.label) {
-			taxonomyInstance.label = params.label
-		}
-		if (params.type) {
-			taxonomyInstance.type = Taxonomy.Type.valueOf(params.type)
-		}
-
 		if (params.data) {
 			def data = JSON.parse(params.data)
-			def deletedTerms = []
-			updateChildrenRecursive(taxonomyInstance, taxonomyInstance.terms, data.terms, deletedTerms)
-
+			def deletedTermIds = taxonomyInstance.allTermIds
+			updateTermsRecursive(taxonomyInstance, taxonomyInstance, data.terms, deletedTermIds)
+			// bulk delete to avoid conflicting with referential integrity constraints
+			bulkDeleteTermIds(deletedTermIds)
 		}
-		if (!taxonomyInstance.save(flush: true)) {
+
+		if (!taxonomyInstance.save(flush:true)) {
 			respond taxonomyInstance.errors, view:'edit'
 			return
 		}
 
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy'), taxonomyInstance.id])
+		flash.message = message(code: 'default.updated.message', args: [message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy'), message(code: 'de.httc.plugin.taxonomy.label.' + taxonomyInstance.label, default:taxonomyInstance.label)])
 		redirect(action:"show", id:taxonomyInstance.id, plugin:"httcTaxonomy")
 	}
 
-	def delete(String id) {
-		def taxonomyInstance = Taxonomy.get(id)
+	def delete(Taxonomy taxonomyInstance) {
+		println "--- 1"
 		if (!taxonomyInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy'), id])
-			redirect(action: "index")
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy'), params.id])
+			redirect(action: "index", plugin:"httcTaxonomy")
 			return
 		}
 
+		println "--- 2"
 		try {
+			bulkDeleteTermIds(taxonomyInstance.allTermIds)
 			taxonomyInstance.delete(flush: true)
-			flash.message = message(code: 'default.deleted.message', args: [message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy'), id])
-			redirect(action: "index")
+			flash.message = message(code: 'default.deleted.message', args: [message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy'), taxonomyInstance.id])
+			redirect(action: "index", plugin:"httcTaxonomy")
 		}
 		catch (DataIntegrityViolationException e) {
-			flash.error = message(code: 'default.not.deleted.message', args: [message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy'), id])
-			redirect(action: "show", id: id)
+			println "--- 3"
+			flash.error = message(code: 'default.not.deleted.message', args: [message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy'), taxonomyInstance.id])
+			redirect(action: "show", id: taxonomyInstance.id, plugin:"httcTaxonomy")
+		}
+		println "--- 4"
+	}
+
+	def updateTermsRecursive(taxonomy, currentNode, jsonChildren, deletedTermIds) {
+		currentNode.children?.clear()
+		jsonChildren?.eachWithIndex() { jsonChild, i ->
+			def termLabel = jsonChild.label?.trim()
+			def termId = jsonChild.id?.trim()
+			if (termLabel?.length() > 0) {
+				def term
+				if (termId?.length() > 0) {
+					term = TaxonomyTerm.get(termId)
+					deletedTermIds.remove(termId)
+				}
+				else {
+					term = new TaxonomyTerm()
+				}
+				term.label = termLabel
+				currentNode.addToChildren(term)
+				updateTermsRecursive(taxonomy, term, jsonChild.children, deletedTermIds)
+			}
 		}
 	}
 
-	def updateChildrenRecursive(currentNode, currentChildren, jsonChildren, deletedNodes) {
-		currentChildren.clear()
-		jsonChildren?.eachWithIndex() { jsonChild, i ->
-			println " ${i}: ${jsonChild}"
-			def term = jsonChild.id ? TaxonomyTerm.get(jsonChild.id) : new TaxonomyTerm()
-			term.label = jsonChild.label
-			currentChildren.add(term)
-		}
-		currentChildren.eachWithIndex() { child, i ->
-			println "child.children=" + child.children
-			if (child.children == null) {
-				child.children = []
-			}
-			updateChildrenRecursive(child, child.children, jsonChildren.get(i).children, deletedNodes)
-		}
-
-/*
-		if (jsonChildren?.size() > 0) {
-			jsonChildren.eachWithIndex() { jsonChild, i ->
-				println " ${i}: ${jsonChild}"
-			};
-		}
-*/
+	private def bulkDeleteTermIds(termIds) {
+		TaxonomyTerm.where {
+			id in termIds
+		}.deleteAll()
 	}
 }

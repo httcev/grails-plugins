@@ -4,85 +4,88 @@ package de.httc.plugins.taxonomy
 import de.httc.plugins.esa.EsaComparable
 import edu.kit.aifb.concept.IConceptVector;
 
-class TaxonomyTerm implements EsaComparable, Comparable {
-    def transient esaService
+class TaxonomyTerm extends TaxonomyNode implements EsaComparable {
+	def transient esaService
 
-    static searchable = { only = ["label"]}
+	static transients = ["esaVector"]
+	static constraints = {
+		esaVectorData maxSize:1024*1024*50, nullable:true
+		taxonomy nullable:true
+		parent nullable:false
+	}
 
-    static belongsTo = [parent:TaxonomyTerm, taxonomy:Taxonomy]
-    static hasMany = [children:TaxonomyTerm]
-    static transients = ["esaVector"]
-    static mapping = {
-		//parent cascade:"all-delete-orphan", nullable:true
-		//children cascade:"all-delete-orphan"
-		id (generator: "assigned")	// this is needed to import taxonomies and terms from sharepoint and keeping the foreign ids.
-		label type:"text"
-		children cascade: "all-delete-orphan"
-    }
-    static constraints = {
-		esaVectorData(maxSize:1024*1024*50, nullable:true)
-		parent nullable:true
-		id bindable:true	// this is needed to import taxonomies and terms from sharepoint and keeping the foreign ids.
-    }
+	Taxonomy taxonomy
+	TaxonomyNode parent
+	IConceptVector esaVector
+	byte[] esaVectorData
 
-    String id = UUID.randomUUID().toString()
-    String label
-    boolean isPrimaryDomain
-    List<TaxonomyTerm> children       // defined as list to keep order in which elements got added
-    IConceptVector esaVector
-    byte[] esaVectorData
-    //Date lastUpdated
-
-    def beforeInsert() {
+	def beforeInsert() {
+		updateTaxonomyReference()
 		updateEsaVector()
-    }
+	}
 
-    def beforeUpdate() {
+	def beforeUpdate() {
 		if (isDirty('label') || isDirty('parent')) {
-		    updateEsaVector()
+			updateTaxonomyReference()
+			updateEsaVector()
 		}
-    }
-
-    /*
-    used in hasMany relationships
-    */
-    int compareTo(obj) {
-        label.compareTo(obj.label)
-    }
-
-    public IConceptVector getEsaVector() {
+	}
+/*
+	def setParent(TaxonomyNode parent) {
+		this.parent = parent
+		updateTaxonomyReference()
+	}
+*/
+	public IConceptVector getEsaVector() {
 		try {
-		    if (esaVector == null && esaVectorData != null) {
-			ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(esaVectorData));
-			esaVector = (IConceptVector) ois.readObject();
-			ois.close();
-		    }
+			if (esaVector == null && esaVectorData != null) {
+				ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(esaVectorData));
+				esaVector = (IConceptVector) ois.readObject();
+				ois.close();
+			}
 		}
 		catch (Exception e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
 		return esaVector;
-    }
+	}
 
-    private void updateEsaVector() {
+	private void updateEsaVector() {
 		// TODO: update ESA vector for children when node label changes or parent changes!
 		def text = label
 		try {
-		    def cursor = this;
-		    while (cursor.parent != null) {
+			def cursor = this;
+			while (cursor.hasProperty("parent") && cursor.parent != null) {
 				cursor = cursor.parent
 				text += " ${cursor.label}"
-		    }
-		    this.esaVector = esaService.extractEsaVector(text, "de", true)
+			}
+			this.esaVector = esaService.extractEsaVector(text, "de", true)
 
-		    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		    ObjectOutputStream oos = new ObjectOutputStream(bos);
-		    oos.writeObject(esaVector);
-		    oos.close();
-		    esaVectorData = bos.toByteArray();
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream(bos);
+			oos.writeObject(esaVector);
+			oos.close();
+			esaVectorData = bos.toByteArray();
 		}
 		catch (Exception e) {
-		    log.warn "Couldn't extract ESA vector for '${text}'"
+			log.warn "Couldn't extract ESA vector for '${text}'"
 		}
-    }
+	}
+
+	private void updateTaxonomyReference() {
+		def root = parent
+		while (root?.hasProperty("parent") && root.parent != null) {
+			root = root.parent
+		}
+		if (!(root instanceof Taxonomy)) {
+			log.warn("couldn't infer taxonomy into term ${this.label}, root=${root?.properties}")
+		}
+		else {
+			taxonomy = root
+		}
+
+		children?.each {
+			it.updateTaxonomyReference()
+		}
+	}
 }

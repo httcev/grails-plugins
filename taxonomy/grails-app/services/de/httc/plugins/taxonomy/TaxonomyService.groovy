@@ -4,28 +4,28 @@ import grails.transaction.Transactional
 
 
 class TaxonomyService {
-    def esaService
+	def esaService
 
-    def suggestTerms(text) {
-	return suggestTerms(text, null)
-    }
-    
-    def suggestTerms(text, primary) {
-	def terms
-	if (primary) {
-	    terms = TaxonomyTerm.findAllWhere(isPrimaryDomain:true)
+	def suggestTerms(text) {
+		return suggestTerms(text, null)
 	}
-	else { 
-	    terms = TaxonomyTerm.list()
+
+	def suggestTerms(text, primary) {
+		def terms
+		if (primary) {
+			terms = TaxonomyTerm.where { taxonomy.type == Taxonomy.Type.PRIMARY }.list()
+		}
+		else {
+			terms = TaxonomyTerm.list()
+		}
+		if (terms) {
+			try {
+				def cv = esaService.extractEsaVector(text, "de", true)
+				return esaService.getRelevantObjects(cv, 5, 0.1d, terms)
+			}
+			catch(e) {
+				log.warn e
+			}
+		}
 	}
-	if (terms) {
-	    try {
-		def cv = esaService.extractEsaVector(text, "de", true)
-		return esaService.getRelevantObjects(cv, 5, 0.1d, terms)
-	    }
-	    catch(e) {
-		log.warn e
-	    }
-	}
-    }
 }

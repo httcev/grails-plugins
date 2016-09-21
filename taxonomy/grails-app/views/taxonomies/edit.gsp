@@ -9,7 +9,7 @@
 	<body>
 		<ol class="breadcrumb">
 			<li><g:link uri="/admin"><g:message code="default.admin.label" default="Administration" /></g:link></li>
-			<li><g:link class="list" action="index" namespace="admin">${entitiesName}</g:link></li>
+			<li><g:link class="list" action="index" namespace="admin" plugin="httcTaxonomy">${entitiesName}</g:link></li>
 			<li class="active"><g:message code="default.edit.label" args="[entityName]" /></li>
 		</ol>
 		<form action="${createLink(action:'update', id:taxonomy?.id, namespace:'admin', plugin:'httcTaxonomy')}" method="post" role="form" class="taxonomy-edit form-horizontal">
@@ -28,7 +28,7 @@
 			<input type="hidden" name="data" id="data">
 			<g:render template="form" />
 		</form>
-		<g:render template="terms" model="${[terms:taxonomy?.terms, mode:'edit']}" />
+		<g:render template="terms" model="${[taxonomy:taxonomy, mode:'edit']}" />
 
 		<asset:stylesheet src="jstree-3.0.1.min.css"/>
 		<asset:javascript src="jstree-3.0.1.min.js"/>
