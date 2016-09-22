@@ -7,7 +7,7 @@
 		<g:render template="/taxonomies/termOption" model="${[term:term, selectedValue:selectedValue, level:0]}" />
 	</g:each>
 </select>
-<script type="text/javascript">
+<asset:script type="text/javascript">
 	$(function() {
 		$("#${selectId}").chosen({
 			no_results_text:'<g:message code="app.filter.empty" args="${[message(code: 'de.httc.plugin.taxonomy.terms', default: 'Terms')]}" default="No {0} found."/>'
@@ -16,4 +16,5 @@
 			, allow_single_deselect: true
 		});
 	});
-</script>
+</asset:script>
+<asset:deferredScripts/>

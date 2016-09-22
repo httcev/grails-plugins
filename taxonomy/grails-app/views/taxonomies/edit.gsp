@@ -28,7 +28,7 @@
 			<input type="hidden" name="data" id="data">
 			<g:render template="form" />
 		</form>
-		<g:render template="terms" model="${[taxonomy:taxonomy, mode:'edit']}" />
+		<g:render template="termsWithHeader" model="${[taxonomy:taxonomy, mode:'edit']}" />
 
 		<asset:stylesheet src="jstree-3.0.1.min.css"/>
 		<asset:javascript src="jstree-3.0.1.min.js"/>
@@ -90,13 +90,18 @@
 
 			$(document).ready(function() {
 				$("#taxonomy").jstree({
-					"core" : { "animation":0, "check_callback":true },
-				    "plugins" : ["dnd"]
-			    });
-			    tree = $("#taxonomy").jstree(true);
-		    });
-		    $('#taxonomy').on("changed.jstree", function (e, data) {
-		    	$("#rename-button,#delete-button").toggleClass("disabled", data.selected.length == 0);
+					"core" : { "animation":0, "check_callback":true, "strings":{"New node" : "${message(code:'de.httc.plugin.taxonomy.newNode')}"} },
+					"types" : {
+						"default" : {
+							"icon" : "fa fa-tag"
+						}
+					},
+					"plugins" : ["dnd", "types"]
+				});
+				tree = $("#taxonomy").jstree(true);
+			});
+			$('#taxonomy').on("changed.jstree", function (e, data) {
+				$("#rename-button,#delete-button").toggleClass("disabled", data.selected.length == 0);
 			});
 		</asset:script>
 		<asset:deferredScripts/>

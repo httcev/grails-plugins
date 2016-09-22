@@ -35,7 +35,7 @@
 						<tr><td><g:message code="de.httc.plugin.taxonomy.type" default="Type" />:</td><td><g:fieldValue bean="${taxonomy}" field="type"/></td></tr>
 					</tbody>
 				</table>
-				<g:render template="terms" model="${[taxonomy:taxonomy]}" />
+				<g:render template="termsWithHeader" model="${[taxonomy:taxonomy]}" />
 			</div>
 		</form>
 	</body>
