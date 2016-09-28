@@ -37,15 +37,26 @@
 			<version>1.9</version>
 			<exclusions>
 				<exclusion>
+					<groupId>xerces</groupId>
+					<artifactId>xercesImpl</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>xml-apis</groupId>
+					<artifactId>xml-apis</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+				<exclusion>
 					<groupId>org.apache.httpcomponents</groupId>
 					<artifactId>httpcore</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>org.bouncycastle</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
 			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.hashids</groupId>
-			<artifactId>hashids</artifactId>
-			<version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.grails.plugins</groupId>

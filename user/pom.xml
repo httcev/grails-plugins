@@ -22,6 +22,12 @@
 	</repositories>
 	<dependencies>
 		<dependency>
+			<groupId>de.httc.plugins</groupId>
+			<artifactId>httc-taxonomy</artifactId>
+			<version>${project.parent.version}</version>
+			<type>zip</type>
+		</dependency>
+		<dependency>
 			<!-- used to remove exif metadata from uploaded images -->
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-imaging</artifactId>
