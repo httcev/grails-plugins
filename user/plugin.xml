@@ -9,6 +9,7 @@
   <resources>
     <resource>BootStrap</resource>
     <resource>HttcUserDefaultConfig</resource>
+    <resource>HttcUserUrlMappings</resource>
     <resource>de.httc.plugins.user.RegisterController</resource>
     <resource>de.httc.plugins.user.admin.UserController</resource>
     <resource>de.httc.plugins.user.Profile</resource>

@@ -7,9 +7,10 @@
   <documentation>http://grails.org/plugin/httc-taxonomy</documentation>
   <type>HttcTaxonomyGrailsPlugin</type>
   <resources>
+    <resource>HttcTaxonomyUrlMappings</resource>
     <resource>de.httc.plugins.taxonomy.TaxonomiesController</resource>
-    <resource>de.httc.plugins.taxonomy.admin.TaxonomiesController</resource>
     <resource>de.httc.plugins.taxonomy.Taxonomy</resource>
+    <resource>de.httc.plugins.taxonomy.TaxonomyNode</resource>
     <resource>de.httc.plugins.taxonomy.TaxonomyTerm</resource>
     <resource>de.httc.plugins.taxonomy.TaxonomyService</resource>
   </resources>
