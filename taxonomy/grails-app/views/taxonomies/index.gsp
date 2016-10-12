@@ -29,7 +29,9 @@
 						<tr>
 							<g:sortableColumn property="label" title="${message(code: 'de.httc.plugin.taxonomy.label', default: 'Name')}" />
 							<th><g:message code="de.httc.plugin.taxonomy.term.count" /></th>
+<%--
 							<g:sortableColumn property="type" title="${message(code: 'de.httc.plugin.taxonomy.type', default: 'Type')}" />
+--%>
 							<g:sortableColumn property="lastUpdated" title="${message(code: 'de.httc.plugin.taxonomy.lastUpdated', default: 'Last updated')}" />
 						</tr>
 					</thead>
@@ -38,7 +40,9 @@
 						<tr>
 							<td><g:link action="show" id="${taxonomy.id}" plugin="httcTaxonomy"><g:message code="de.httc.plugin.taxonomy.label.${taxonomy.label}" default="${taxonomy.label}"/></g:link></td>
 							<td>${taxonomy.termCount}</td>
+<%--
 							<td>${fieldValue(bean: taxonomy, field: "type")}</td>
+--%>
 							<td><g:formatDate date="${taxonomy.lastUpdated}" type="date"/></td>
 						</tr>
 					</g:each>

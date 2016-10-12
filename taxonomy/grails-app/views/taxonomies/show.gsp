@@ -32,7 +32,9 @@
 					<tbody>
 						<tr><td><g:message code="de.httc.plugin.taxonomy.label" default="Name" />:</td><td><b><g:message code="de.httc.plugin.taxonomy.label.${taxonomy.label}" default="${taxonomy.label}"/></b></td></tr>
 						<tr><td><g:message code="de.httc.plugin.taxonomy.lastUpdated" default="Last updated" />:</td><td><g:fieldValue bean="${taxonomy}" field="lastUpdated"/></td></tr>
+<%--
 						<tr><td><g:message code="de.httc.plugin.taxonomy.type" default="Type" />:</td><td><g:fieldValue bean="${taxonomy}" field="type"/></td></tr>
+--%>
 					</tbody>
 				</table>
 				<g:render template="termsWithHeader" model="${[taxonomy:taxonomy]}" />
