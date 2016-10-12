@@ -1,10 +1,10 @@
 <asset:stylesheet src="chosen-adapted.css"/>
 <asset:javascript src="chosen.jquery.js"/>
-<g:set var="selectId" value="${UUID.randomUUID().toString()}" />
-<select id="${selectId}" name="${name}" class="form-control" value="${selectedValue}"${multiple ? " multiple" : ""} data-placeholder="${placeholder}">
+<g:set var="selectId" value="${id ?: UUID.randomUUID().toString()}" />
+<select id="${selectId}" name="${name}" class="form-control-dummy ${classes?.join(' ')}"${multiple ? " multiple" : ""} data-placeholder="${placeholder}">
 	<option value=""></option>
-	<g:each in="${taxonomy?.children}" var="term">
-		<g:render template="/taxonomies/termOption" model="${[term:term, selectedValue:selectedValue, level:0]}" />
+	<g:each in="${terms}" var="term">
+		<g:render template="/taxonomies/termOption" model="${[term:term, selectedValues:selectedValues, level:0]}" />
 	</g:each>
 </select>
 <asset:script type="text/javascript">
@@ -14,6 +14,7 @@
 			, disable_search_threshold: 10
 			, width:"100%"
 			, allow_single_deselect: true
+			, inherit_select_classes: true
 		});
 	});
 </asset:script>

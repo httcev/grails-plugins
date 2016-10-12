@@ -14,7 +14,7 @@
 		</ol>
 		<h1 class="page-header clearfix">
 			${entitiesName}
-			<g:link class="create btn btn-primary pull-right" action="create" namespace="admin" plugin="httcTaxonomy" title="${message(code: 'default.new.label', args:[entityName])}">
+			<g:link class="create btn btn-primary pull-right" action="create" plugin="httcTaxonomy" title="${message(code: 'default.new.label', args:[entityName])}">
 				<i class="fa fa-plus"></i><span class="button-label"> <g:message code="default.button.create.label" /></span>
 			</g:link>
 		</h1>
@@ -27,16 +27,16 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<g:sortableColumn property="label" namespace="admin" title="${message(code: 'de.httc.plugin.taxonomy.label', default: 'Name')}" />
+							<g:sortableColumn property="label" title="${message(code: 'de.httc.plugin.taxonomy.label', default: 'Name')}" />
 							<th><g:message code="de.httc.plugin.taxonomy.term.count" /></th>
-							<g:sortableColumn property="type" namespace="admin" title="${message(code: 'de.httc.plugin.taxonomy.type', default: 'Type')}" />
-							<g:sortableColumn property="lastUpdated" namespace="admin" title="${message(code: 'de.httc.plugin.taxonomy.lastUpdated', default: 'Last updated')}" />
+							<g:sortableColumn property="type" title="${message(code: 'de.httc.plugin.taxonomy.type', default: 'Type')}" />
+							<g:sortableColumn property="lastUpdated" title="${message(code: 'de.httc.plugin.taxonomy.lastUpdated', default: 'Last updated')}" />
 						</tr>
 					</thead>
 					<tbody>
 					<g:each in="${taxonomyList}" status="i" var="taxonomy">
 						<tr>
-							<td><g:link action="show" id="${taxonomy.id}" namespace="admin" plugin="httcTaxonomy"><g:message code="de.httc.plugin.taxonomy.label.${taxonomy.label}" default="${taxonomy.label}"/></g:link></td>
+							<td><g:link action="show" id="${taxonomy.id}" plugin="httcTaxonomy"><g:message code="de.httc.plugin.taxonomy.label.${taxonomy.label}" default="${taxonomy.label}"/></g:link></td>
 							<td>${taxonomy.termCount}</td>
 							<td>${fieldValue(bean: taxonomy, field: "type")}</td>
 							<td><g:formatDate date="${taxonomy.lastUpdated}" type="date"/></td>
@@ -46,7 +46,7 @@
 				</table>
 			</div>
 			<g:if test="${params.max < taxonomyCount}">
-				<g:paginate total="${taxonomyCount ?: 0}" namespace="admin" />
+				<g:paginate total="${taxonomyCount ?: 0}" />
 			</g:if>
 		</g:if>
 		<g:else>

@@ -9,10 +9,10 @@
 	<body>
 		<ol class="breadcrumb">
 			<li><g:link uri="/admin"><g:message code="default.admin.label" default="Administration" /></g:link></li>
-			<li><g:link class="list" action="index" namespace="admin" plugin="httcTaxonomy">${entitiesName}</g:link></li>
+			<li><g:link class="list" action="index" plugin="httcTaxonomy">${entitiesName}</g:link></li>
 			<li class="active"><g:message code="default.edit.label" args="[entityName]" /></li>
 		</ol>
-		<form action="${createLink(action:'update', id:taxonomy?.id, namespace:'admin', plugin:'httcTaxonomy')}" method="post" role="form" class="taxonomy-edit form-horizontal">
+		<form action="${createLink(action:'update', id:taxonomy?.id,  plugin:'httcTaxonomy')}" method="post" role="form" class="taxonomy-edit form-horizontal">
 			<h1 class="page-header clearfix">
 				<g:message code="default.edit.label" args="[entityName]" />
 				<button class="save btn btn-success pull-right" onclick="saveTaxonomy()"><i class="fa fa-cloud-upload"></i> <g:message code="default.button.update.label" default="Update" /></button>

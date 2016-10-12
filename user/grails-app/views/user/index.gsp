@@ -6,12 +6,12 @@
 		<title>${entitiesName}</title>
 	</head>
 	<body>
-<%--	
+<%--
 		<ol class="breadcrumb">
 			<li><g:link uri="/admin"><g:message code="default.admin.label" default="Administration" /></g:link></li>
 			<li class="active">${entitiesName}</li>
 		</ol>
---%>		
+--%>
 		<h1 class="page-header clearfix">
 			${entitiesName}
 			<g:link class="create btn btn-primary pull-right" action="create" namespace="admin" title="${message(code: 'default.new.label', args:[entityName])}">
@@ -30,6 +30,7 @@
 						<g:sortableColumn property="profile.lastName" namespace="admin" title="${message(code: 'de.httc.plugin.user.lastName')}" />
 						<g:sortableColumn property="profile.firstName" namespace="admin" title="${message(code: 'de.httc.plugin.user.firstName')}" />
 						<g:sortableColumn property="profile.company" namespace="admin" title="${message(code: 'de.httc.plugin.user.company')}" />
+						<th>${message(code: 'de.httc.plugin.taxonomy.label.organisations')}</th>
 						<g:sortableColumn property="enabled" namespace="admin" title="${message(code: 'de.httc.plugin.user.enabled')}" />
 						<g:sortableColumn property="accountLocked" namespace="admin" title="${message(code: 'de.httc.plugin.user.accountNotLocked')}" />
 					</tr>
@@ -41,6 +42,7 @@
 						<td>${fieldValue(bean: user.profile, field: "lastName")}</td>
 						<td>${fieldValue(bean: user.profile, field: "firstName")}</td>
 						<td>${fieldValue(bean: user.profile, field: "company")}</td>
+						<td>${user?.profile?.organisations*.label.join(", ")}</td>
 						<td><i class="fa fa-lg fa-${user.enabled ? 'check text-success' : 'minus text-warning'}"></i></td>
 						<td><i class="fa fa-lg fa-${user.accountLocked ? 'minus text-warning' : 'check text-success'}"></i></td>
 					</tr>

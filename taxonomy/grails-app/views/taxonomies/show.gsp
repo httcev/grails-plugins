@@ -10,14 +10,14 @@
 	<body>
 		<ol class="breadcrumb">
 			<li><g:link uri="/admin"><g:message code="default.admin.label" default="Administration" /></g:link></li>
-			<li><g:link class="list" action="index" namespace="admin" plugin="httcTaxonomy">${entitiesName}</g:link></li>
+			<li><g:link class="list" action="index" plugin="httcTaxonomy">${entitiesName}</g:link></li>
 			<li class="active"><g:message code="default.show.label" args="[entityName]" /></li>
 		</ol>
-		<form action="${createLink(action:'delete', id:taxonomy?.id, namespace:'admin', plugin:'httcTaxonomy')}" method="post" class="taxonomy-show">
+		<form action="${createLink(action:'delete', id:taxonomy?.id, plugin:'httcTaxonomy')}" method="post" class="taxonomy-show">
 			<h1 class="page-header clearfix">
 				<g:message code="default.show.label" args="[entityName]" />
 				<div class="buttons pull-right">
-					<g:link class="edit btn btn-default" action="edit" id="${taxonomy?.id}" namespace="admin" plugin="httcTaxonomy"><i class="fa fa-edit fa-lg"></i> <g:message code="default.button.edit.label" default="Edit" /></g:link>
+					<g:link class="edit btn btn-default" action="edit" id="${taxonomy?.id}" plugin="httcTaxonomy"><i class="fa fa-edit fa-lg"></i> <g:message code="default.button.edit.label" default="Edit" /></g:link>
 					<button class="delete btn btn-danger" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', args: [entityName])}');"><i class="fa fa-trash-o fa-lg"></i> <g:message code="default.button.delete.label" default="Delete" /></button>
 				</div>
 			</h1>

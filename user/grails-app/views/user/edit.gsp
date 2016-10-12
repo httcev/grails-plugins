@@ -3,7 +3,7 @@
 		<meta name="layout" content="admin">
 		<g:set var="entityName" value="${message(code: 'de.httc.plugin.user.user')}" />
 		<g:set var="entitiesName" value="${message(code: 'de.httc.plugin.user.users')}" />
-		<title><g:message code="default.edit.label" args="[entityName]" />!!</title>
+		<title><g:message code="default.edit.label" args="[entityName]" /></title>
 		<asset:stylesheet src="user.css" />
 	</head>
 	<body>

@@ -11,155 +11,161 @@ import de.httc.plugins.user.Role
 @Transactional(readOnly = true)
 @Secured(['ROLE_ADMIN', 'ROLE_USER_ADMIN'])
 class UserController {
-    static namespace = "admin"
-    def imageService
-    def springSecurityService
-    def grailsApplication
+	static namespace = "admin"
+	def imageService
+	def springSecurityService
+	def grailsApplication
 
-    def index(Integer max) {
-        params.offset = params.offset ? (params.offset as int) : 0
-        params.max = Math.min(max ?: 10, 100)
-        params.sort = params.sort ?: "username"
-        params.order = params.order ?: "asc"
-        respond User.list(params), model:[userCount: User.count()]
-    }
+	def index(Integer max) {
+		params.offset = params.offset ? (params.offset as int) : 0
+		params.max = Math.min(max ?: 10, 100)
+		params.sort = params.sort ?: "username"
+		params.order = params.order ?: "asc"
+		respond User.list(params), model:[userCount: User.count()]
+	}
 
-    def create() {
-        params.passwordExpired = true
-        respond new User(params)
-    }
+	def create() {
+		params.passwordExpired = true
+		respond new User(params)
+	}
 
-    @Transactional
-    def save(User userInstance) {
-        if (userInstance == null) {
-            notFound()
-            return
-        }
+	@Transactional
+	def save(User userInstance) {
+		if (userInstance == null) {
+			notFound()
+			return
+		}
 
-        if (params['_photo']?.bytes?.length > 0) {
-            userInstance.profile.photo = imageService.createThumbnailBytes(params['_photo'].bytes, grailsApplication.mergedConfig.de.httc.plugin.user.avatarSize ?: 40)
-        }
-        else if (params['_deletePhoto'] == 'true') {
-            userInstance.profile.photo = null
-        }
+		userInstance.profile?.organisations?.clear()
+		bindData(userInstance, params, [include:["profile.organisations"]])
 
-        if (!userInstance.save(true)) {
-            respond userInstance.errors, view:'create'
-            return
-        }
+		if (params['_photo']?.bytes?.length > 0) {
+			userInstance.profile.photo = imageService.createThumbnailBytes(params['_photo'].bytes, grailsApplication.mergedConfig.de.httc.plugin.user.avatarSize ?: 40)
+		}
+		else if (params['_deletePhoto'] == 'true') {
+			userInstance.profile.photo = null
+		}
 
-        updateRoles(userInstance)
+		if (!userInstance.save(true)) {
+			respond userInstance.errors, view:'create'
+			return
+		}
 
-        flash.message = message(code: 'default.created.message', args: [message(code: 'de.httc.plugin.user.user', default: 'User'), userInstance.profile.displayName])
-        redirect action:"index", method:"GET"
-    }
+		updateRoles(userInstance)
 
-    def edit(User userInstance) {
-        if (userInstance == null) {
-            notFound()
-            return
-        }
-        respond userInstance
-    }
+		flash.message = message(code: 'default.created.message', args: [message(code: 'de.httc.plugin.user.user', default: 'User'), userInstance.profile.displayName])
+		redirect action:"index", method:"GET"
+	}
 
-    @Transactional
-    def update(User userInstance) {
-        if (userInstance == null) {
-            notFound()
-            return
-        }
+	def edit(User userInstance) {
+		if (userInstance == null) {
+			notFound()
+			return
+		}
+		respond userInstance
+	}
 
-        if (params['_photo']?.bytes?.length > 0) {
-            userInstance.profile.photo = imageService.createThumbnailBytes(params['_photo'].bytes, grailsApplication.mergedConfig.de.httc.plugin.user.avatarSize ?: 40)
-        }
-        else if (params['_deletePhoto'] == 'true') {
-            userInstance.profile.photo = null
-        }
+	@Transactional
+	def update(User userInstance) {
+		if (userInstance == null) {
+			notFound()
+			return
+		}
 
-        userInstance.save flush:true
-        if (userInstance.hasErrors() || userInstance.profile?.hasErrors()) {
-            respond userInstance.errors, view:'edit'
-            return
-        }
-        updateRoles(userInstance)
+		userInstance.profile?.organisations?.clear()
+		bindData(userInstance, params, [include:["profile.organisations"]])
 
-        flash.message = message(code: 'default.updated.message', args: [message(code: 'de.httc.plugin.user.user', default: 'User'), userInstance.profile.displayName])
-        redirect action:"index", method:"GET"
-    }
+		if (params['_photo']?.bytes?.length > 0) {
+			userInstance.profile.photo = imageService.createThumbnailBytes(params['_photo'].bytes, grailsApplication.mergedConfig.de.httc.plugin.user.avatarSize ?: 40)
+		}
+		else if (params['_deletePhoto'] == 'true') {
+			userInstance.profile.photo = null
+		}
 
-    @Transactional
-    def delete(User userInstance) {
-        if (userInstance == null) {
-            notFound()
-            return
-        }
+		userInstance.save flush:true
+		if (userInstance.hasErrors() || userInstance.profile?.hasErrors()) {
+			respond userInstance.errors, view:'edit'
+			return
+		}
+		updateRoles(userInstance)
 
-        userInstance.delete flush:true
+		flash.message = message(code: 'default.updated.message', args: [message(code: 'de.httc.plugin.user.user', default: 'User'), userInstance.profile.displayName])
+		redirect action:"index", method:"GET"
+	}
 
-        flash.message = message(code: 'default.deleted.message', args: [message(code: 'de.httc.plugin.user.user', default: 'User'), userInstance.profile.displayName])
-        redirect action:"index", method:"GET"
-    }
+	@Transactional
+	def delete(User userInstance) {
+		if (userInstance == null) {
+			notFound()
+			return
+		}
 
-    /*
-    * copied from https://grails-plugins.github.io/grails-spring-security-core/guide/passwords.html
-    */
-    @Secured('permitAll')
-    def passwordExpired() {
-        [username: session['SPRING_SECURITY_LAST_USERNAME']]
-    }
+		userInstance.delete flush:true
 
-    /*
-    * copied from https://grails-plugins.github.io/grails-spring-security-core/guide/passwords.html
-    */
-    @Transactional
-    @Secured('permitAll')
-    def updatePassword() {
-        String username = session['SPRING_SECURITY_LAST_USERNAME']
-        if (!username) {
-          flash.message = 'Sorry, an error has occurred'
-          redirect controller: 'login', action: 'auth'
-          return
-        }
-        String password = params.password
-        String newPassword = params.password_new
-        String newPassword2 = params.password_new_2
-        if (!password || !newPassword || !newPassword2 || newPassword != newPassword2) {
-          flash.message = 'Please enter your current password and a valid new password'
-          render view: 'passwordExpired', model: [username: session['SPRING_SECURITY_LAST_USERNAME']]
-          return
-        }
+		flash.message = message(code: 'default.deleted.message', args: [message(code: 'de.httc.plugin.user.user', default: 'User'), userInstance.profile.displayName])
+		redirect action:"index", method:"GET"
+	}
 
-        User user = User.findByUsername(username)
-        if (!springSecurityService.passwordEncoder?.isPasswordValid(user.password, password, null /*salt*/)) {
-          flash.message = 'Current password is incorrect'
-          render view: 'passwordExpired', model: [username: session['SPRING_SECURITY_LAST_USERNAME']]
-          return
-        }
+	/*
+	* copied from https://grails-plugins.github.io/grails-spring-security-core/guide/passwords.html
+	*/
+	@Secured('permitAll')
+	def passwordExpired() {
+		[username: session['SPRING_SECURITY_LAST_USERNAME']]
+	}
 
-        if (springSecurityService.passwordEncoder?.isPasswordValid(user.password, newPassword, null /*salt*/)) {
-          flash.message = 'Please choose a different password from your current one'
-          render view: 'passwordExpired', model: [username: session['SPRING_SECURITY_LAST_USERNAME']]
-          return
-        }
+	/*
+	* copied from https://grails-plugins.github.io/grails-spring-security-core/guide/passwords.html
+	*/
+	@Transactional
+	@Secured('permitAll')
+	def updatePassword() {
+		String username = session['SPRING_SECURITY_LAST_USERNAME']
+		if (!username) {
+		  flash.message = 'Sorry, an error has occurred'
+		  redirect controller: 'login', action: 'auth'
+		  return
+		}
+		String password = params.password
+		String newPassword = params.password_new
+		String newPassword2 = params.password_new_2
+		if (!password || !newPassword || !newPassword2 || newPassword != newPassword2) {
+		  flash.message = 'Please enter your current password and a valid new password'
+		  render view: 'passwordExpired', model: [username: session['SPRING_SECURITY_LAST_USERNAME']]
+		  return
+		}
 
-        user.password = newPassword
-        user.passwordExpired = false
-        user.save()
+		User user = User.findByUsername(username)
+		if (!springSecurityService.passwordEncoder?.isPasswordValid(user.password, password, null /*salt*/)) {
+		  flash.message = 'Current password is incorrect'
+		  render view: 'passwordExpired', model: [username: session['SPRING_SECURITY_LAST_USERNAME']]
+		  return
+		}
 
-        springSecurityService.reauthenticate user.username
+		if (springSecurityService.passwordEncoder?.isPasswordValid(user.password, newPassword, null /*salt*/)) {
+		  flash.message = 'Please choose a different password from your current one'
+		  render view: 'passwordExpired', model: [username: session['SPRING_SECURITY_LAST_USERNAME']]
+		  return
+		}
 
-        redirect uri:"/"
-    }
+		user.password = newPassword
+		user.passwordExpired = false
+		user.save()
 
-    protected void notFound() {
-        flash.message = message(code: 'default.not.found.message', args: [message(code: 'de.httc.plugin.user.user', default: 'User'), params.id])
-        redirect action: "index", method: "GET"
-    }
+		springSecurityService.reauthenticate user.username
 
-    protected void updateRoles(User userInstance) {
-        UserRole.findAllByUser(userInstance)*.delete()
-        params?.role?.each {
-            UserRole.create(userInstance, Role.get(it), true)
-        }
-    }
+		redirect uri:"/"
+	}
+
+	protected void notFound() {
+		flash.message = message(code: 'default.not.found.message', args: [message(code: 'de.httc.plugin.user.user', default: 'User'), params.id])
+		redirect action: "index", method: "GET"
+	}
+
+	protected void updateRoles(User userInstance) {
+		UserRole.findAllByUser(userInstance)*.delete()
+		params?.role?.each {
+			UserRole.create(userInstance, Role.get(it), true)
+		}
+	}
 }
