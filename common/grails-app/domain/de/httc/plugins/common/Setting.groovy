@@ -38,8 +38,4 @@ class Setting {
 	private void publishChangedEvent() {
 		grailsApplication.mainContext.publishEvent(new SettingChangedEvent(this))
 	}
-
-	static String getValue(key) {
-		return Setting.findByKey(key)?.value
-	}
 }

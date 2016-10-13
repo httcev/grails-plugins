@@ -98,7 +98,6 @@ grails.databinding.dateFormats = [
 
 
 grails.logging.jul.usebridge = true
-//grails.serverURL = "https://${Environment.current == Environment.PRODUCTION ? 'plattform' : Environment.current.name}.kola-projekt.de"
 
 environments {
     development {

@@ -4,7 +4,6 @@ import org.springframework.context.ApplicationListener
 import org.springframework.context.ApplicationEvent
 import grails.transaction.Transactional
 import de.httc.plugins.user.User
-import de.httc.plugins.common.Setting
 import gov.adlnet.xapi.model.*
 import gov.adlnet.xapi.client.StatementClient
 import static grails.async.Promises.task
@@ -12,8 +11,9 @@ import static grails.async.Promises.task
 @Transactional(readOnly = true)
 class LrsService implements ApplicationListener<ApplicationEvent> {
 	def springSecurityService
-	def client
+	def settingService
 	def grailsLinkGenerator
+	def client
 
 	def log(Verb verb, String activityId) {
 		log(verb, createActivity(activityId))
@@ -82,7 +82,7 @@ class LrsService implements ApplicationListener<ApplicationEvent> {
 		else {
 			//log.info "--- ignoring event ${event}"
 		}
-*/		
+*/
 	}
 
 	private def createActivity(String activityId) {
@@ -92,9 +92,9 @@ class LrsService implements ApplicationListener<ApplicationEvent> {
 	}
 
 	private def readConfig() {
-		def lrsUrl = Setting.getValue("lrsUrl")
-		def lrsUser = Setting.getValue("lrsUser")
-		def lrsPassword = Setting.getValue("lrsPassword")
+		def lrsUrl = settingService.getValue("lrsUrl")
+		def lrsUser = settingService.getValue("lrsUser")
+		def lrsPassword = settingService.getValue("lrsPassword")
 		if (lrsUrl && lrsUser && lrsPassword) {
 			client = new StatementClient(lrsUrl, lrsUser, lrsPassword)
 		}

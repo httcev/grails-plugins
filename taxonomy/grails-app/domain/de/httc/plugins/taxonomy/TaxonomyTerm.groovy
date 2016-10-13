@@ -30,12 +30,7 @@ class TaxonomyTerm extends TaxonomyNode implements EsaComparable {
 			updateEsaVector()
 		}
 	}
-/*
-	def setParent(TaxonomyNode parent) {
-		this.parent = parent
-		updateTaxonomyReference()
-	}
-*/
+
 	public IConceptVector getEsaVector() {
 		try {
 			if (esaVector == null && esaVectorData != null) {

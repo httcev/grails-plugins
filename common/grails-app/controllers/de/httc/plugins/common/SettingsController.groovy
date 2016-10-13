@@ -8,6 +8,7 @@ import org.springframework.security.access.annotation.Secured
 @Secured(['ROLE_ADMIN'])
 class SettingsController {
 	def grailsApplication
+	def settingService
 
 	def index() {
 		respond Setting.listOrderByWeight()
@@ -27,7 +28,7 @@ class SettingsController {
 		}
 		// update "terms of use existing" cache
 		// TODO: refactor this to a generic form
-		grailsApplication.config.kola.termsOfUseExisting = Setting.getValue("termsOfUse")?.length() > 0
+		grailsApplication.config.app.settings.termsOfUseExisting = settingService.getValue("termsOfUse")?.length() > 0
 		flash.message = message(code: 'default.updated.message.single', args: [message(code: 'de.httc.plugin.common.settings', default: 'Settings')])
 		redirect action:"index", method:"GET"
 	}

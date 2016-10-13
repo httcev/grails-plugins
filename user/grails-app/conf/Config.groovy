@@ -98,7 +98,6 @@ grails.databinding.dateFormats = [
 
 
 grails.logging.jul.usebridge = true
-//grails.serverURL = "https://${Environment.current == Environment.PRODUCTION ? 'plattform' : Environment.current.name}.kola-projekt.de"
 de.httc.plugin.user.selfRegistrationEnabled = true
 
 elasticSearch {
@@ -165,10 +164,10 @@ grails {
             "mail.smtp.socketFactory.fallback":"false"]
    }
 }
-grails.plugin.springsecurity.ui.forgotPassword.emailSubject = "KOLA Benutzerkonto, neues Passwort"
-grails.plugin.springsecurity.ui.forgotPassword.emailFrom = "info@kola-projekt.de"
-grails.plugin.springsecurity.ui.forgotPassword.emailBody = 'Guten Tag $user.profile.firstName $user.profile.lastName,<br/><br/>bitte klicken Sie&nbsp;<a href="$url">hier</a>, um Ihr KOLA-Passwort neu zu setzen.<br/><br/>Wenn Sie diese Mail nicht angefordert haben, ignorieren Sie sie bitte einfach, es wurden keine Änderungen vorgenommen.<br/><br/>Ihr KOLA-Team'
-grails.plugin.springsecurity.ui.register.emailSubject = "KOLA Benutzerkonto"
+grails.plugin.springsecurity.ui.forgotPassword.emailSubject = "Benutzerkonto, neues Passwort"
+grails.plugin.springsecurity.ui.forgotPassword.emailFrom = "info@httc.de"
+grails.plugin.springsecurity.ui.forgotPassword.emailBody = 'Guten Tag $user.profile.firstName $user.profile.lastName,<br/><br/>bitte klicken Sie&nbsp;<a href="$url">hier</a>, um Ihr Passwort neu zu setzen.<br/><br/>Wenn Sie diese Mail nicht angefordert haben, ignorieren Sie sie bitte einfach, es wurden keine Änderungen vorgenommen.<br/><br/>Ihr Support-Team'
+grails.plugin.springsecurity.ui.register.emailSubject = "Benutzerkonto"
 grails.plugin.springsecurity.ui.register.defaultRoleNames =["ROLE_USER"]
-grails.plugin.springsecurity.ui.register.emailFrom = "info@kola-projekt.de"
-grails.plugin.springsecurity.ui.register.emailBody = 'Guten Tag $user.profile.firstName $user.profile.lastName,<br/><br/>um das Anlegen des neuen KOLA Benutzerkontos abzuschließen, klicken Sie bitte&nbsp;<a href="$url">hier</a>.<br/><br/>Wenn Sie kein KOLA Benutzerkonto angefordert haben, ignorieren Sie diese Mail bitte einfach.<br/><br/>Ihr KOLA-Team'
+grails.plugin.springsecurity.ui.register.emailFrom = "info@httc.de"
+grails.plugin.springsecurity.ui.register.emailBody = 'Guten Tag $user.profile.firstName $user.profile.lastName,<br/><br/>um das Anlegen des neuen Benutzerkontos abzuschließen, klicken Sie bitte&nbsp;<a href="$url">hier</a>.<br/><br/>Wenn Sie kein Benutzerkonto angefordert haben, ignorieren Sie diese Mail bitte einfach.<br/><br/>Ihr Support-Team'

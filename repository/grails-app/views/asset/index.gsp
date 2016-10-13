@@ -27,7 +27,7 @@
 			<div class="message alert alert-success" role="status">${flash.message}</div>
 		</g:if>
 		<g:if test="${assetList?.size() > 0}">
-			<p class="margin text-muted small"><g:message code="de.httc.search.hits.displaying" default="Showing {0} {1}-{2} of {3}" args="${[entitiesName, params.offset + 1, Math.min(params.offset + params.max, assetCount), assetCount]}" />:</p>
+			<p class="margin text-muted small"><g:message code="app.search.hits.displaying" default="Showing {0} {1}-{2} of {3}" args="${[entitiesName, params.offset + 1, Math.min(params.offset + params.max, assetCount), assetCount]}" />:</p>
 			<div class="table-responsive">
 				<table class="table">
 					<thead>

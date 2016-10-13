@@ -12,6 +12,7 @@
     <resource>de.httc.plugins.common.SettingsController</resource>
     <resource>de.httc.plugins.common.Setting</resource>
     <resource>de.httc.plugins.common.AuthService</resource>
+    <resource>de.httc.plugins.common.SettingService</resource>
     <resource>de.httc.plugins.common.HttcTagLib</resource>
   </resources>
 </plugin>

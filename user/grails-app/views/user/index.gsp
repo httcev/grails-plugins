@@ -21,7 +21,7 @@
 		<g:if test="${flash.message}">
 			<div class="message alert alert-success" role="status">${flash.message}</div>
 		</g:if>
-		<p class="margin text-muted small"><g:message code="de.httc.search.hits.displaying" args="${[entitiesName, params.offset + 1, Math.min(params.offset + params.max, userCount), userCount]}" />:</p>
+		<p class="margin text-muted small"><g:message code="app.search.hits.displaying" args="${[entitiesName, params.offset + 1, Math.min(params.offset + params.max, userCount), userCount]}" />:</p>
 		<div class="table-responsive">
 			<table class="table table-striped">
 				<thead>
