@@ -20,7 +20,7 @@
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<grails.version>2.5.5</grails.version>
+		<grails.version>2.5.3</grails.version>
 		<h2.version>1.4.192</h2.version>
 	</properties>
 	<developers>
