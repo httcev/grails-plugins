@@ -50,8 +50,7 @@ class LrsService implements ApplicationListener<ApplicationEvent> {
 					statement.setVerb(verb);
 					statement.setObject(activity);
 
-					String publishedId = client.postStatement(statement)
-					log.debug "--- publishedId=${publishedId}"
+					client.postStatement(statement)
 				}
 				catch(e) {
 					log.error e
