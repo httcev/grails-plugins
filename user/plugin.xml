@@ -1,4 +1,4 @@
-<plugin name='httc-user' version='2.0.2-SNAPSHOT' grailsVersion='2.4 &gt; *'>
+<plugin name='httc-user' version='2.0.3-SNAPSHOT' grailsVersion='2.4 &gt; *'>
   <author>Stephan Tittel</author>
   <authorEmail>stephan.tittel@httc.de</authorEmail>
   <title>httc user plugin</title>
