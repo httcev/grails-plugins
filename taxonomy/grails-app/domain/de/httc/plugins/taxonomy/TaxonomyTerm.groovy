@@ -83,4 +83,27 @@ class TaxonomyTerm extends TaxonomyNode implements EsaComparable {
 			it.updateTaxonomyReference()
 		}
 	}
+
+	static _embedded = ["label"]
+	static _referenced = ["taxonomy", "parent", "children"]
+
+	static {
+		grails.converters.JSON.registerObjectMarshaller(TaxonomyTerm) { term ->
+			def doc = term.properties.findAll { k, v ->
+				k in _embedded
+			}
+			_referenced.each {
+				if (term."$it" instanceof List) {
+					doc."$it" = term."$it"?.collect {
+						it?.id
+					}
+				}
+				else {
+					doc."$it" = term."$it"?.id
+				}
+			}
+			doc.id = term.id
+			return [id:term.id, doc:doc]
+		}
+	}
 }

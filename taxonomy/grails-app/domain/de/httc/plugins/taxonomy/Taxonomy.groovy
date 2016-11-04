@@ -20,4 +20,27 @@ class Taxonomy extends TaxonomyNode {
 	def getAllTermIds() {
 		return TaxonomyTerm.executeQuery("select t.id from TaxonomyTerm t where t.taxonomy = ?", [this])
 	}
+
+	static _embedded = ["label", "type"]
+	static _referenced = ["parent", "children"]
+
+	static {
+		grails.converters.JSON.registerObjectMarshaller(Taxonomy) { taxonomy ->
+			def doc = taxonomy.properties.findAll { k, v ->
+				k in _embedded
+			}
+			_referenced.each {
+				if (taxonomy."$it" instanceof List) {
+					doc."$it" = taxonomy."$it"?.collect {
+						it?.id
+					}
+				}
+				else {
+					doc."$it" = taxonomy."$it"?.id
+				}
+			}
+			doc.id = taxonomy.id
+			return [id:taxonomy.id, doc:doc]
+		}
+	}
 }
