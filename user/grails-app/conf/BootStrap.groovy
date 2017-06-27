@@ -9,7 +9,7 @@ class BootStrap {
             def adminRole = new Role(authority: 'ROLE_ADMIN').save(flush: true)
             assert Role.count() == 1
 
-            def adminUser = new User(username:"admin", password:"admin", email:"stephan.tittel@httc.de", profile:[firstName:"User", lastName:"Admin"])
+            def adminUser = new User(username:"admin", password:"admin", email:"test@example.com", profile:[firstName:"User", lastName:"Admin"])
 
             if (!adminUser.save(flush: true)) {
                 adminUser.errors.allErrors.each {
@@ -23,7 +23,7 @@ class BootStrap {
         }
         environments {
             development {
-                def testUser = new User(username:"test", password:"test", email:"stephan.tittel@httc.de", profile:[firstName:"User", lastName:"Test"]).save(flush: true)
+                def testUser = new User(username:"test", password:"test", email:"test2@example.com", profile:[firstName:"User", lastName:"Test"]).save(flush: true)
                 assert User.count() == 2
             }
         }
