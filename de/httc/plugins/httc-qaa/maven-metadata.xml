@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
   <groupId>de.httc.plugins</groupId>
-  <artifactId>httc-push-notification</artifactId>
+  <artifactId>httc-qaa</artifactId>
   <versioning>
     <versions>
       <version>2.0.4-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20170628093803</lastUpdated>
+    <lastUpdated>20170628093932</lastUpdated>
   </versioning>
 </metadata>

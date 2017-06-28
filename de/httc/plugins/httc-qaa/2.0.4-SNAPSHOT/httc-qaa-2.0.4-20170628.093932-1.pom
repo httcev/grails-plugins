@@ -7,10 +7,10 @@
 		<version>2.0.4-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>httc-push-notification</artifactId>
+	<artifactId>httc-qaa</artifactId>
 	<packaging>grails-plugin</packaging>
 
-	<name>httc push notification plugin</name>
+	<name>httc qaa plugin</name>
 	<description />
 
 	<dependencies>
@@ -26,6 +26,30 @@
 			<version>${project.parent.version}</version>
 			<type>zip</type>
 		</dependency>
+		<dependency>
+			<groupId>de.httc.plugins</groupId>
+			<artifactId>httc-repository</artifactId>
+			<version>${project.parent.version}</version>
+			<type>zip</type>
+		</dependency>
+		<dependency>
+			<groupId>de.httc.plugins</groupId>
+			<artifactId>httc-taxonomy</artifactId>
+			<version>${project.parent.version}</version>
+			<type>zip</type>
+		</dependency>
+		<dependency>
+			<groupId>de.httc.plugins</groupId>
+			<artifactId>httc-push-notification</artifactId>
+			<version>${project.parent.version}</version>
+			<type>zip</type>
+		</dependency>
+		<dependency>
+			<groupId>de.httc.plugins</groupId>
+			<artifactId>httc-lrs</artifactId>
+			<version>${project.parent.version}</version>
+			<type>zip</type>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -33,7 +57,7 @@
 				<groupId>com.google.code.maven-replacer-plugin</groupId>
 				<artifactId>replacer</artifactId>
 				<configuration>
-					<file>HttcPushNotificationGrailsPlugin.groovy</file>
+					<file>HttcQaaGrailsPlugin.groovy</file>
 				</configuration>
 			</plugin>
 			<plugin>
