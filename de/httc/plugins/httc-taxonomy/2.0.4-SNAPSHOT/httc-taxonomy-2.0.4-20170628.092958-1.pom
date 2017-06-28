@@ -7,29 +7,18 @@
 		<version>2.0.4-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>httc-esa</artifactId>
+	<artifactId>httc-taxonomy</artifactId>
 	<packaging>grails-plugin</packaging>
 
-	<name>httc esa plugin</name>
+	<name>httc taxonomy plugin</name>
 	<description />
 
 	<dependencies>
 		<dependency>
-			<groupId>edu.kit.aifb.esa</groupId>
-			<artifactId>research-esa</artifactId>
-			<version>2.0</version>
-			<exclusions>
-				<!-- exclude hsql db (pulled in by research esa -> apache hadoop) since we're using a newer version -->
-				<exclusion>
-					<groupId>hsqldb</groupId>
-					<artifactId>hsqldb</artifactId>
-				</exclusion>
-				<!-- exclude rhino js because otherwise the "less" compiler fails at runtime -->
-				<exclusion>
-					<groupId>rhino</groupId>
-					<artifactId>js</artifactId>
-				</exclusion>
-			</exclusions>
+			<groupId>de.httc.plugins</groupId>
+			<artifactId>httc-esa</artifactId>
+			<version>${project.parent.version}</version>
+			<type>zip</type>
 		</dependency>
 	</dependencies>
 	<build>
@@ -38,7 +27,7 @@
 				<groupId>com.google.code.maven-replacer-plugin</groupId>
 				<artifactId>replacer</artifactId>
 				<configuration>
-					<file>HttcEsaGrailsPlugin.groovy</file>
+					<file>HttcTaxonomyGrailsPlugin.groovy</file>
 				</configuration>
 			</plugin>
 			<plugin>
