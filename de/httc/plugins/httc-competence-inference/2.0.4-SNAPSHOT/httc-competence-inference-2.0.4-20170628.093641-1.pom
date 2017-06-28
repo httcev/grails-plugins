@@ -7,10 +7,10 @@
 		<version>2.0.4-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>httc-competence</artifactId>
+	<artifactId>httc-competence-inference</artifactId>
 	<packaging>grails-plugin</packaging>
 
-	<name>httc competence plugin</name>
+	<name>httc competence inference plugin</name>
 	<description />
 	<dependencies>
 		<dependency>
@@ -19,15 +19,20 @@
 			<version>${project.parent.version}</version>
 			<type>zip</type>
 		</dependency>
+		<dependency>
+			<groupId>de.httc.plugins</groupId>
+			<artifactId>httc-competence</artifactId>
+			<version>${project.parent.version}</version>
+			<type>zip</type>
+		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>com.google.code.maven-replacer-plugin</groupId>
 				<artifactId>replacer</artifactId>
 				<configuration>
-					<file>HttcCompetenceGrailsPlugin.groovy</file>
+					<file>HttcCompetenceInferenceGrailsPlugin.groovy</file>
 				</configuration>
 			</plugin>
 			<plugin>
