@@ -7,21 +7,22 @@
 		<version>2.0.4-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>httc-competence-inference</artifactId>
+	<artifactId>httc-push-notification</artifactId>
 	<packaging>grails-plugin</packaging>
 
-	<name>httc competence inference plugin</name>
+	<name>httc push notification plugin</name>
 	<description />
+
 	<dependencies>
 		<dependency>
 			<groupId>de.httc.plugins</groupId>
-			<artifactId>httc-taxonomy</artifactId>
+			<artifactId>httc-common</artifactId>
 			<version>${project.parent.version}</version>
 			<type>zip</type>
 		</dependency>
 		<dependency>
 			<groupId>de.httc.plugins</groupId>
-			<artifactId>httc-competence</artifactId>
+			<artifactId>httc-user</artifactId>
 			<version>${project.parent.version}</version>
 			<type>zip</type>
 		</dependency>
@@ -32,7 +33,7 @@
 				<groupId>com.google.code.maven-replacer-plugin</groupId>
 				<artifactId>replacer</artifactId>
 				<configuration>
-					<file>HttcCompetenceInferenceGrailsPlugin.groovy</file>
+					<file>HttcPushNotificationGrailsPlugin.groovy</file>
 				</configuration>
 			</plugin>
 			<plugin>
