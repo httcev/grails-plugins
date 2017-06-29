@@ -17,10 +17,16 @@
 
 	<repositories>
 		<repository>
-			<id>apache-snapshots</id>
-			<name>Apache Snapshots Repository</name>
+			<!-- for commons-imaging -->
+			<id>apache.snapshots</id>
+			<name>Apache Development Snapshot Repository</name>
 			<url>https://repository.apache.org/content/repositories/snapshots/</url>
-			<layout>default</layout>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
 		</repository>
 	</repositories>
 	<dependencies>
@@ -34,7 +40,7 @@
 			<!-- used to remove exif metadata from uploaded images -->
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-imaging</artifactId>
-			<version>1.0</version>
+			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.grails.plugins</groupId>
