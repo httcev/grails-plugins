@@ -22,6 +22,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<grails.version>2.5.3</grails.version>
 		<h2.version>1.4.192</h2.version>
+		<!-- github server corresponds to entry in ~/.m2/settings.xml -->
+		<github.global.server>github</github.global.server>
+		<repo.dir>${project.build.directory}/mvn-repo</repo.dir>
 	</properties>
 	<developers>
 		<developer>
@@ -35,8 +38,8 @@
 	</developers>
 	<scm>
 		<connection>scm:git:https://dev.kom.e-technik.tu-darmstadt.de/gitlab/tittel/grails-plugins.git</connection>
-	  <tag>HEAD</tag>
-  </scm>
+		<tag>HEAD</tag>
+	</scm>
 	<repositories>
 		<repository>
 			<id>docendo</id>
@@ -67,7 +70,13 @@
 			</snapshots>
 		</repository>
 	</repositories>
-
+	<distributionManagement>
+		<repository>
+			<id>internal.repo</id>
+			<name>Temporary Staging Repository</name>
+			<url>file://${project.build.directory}/mvn-repo</url>
+		</repository>
+	</distributionManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.grails</groupId>
@@ -175,17 +184,37 @@
 					</configuration>
 				</plugin>
 				<plugin>
-					<!-- prevent from deploying to remote repositories -->
-					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-deploy-plugin</artifactId>
 					<version>2.8.2</version>
 					<configuration>
-						<skip>true</skip>
+						<altDeploymentRepository>internal.repo::default::file://${repo.dir}</altDeploymentRepository>
 					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>com.github.github</groupId>
+					<artifactId>site-maven-plugin</artifactId>
+					<version>0.12</version>
+					<configuration>
+						<message>Maven artifacts for ${project.version}</message>  <!-- git commit message -->
+						<noJekyll>true</noJekyll>                                  <!-- disable webpage processing -->
+						<outputDirectory>${repo.dir}</outputDirectory> <!-- matches distribution management repository url above -->
+						<branch>refs/heads/mvn-repo</branch>                       <!-- remote branch name -->
+						<includes><include>**/*</include></includes>
+						<repositoryName>grails-plugins</repositoryName>      <!-- github repo name -->
+						<repositoryOwner>httcev</repositoryOwner>    <!-- github username  -->
+					</configuration>
+					<executions>
+						<!-- run site-maven-plugin's 'site' target as part of the build's normal 'deploy' phase -->
+						<execution>
+							<goals>
+							<goal>site</goal>
+							</goals>
+							<phase>deploy</phase>
+						</execution>
+					</executions>
 				</plugin>
 			</plugins>
 		</pluginManagement>
-
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
