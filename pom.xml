@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.httc.plugins</groupId>
 	<artifactId>httc-grails-plugins</artifactId>
-	<version>2.0.4-SNAPSHOT</version>
+	<version>2.0.4</version>
 	<packaging>pom</packaging>
 	<name>httc grails plugins</name>
 	<description />
@@ -38,7 +38,7 @@
 	</developers>
 	<scm>
 		<connection>scm:git:https://dev.kom.e-technik.tu-darmstadt.de/gitlab/tittel/grails-plugins.git</connection>
-		<tag>HEAD</tag>
+		<tag>httc-grails-plugins-2.0.4</tag>
 	</scm>
 	<repositories>
 		<repository>
