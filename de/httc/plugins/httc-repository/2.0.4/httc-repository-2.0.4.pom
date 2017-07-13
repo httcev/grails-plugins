@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>de.httc.plugins</groupId>
+		<artifactId>httc-grails-plugins</artifactId>
+		<version>2.0.4</version>
+	</parent>
+
+	<artifactId>httc-repository</artifactId>
+	<packaging>grails-plugin</packaging>
+
+	<name>httc repository plugin</name>
+	<description>httc repository plugin</description>
+	<properties>
+		<repo.dir>${project.parent.build.directory}/mvn-repo</repo.dir>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>de.httc.plugins</groupId>
+			<artifactId>httc-taxonomy</artifactId>
+			<version>${project.parent.version}</version>
+			<type>zip</type>
+		</dependency>
+		<dependency>
+			<groupId>de.httc.plugins</groupId>
+			<artifactId>httc-user</artifactId>
+			<version>${project.parent.version}</version>
+			<type>zip</type>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tika</groupId>
+			<artifactId>tika-core</artifactId>
+			<version>1.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tika</groupId>
+			<artifactId>tika-parsers</artifactId>
+			<version>1.9</version>
+			<exclusions>
+				<exclusion>
+					<groupId>xerces</groupId>
+					<artifactId>xercesImpl</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>xml-apis</groupId>
+					<artifactId>xml-apis</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.httpcomponents</groupId>
+					<artifactId>httpcore</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.bouncycastle</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.grails.plugins</groupId>
+			<artifactId>webflow</artifactId>
+			<version>2.1.0</version>
+			<scope>runtime</scope>
+			<type>zip</type>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.google.code.maven-replacer-plugin</groupId>
+				<artifactId>replacer</artifactId>
+				<configuration>
+					<file>HttcRepositoryGrailsPlugin.groovy</file>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>
