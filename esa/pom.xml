@@ -12,9 +12,6 @@
 
 	<name>httc esa plugin</name>
 	<description />
-	<properties>
-		<repo.dir>${project.parent.build.directory}/mvn-repo</repo.dir>
-	</properties>
 
 	<dependencies>
 		<dependency>
@@ -43,10 +40,6 @@
 				<configuration>
 					<file>HttcEsaGrailsPlugin.groovy</file>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>com.github.github</groupId>
-				<artifactId>site-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>

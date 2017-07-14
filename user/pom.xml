@@ -11,9 +11,6 @@
 
 	<name>httc user plugin</name>
 	<description />
-	<properties>
-		<repo.dir>${project.parent.build.directory}/mvn-repo</repo.dir>
-	</properties>
 
 	<repositories>
 		<repository>
@@ -75,10 +72,6 @@
 				<configuration>
 					<file>HttcUserGrailsPlugin.groovy</file>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>com.github.github</groupId>
-				<artifactId>site-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
