@@ -17,6 +17,9 @@ class SettingsController {
 	@Transactional
 	def update(SettingsCommand cmd) {
 		cmd?.settings?.each { setting ->
+			if (setting.exported == null) {
+				setting.exported = false
+			}
 			if (!setting.save()) {
 				errors.rejectValue("value", "401", [message(code:"${setting.prefix}.${setting.key}")] as Object[], message(code:"de.httc.plugin.common.settings.required"))
 			}

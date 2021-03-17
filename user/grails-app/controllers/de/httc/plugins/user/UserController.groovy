@@ -1,8 +1,9 @@
-package de.httc.plugins.user.admin
+package de.httc.plugins.user
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import org.springframework.security.access.annotation.Secured
+import org.hibernate.criterion.Order
 
 import de.httc.plugins.user.User
 import de.httc.plugins.user.UserRole
@@ -11,21 +12,40 @@ import de.httc.plugins.user.Role
 @Transactional(readOnly = true)
 @Secured(['ROLE_ADMIN', 'ROLE_USER_ADMIN'])
 class UserController {
-	static namespace = "admin"
 	def imageService
 	def springSecurityService
 	def grailsApplication
 
 	def index(Integer max) {
-		params.offset = params.offset ? (params.offset as int) : 0
-		params.max = Math.min(max ?: 10, 100)
+		params.offset = params.offset && !params.resetOffset ? (params.offset as int) : 0
+		params.max = Math.min(max ?: 20, 100)
 		params.sort = params.sort ?: "username"
 		params.order = params.order ?: "asc"
-		respond User.list(params), model:[userCount: User.count()]
+
+		def hibernateOrder = params.order == "asc" ? Order.asc(params.sort).ignoreCase() : Order.desc(params.sort).ignoreCase()
+
+		def results = User.createCriteria().list(max:params.max, offset:params.offset) {
+			// left join allows null values in the association
+			createAlias('profile', 'p', org.hibernate.Criteria.LEFT_JOIN)
+			createAlias('p.company', 'pc', org.hibernate.Criteria.LEFT_JOIN)
+
+			if (params.filter) {
+				or {
+					ilike("username", "%${params.filter}%")
+					ilike("p.firstName", "%${params.filter}%")
+					ilike("p.lastName", "%${params.filter}%")
+				}
+			}
+
+			order(hibernateOrder)
+			// add secondary sort key to keep sorting consistent on reload
+			order("id", "asc")
+		}
+		respond results, model:[userCount:results.totalCount]
 	}
 
 	def create() {
-		params.passwordExpired = true
+//		params.passwordExpired = true
 		respond new User(params)
 	}
 

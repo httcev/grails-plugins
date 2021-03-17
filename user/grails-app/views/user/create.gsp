@@ -7,12 +7,12 @@
 	</head>
 	<body>
 		<ol class="breadcrumb">
-			<li><g:link uri="/admin"><g:message code="default.admin.label" default="Administration" /></g:link></li>
-			<li><g:link action="index" namespace="admin">${entitiesName}</g:link></li>
+			<li><g:message code="default.admin.label" default="Administration" /></li>
+			<li><g:link action="index">${entitiesName}</g:link></li>
 			<li class="active"><g:message code="default.create.label" args="[entityName]" /></li>
 		</ol>
 
-		<g:form url="[resource:user, action:'save', namespace:'admin']" class="form-horizontal" autocomplete="off" enctype="multipart/form-data">
+		<g:form url="[resource:user, action:'save']" class="form-horizontal" autocomplete="off" enctype="multipart/form-data">
 			<h1 class="page-header clearfix">
 				<g:message code="default.create.label" args="[entityName]" />
 				<div class="buttons pull-right">

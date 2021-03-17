@@ -1,4 +1,4 @@
-<plugin name='httc-user' version='2.0.6-SNAPSHOT' grailsVersion='2.4 &gt; *'>
+<plugin name='httc-user' version='2.0.13-SNAPSHOT' grailsVersion='2.4 &gt; *'>
   <author>Stephan Tittel</author>
   <authorEmail>stephan.tittel@httc.de</authorEmail>
   <title>httc user plugin</title>
@@ -11,7 +11,7 @@
     <resource>HttcUserDefaultConfig</resource>
     <resource>HttcUserUrlMappings</resource>
     <resource>de.httc.plugins.user.RegisterController</resource>
-    <resource>de.httc.plugins.user.admin.UserController</resource>
+    <resource>de.httc.plugins.user.UserController</resource>
     <resource>de.httc.plugins.user.Profile</resource>
     <resource>de.httc.plugins.user.Role</resource>
     <resource>de.httc.plugins.user.User</resource>

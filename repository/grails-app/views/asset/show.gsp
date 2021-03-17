@@ -17,7 +17,7 @@
 	<body>
 		<ol class="breadcrumb">
 			<li><g:link uri="/"><g:message code="app.home" /></g:link></li>
-			<li><g:link class="list" action="index" namespace="admin">${entitiesName}</g:link></li>
+			<li><g:link class="list" action="index">${entitiesName}</g:link></li>
 			<li class="active"><g:message code="default.show.label" args="[entityName]" /></li>
 		</ol>
 		<g:if test="${flash.error}">
@@ -45,7 +45,7 @@
 		</div>
 --%>
 		<div class="row">
-			<div class="col-sm-2"><label><g:message code="de.httc.plugin.repository.asset.mimeType" />:</label></div>
+			<div class="col-sm-2"><label><g:message code="app.meta.mimeType" />:</label></div>
 			<div class="col-sm-10"><code>${asset?.mimeType}</code></div>
 		</div>
 		<div class="row">

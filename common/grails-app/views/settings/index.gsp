@@ -36,9 +36,17 @@
 						<g:if test="${setting.required}"><span class="required-indicator">*</span>:</g:if>
 					</label>
 					<div class="col-sm-10">
-						<g:if test="${setting.multiline}">
-							<textArea id="${setting.key}" name="settings[${i}].value" class="form-control" rows="8" data-provide="markdown" data-iconlibrary="fa" data-language="de" data-hidden-buttons="cmdImage cmdCode cmdQuote"${setting.required ? " required" : ""}>${setting.value}</textArea>
+						<g:if test="${setting.possibleValues?.size() > 0}">
+							<select id="${setting.key}" name="settings[${i}].value" value="${setting.value}" class="form-control"${setting.required ? " required" : ""}>
+								<option value=""></option>
+								<g:each in="${setting.possibleValues}" var="optionValue">
+									<option value="${optionValue}"${setting.value==optionValue?' selected':''}><g:message code="${setting.prefix}.${setting.key}.${optionValue}" default="${optionValue}"/></option>
+								</g:each>
+							</select>
 						</g:if>
+						<g:elseif test="${setting.multiline}">
+							<textArea id="${setting.key}" name="settings[${i}].value" class="form-control" rows="8" data-provide="markdown" data-iconlibrary="fa" data-language="de" data-hidden-buttons="cmdImage cmdCode cmdQuote"${setting.required ? " required" : ""}>${setting.value}</textArea>
+						</g:elseif>
 						<g:else>
 							<input id="${setting.key}" type="text" name="settings[${i}].value" value="${setting.value}" class="form-control"${setting.required ? " required" : ""}>
 						</g:else>

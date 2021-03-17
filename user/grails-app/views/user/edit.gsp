@@ -8,15 +8,15 @@
 	</head>
 	<body>
 		<ol class="breadcrumb">
-			<li><g:link uri="/admin"><g:message code="default.admin.label" default="Administration" /></g:link></li>
-			<li><g:link class="index" action="index" namespace="admin">${entitiesName}</g:link></li>
+			<li><g:message code="default.admin.label" default="Administration" /></li>
+			<li><g:link class="index" action="index">${entitiesName}</g:link></li>
 			<li class="active"><g:message code="default.edit.label" args="[entityName]" /></li>
 		</ol>
-		<g:form url="[resource:user, action:'update', namespace:'admin']" method="PUT" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
+		<g:form url="[resource:user, action:'update']" method="PUT" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
 			<h1 class="page-header clearfix">
 				<g:message code="default.edit.label" args="[entityName]" />
 				<div class="buttons pull-right">
-					<g:link class="delete btn btn-danger" action="delete" namespace="admin" id="${user.id}" title="${message(code: 'default.button.delete.label', args:[entityName])}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', args: [entityName])}');">
+					<g:link class="delete btn btn-danger" action="delete" id="${user.id}" title="${message(code: 'default.button.delete.label', args:[entityName])}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', args: [entityName])}');">
 						<i class="fa fa-user-times"></i>
 					</g:link>
 					<button class="save btn btn-success"><i class="fa fa-save"></i> <g:message code="default.button.update.label" default="Update" /></button>

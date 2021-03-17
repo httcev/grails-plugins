@@ -30,7 +30,7 @@
 			<g:if test="${authService.canEdit(answer)}">
 				<g:form class="form hidden" action="updateAnswer" id="${answer.id}" method="PUT" enctype="multipart/form-data">
 					<input type="hidden" name="questionId" value="${question.id}">
-					<textarea name="text" class="form-control" rows="5" placeholder="${message(code:'de.httc.plugin.qaa.answer.placeholder')}" required>${answer.text}</textarea>
+					<g:textArea rows="5" name="text" class="form-control" data-provide="markdown" data-iconlibrary="fa" data-language="de" data-hidden-buttons="cmdImage cmdCode cmdQuote cmdPreview" value="${answer.text}" placeholder="${message(code:'de.httc.plugin.qaa.answer.placeholder')}" required="true"/>
 					<g:render model="${[attachments:answer.attachments, mode:'edit']}" template="/task/attachments" />
 					<div class="text-right form-padding-all"><button type="submit" class="btn btn-success"><i class="fa fa-save"></i> <g:message code="default.save.label" args="[message(code:'de.httc.plugin.qaa.answer')]" /></button></div>
 				</g:form>

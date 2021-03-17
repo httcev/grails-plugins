@@ -9,29 +9,31 @@ import java.util.SortedSet
 class Question extends Commentable {
     def springSecurityService
     static searchable = {
-		all = [analyzer: 'german']
-        except = ['creator', 'dateCreated', 'lastUpdated', 'reference', 'acceptedAnswer', 'ratingUsers']
-        title boost:2.0
-        metadata index:"not_analyzed"
-        answers component:true
-        comments component:true
-        attachments component:true
+	    all = [analyzer: 'german']
+      except = ['creator', 'dateCreated', 'lastUpdated', 'reference', 'acceptedAnswer', 'ratingUsers']
+      title boost:2.0
+      metadata index:"not_analyzed"
+      answers component:true
+      comments component:true
+      attachments component:true
     }
 
     static constraints = {
     	title blank:false
-    	text blank:false
+    	text nullable:true
     	acceptedAnswer nullable:true
-        reference nullable:true
+      reference nullable:true
     }
     static hasMany = [attachments:Asset, answers:Answer, comments:Comment, ratingUsers:Long, terms:TaxonomyTerm]
     static mapping = {
     	title type:"text"
     	text type:"text"
     	sort "dateCreated":"desc"
-    	answers sort:"dateCreated", "id"
-		comments sort:"dateCreated", "id"
-        metadata type:"text"
+      answers cascade: "all-delete-orphan", sort:"dateCreated", "id"
+      comments cascade: "all-delete-orphan", sort:"dateCreated", "id"
+      metadata type:"text"
+      attachments cascade: "all-delete-orphan"
+      acceptedAnswer cascade: "delete"
     }
 
     String title

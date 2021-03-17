@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<ol class="breadcrumb">
-			<li><g:link uri="/admin"><g:message code="default.admin.label" default="Administration" /></g:link></li>
+			<li><g:message code="default.admin.label" default="Administration" /></li>
 			<li><g:link class="list" action="index" plugin="httcTaxonomy">${entitiesName}</g:link></li>
 			<li class="active"><g:message code="default.edit.label" args="[entityName]" /></li>
 		</ol>
@@ -30,8 +30,8 @@
 		</form>
 		<g:render template="termsWithHeader" model="${[taxonomy:taxonomy, mode:'edit']}" />
 
-		<asset:stylesheet src="jstree-3.0.1.min.css"/>
-		<asset:javascript src="jstree-3.0.1.min.js"/>
+		<asset:stylesheet src="jstree-3.3.7.min.css"/>
+		<asset:javascript src="jstree-3.3.7.min.js"/>
 		<asset:script type="text/javascript">
 			var tree;
 

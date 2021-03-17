@@ -1,7 +1,7 @@
 class HttcUserUrlMappings {
 
 	static mappings = {
-		"/user/$action?/$id?(.$format)?" { controller = "user"; namespace="admin"; plugin = "httcUser" }
+		"/user/$action?/$id?(.$format)?" { controller = "user"; plugin = "httcUser" }
 		"/register/$action?" { controller = "register"; plugin = "httcUser" }
 	}
 }

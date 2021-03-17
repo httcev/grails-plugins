@@ -6,7 +6,9 @@ class Profile {
 	static constraints = {
 		firstName blank: false, unique: "lastName"
 		lastName blank: false
-		company nullable: true
+		company nullable:true, validator: { val, obj ->
+			return val == null || val.taxonomy.label == "companies"
+		}
 		phone nullable: true
 		mobile nullable: true
 		lastUpdated nullable: true // needed for downward compatibility
@@ -27,7 +29,7 @@ class Profile {
 
 	String firstName
 	String lastName
-	String company
+	TaxonomyTerm company
 	String phone
 	String mobile
 	byte[] photo

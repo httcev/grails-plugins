@@ -17,12 +17,15 @@ class QuestionController {
   def index(Integer max) {
 	  params.offset = params.offset && !params.resetOffset ? (params.offset as int) : 0
 	  params.max = Math.min(max ?: 10, 100)
-	  params.sort = params.sort ?: "lastUpdated"
+	  params.sort = params.sort ?: "dateCreated"
 	  params.order = params.order ?: "desc"
+    params.answered = params.answered ?: "no"
+    params.createdBy = params.createdBy ?: "company"
+    params.task = params.task ?: "all"
 
 	  def user = springSecurityService.currentUser
 	  def userCompany = user.profile?.company
-	  def filtered = params.own || params.ownCompany
+	  def filtered = params.createdBy != "all" || params.answered != "all" || params.task != "all"
 
 	  def results = Question.createCriteria().list(max:params.max, offset:params.offset) {
 		  // left join allows null values in the association
@@ -31,14 +34,26 @@ class QuestionController {
 
 		  eq("deleted", false)
 		  if (filtered) {
-			  or {
-				  if (params.own) {
+        and {
+				  if (params.createdBy == "own") {
 					  eq("creator", user)
 				  }
-				  if (params.ownCompany) {
+				  if (params.createdBy == "company") {
 					  eq("cp.company", userCompany)
 				  }
-			  }
+          if (params.answered == "yes") {
+            isNotNull("acceptedAnswer")
+          }
+          if (params.answered == "no") {
+            isNull("acceptedAnswer")
+          }
+          if (params.task == "yes") {
+            isNotNull("reference")
+          }
+          if (params.task == "no") {
+            isNull("reference")
+          }
+        }
 		  }
 		  and {
 			  order(params.sort, params.order)
@@ -63,12 +78,14 @@ class QuestionController {
 		  return
 	  }
 	  def sortedAnswers = question.answers?.sort { a,b ->
+      /*
 		  if (question.acceptedAnswer?.id == a.id) {
 			  return -1
 		  }
 		  else if (question.acceptedAnswer?.id == b.id) {
 			  return 1
 		  }
+      */
 		  return a.dateCreated.compareTo(b.dateCreated)
 	  }
 	  respond question, model:[sortedAnswers:sortedAnswers]
@@ -219,7 +236,7 @@ class QuestionController {
 	  }
 	  else {
 		  answer.text = "DELETED"
-		  answer.deleted =true
+		  answer.deleted = true
 		  questionService.saveAnswer(answer)
 		  msg = message(code: 'default.deleted.message', args: [message(code: 'de.httc.plugin.qaa.answer'), answer.id])
 	  }
@@ -241,6 +258,36 @@ class QuestionController {
 		  question = question.question
 	  }
 	  flash.message = message(code: 'default.created.message.single', args: [message(code: 'de.httc.plugin.qaa.comment')])
+	  redirect action:"show", method:"GET", id:question.id
+  }
+
+  @Transactional
+  def updateComment(Comment comment) {
+	  if (!authService.canEdit(comment)) {
+		  forbidden()
+		  return
+	  }
+    def question = comment.reference
+	  if (question instanceof Answer) {
+		  question = question.question
+	  }
+	  def msg
+	  if (comment.text) {
+		  if (!questionService.saveComment(comment)) {
+			  flash.error = comment.errors
+			  redirect action:"show", method:"GET", id:question.id
+			  return
+		  }
+		  msg = message(code: 'default.updated.message.single', args: [message(code: 'de.httc.plugin.qaa.comment')])
+	  }
+	  else {
+		  comment.text = "DELETED"
+		  comment.deleted = true
+		  questionService.saveComment(comment)
+		  msg = message(code: 'default.deleted.message', args: [message(code: 'de.httc.plugin.qaa.comment'), comment.id])
+	  }
+
+	  flash.message = msg
 	  redirect action:"show", method:"GET", id:question.id
   }
 

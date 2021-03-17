@@ -1,7 +1,9 @@
 package de.httc.plugins.taxonomy
 
 import java.util.UUID;
+import groovy.transform.EqualsAndHashCode
 
+@EqualsAndHashCode(includes="id")
 abstract class TaxonomyNode {
 	static searchable = { only = ["label"]}
 	static mappedBy = [children:"parent"]

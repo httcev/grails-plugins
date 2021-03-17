@@ -1,4 +1,4 @@
-<plugin name='httc-taxonomy' version='2.0.6-SNAPSHOT' grailsVersion='2.4 &gt; *'>
+<plugin name='httc-taxonomy' version='2.0.13-SNAPSHOT' grailsVersion='2.4 &gt; *'>
   <author>Stephan Tittel</author>
   <authorEmail>stephan.tittel@httc.de</authorEmail>
   <title>httc taxonomy plugin</title>
@@ -12,6 +12,5 @@
     <resource>de.httc.plugins.taxonomy.Taxonomy</resource>
     <resource>de.httc.plugins.taxonomy.TaxonomyNode</resource>
     <resource>de.httc.plugins.taxonomy.TaxonomyTerm</resource>
-    <resource>de.httc.plugins.taxonomy.TaxonomyService</resource>
   </resources>
 </plugin>

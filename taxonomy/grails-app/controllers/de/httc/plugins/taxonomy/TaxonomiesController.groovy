@@ -57,13 +57,13 @@ class TaxonomiesController {
 		}
 
 		flash.message = message(code: 'default.created.message', args: [message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy'), taxonomyInstance.id])
-		redirect(action:"show", id:taxonomyInstance.id, namespace:"admin", plugin:"httcTaxonomy")
+		redirect(action:"show", id:taxonomyInstance.id, plugin:"httcTaxonomy")
 	}
 
 	def show(Taxonomy taxonomyInstance) {
 		if (!taxonomyInstance) {
 			flash.message = message(code: 'default.not.found.message', args: [message(code: 'de.httc.plugin.taxonomy.taxonomy', default: 'Taxonomy'), params.id])
-			redirect(action: "index", namespace:"admin", plugin:"httcTaxonomy")
+			redirect(action: "index", plugin:"httcTaxonomy")
 			return
 		}
 		withFormat {

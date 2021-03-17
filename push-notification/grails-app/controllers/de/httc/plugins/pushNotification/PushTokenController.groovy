@@ -13,9 +13,11 @@ class PushTokenController {
 
 	@Secured("permitAll")
 	def index() {
-		render(contentType: 'text/json') {[
-			"senderId": settingService.getValue("gcmSenderId")
-		]}
+		def responseData = [
+			"senderId": settingService.getValue("gcmSenderId"),
+			"channel": settingService.getValue("gcmChannel")
+		]
+		render responseData as JSON
 	}
 
 	def update() {
@@ -24,15 +26,18 @@ class PushTokenController {
 			render(status:400, text:"missing token definition")
 			return
 		}
+		// prevent duplicates, so first remove this token from all other users.
+		// this can be the case when a user changes login credentials in the app.
+		PushToken.where { token == json.token }.deleteAll()
+
 		def currentUser = springSecurityService.currentUser
 		log.info "Registering push notification token for user ${currentUser.username}"
 		def pushToken = PushToken.get(currentUser.id)
 		if (!pushToken) {
 			pushToken = new PushToken(user:currentUser)
 		}
-
 		pushToken.token = json.token
-		if (pushToken.save()) {
+		if (pushToken.save(flush: true)) {
 			render(status:204)
 		}
 		else {

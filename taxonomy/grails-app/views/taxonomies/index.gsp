@@ -8,12 +8,8 @@
 		<title>${entitiesName}</title>
 	</head>
 	<body>
-		<ol class="breadcrumb">
-			<li><g:link uri="/admin"><g:message code="default.admin.label" default="Administration" /></g:link></li>
-			<li class="active">${entitiesName}</li>
-		</ol>
 		<h1 class="page-header clearfix">
-			${entitiesName}
+			<i class="fa fa-tags text-muted"></i> ${entitiesName}
 			<g:link class="create btn btn-primary pull-right" action="create" plugin="httcTaxonomy" title="${message(code: 'default.new.label', args:[entityName])}">
 				<i class="fa fa-plus"></i><span class="button-label"> <g:message code="default.button.create.label" /></span>
 			</g:link>
@@ -32,7 +28,7 @@
 <%--
 							<g:sortableColumn property="type" title="${message(code: 'de.httc.plugin.taxonomy.type', default: 'Type')}" />
 --%>
-							<g:sortableColumn property="lastUpdated" title="${message(code: 'de.httc.plugin.taxonomy.lastUpdated', default: 'Last updated')}" />
+							<g:sortableColumn property="lastUpdated" title="${message(code: 'app.meta.lastUpdated', default: 'Last updated')}" />
 						</tr>
 					</thead>
 					<tbody>

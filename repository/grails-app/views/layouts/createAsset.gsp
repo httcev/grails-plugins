@@ -25,7 +25,7 @@
 			</g:eachError>
 			</ul>
 		</g:hasErrors>
-		<g:form url="[controller:'asset', action:'create', namespace:'admin']" class="form-horizontal" autocomplete="off" enctype="multipart/form-data">
+		<g:form url="[controller:'asset', action:'create']" class="form-horizontal" autocomplete="off" enctype="multipart/form-data">
 			<g:layoutBody />
 		</g:form>
 	</body>

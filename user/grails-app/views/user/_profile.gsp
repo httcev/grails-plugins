@@ -9,6 +9,7 @@
 	<label for="lastName" class="col-sm-2 control-label"><g:message code="de.httc.plugin.user.lastName" /><span class="required-indicator">*</span>:</label>
 	<div class="col-sm-10"><g:textField id="lastName" name="profile.lastName" required="" value="${user?.profile?.lastName}" class="form-control"/></div>
 </div>
+<%--
 <div class="form-group ${hasErrors(bean: user.profile, field: 'company', 'error')} required">
 	<label for="company" class="col-sm-2 control-label"><g:message code="de.httc.plugin.user.company" />:</label>
 	<div class="col-sm-10">
@@ -20,6 +21,18 @@
 		</datalist>
 	</div>
 </div>
+--%>
+<g:set var="companiesTaxonomy" value="${Taxonomy.findByLabel("companies")}" />
+<g:if test="${companiesTaxonomy?.termCount > 0}">
+	<div class="form-group ${hasErrors(bean: user.profile, field: 'company', 'error')} ">
+		<label for="company" class="col-sm-2 control-label">
+			<g:message code="de.httc.plugin.user.company" />:
+		</label>
+		<div class="col-sm-10">
+			<g:render template="/taxonomies/termSelect" plugin="httcTaxonomy" model="${[name:"profile.company", terms:companiesTaxonomy.children, selectedValues:user?.profile?.company*.id, placeholder:" ", multiple:false]}" />
+		</div>
+	</div>
+</g:if>
 <g:set var="organisationsTaxonomy" value="${Taxonomy.findByLabel("organisations")}" />
 <g:if test="${organisationsTaxonomy?.termCount > 0}">
 	<div class="form-group ${hasErrors(bean: user.profile, field: 'organisations', 'error')} ">

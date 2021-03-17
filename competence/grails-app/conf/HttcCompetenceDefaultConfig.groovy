@@ -1,6 +1,0 @@
-grails {
-    plugin {
-        competence {
-        }
-    }
-}

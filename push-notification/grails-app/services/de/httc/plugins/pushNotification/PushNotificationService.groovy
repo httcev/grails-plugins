@@ -5,7 +5,7 @@ import groovy.json.JsonBuilder
 
 class PushNotificationService {
 	def settingService
-	
+
 	def sendPushNotification(User target, message) {
 		def gcmUrl = settingService.getValue("gcmUrl")
 		def gcmApiKey = settingService.getValue("gcmApiKey")
@@ -34,8 +34,8 @@ class PushNotificationService {
 					conn.setDoOutput(true);
 					conn.setDoInput(true);
 
-					def notification = ["to" : pushToken.token, "data" : message]
-					def builder = new JsonBuilder(notification)
+					message.to = pushToken.token
+					def builder = new JsonBuilder(message)
 					def payload = builder.toString().bytes
 					conn.setFixedLengthStreamingMode(payload.length);
 					conn.getOutputStream().write(payload)

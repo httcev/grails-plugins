@@ -1,11 +1,11 @@
 <%@ page import="de.httc.plugins.repository.Asset" %>
 <div class="form-group ${hasErrors(bean: asset, field: 'name', 'error')} required">
-	<label for="name" class="col-sm-2 control-label"><g:message code="de.httc.plugin.repository.asset.name" /><span class="required-indicator">*</span>:</label>
+	<label for="name" class="col-sm-2 control-label"><g:message code="app.meta.name" /><span class="required-indicator">*</span>:</label>
 	<div class="col-sm-10"><g:textField name="name" value="${asset?.name}" class="form-control" required="" /></div>
 </div>
 <g:if test='${asset?.props?."${Asset.PROP_DESCRIPTION}"}'>
 	<div class="form-group">
-		<label for="description" class="col-sm-2 control-label"><g:message code="de.httc.plugin.repository.asset.description" /><span class="required-indicator">*</span>:</label>
+		<label for="description" class="col-sm-2 control-label"><g:message code="app.meta.description" /><span class="required-indicator">*</span>:</label>
 		<div class="col-sm-10"><g:textArea rows="8" id="description" name='props.$Asset.PROP_DESCRIPTION' value='${asset?.props."${Asset.PROP_DESCRIPTION}"}' class="form-control" /></div>
 	</div>
 </g:if>

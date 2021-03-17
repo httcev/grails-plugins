@@ -47,4 +47,3 @@ grails.project.dependency.resolution = {
     }
 }
 grails.plugin.location."httc-taxonomy" = "../taxonomy"
-grails.plugin.location."httc-esa" = "../esa"

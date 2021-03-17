@@ -74,9 +74,9 @@
 			<h1><g:message code="default.add.label" args="[message(code:'de.httc.plugin.qaa.answer')]"/>:</h1>
 			<g:form class="form" action="saveAnswer" enctype="multipart/form-data">
 				<input type="hidden" name="question" value="${question.id}">
-				<textarea name="text" class="form-control" rows="5" placeholder="${message(code:'de.httc.plugin.qaa.answer.placeholder')}" required></textarea>
+				<g:textArea rows="5" name="text" class="form-control" data-provide="markdown" data-iconlibrary="fa" data-language="de" data-hidden-buttons="cmdImage cmdCode cmdQuote cmdPreview" placeholder="${message(code:'de.httc.plugin.qaa.answer.placeholder')}" required="true"/>
 				<g:render model="${[attachments:[], mode:'edit']}" template="/task/attachments" />
-				<div class="text-right form-padding"><button type="submit" class="btn btn-success"><i class="fa fa-save"></i> <g:message code="default.save.label" args="[message(code:'de.httc.plugin.qaa.answer')]"/></button></div>
+				<div class="text-right form-padding"><button type="submit" class="btn btn-success"><i class="fa fa-save"></i> <g:message code="default.save.label" args="[message(code:'de.httc.plugin.qaa.answer')]" /></button></div>
 			</g:form>
 		</div>
 	</body>

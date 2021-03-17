@@ -32,16 +32,16 @@
 				<table class="table">
 					<thead>
 						<tr>
-							<g:sortableColumn property="name" namespace="${currentNamespace}" title="${message(code: 'de.httc.plugin.repository.asset.name')}" />
-							<th><g:message code="de.httc.plugin.repository.asset.description" /></th>
-							<g:sortableColumn property="lastUpdated" namespace="${currentNamespace}" title="${message(code: 'de.httc.plugin.repository.asset.lastUpdated')}" />
-							<g:sortableColumn property="mimeType" namespace="${currentNamespace}" title="${message(code: 'de.httc.plugin.repository.asset.mimeType')}" />
+							<g:sortableColumn property="name" title="${message(code: 'app.meta.name')}" />
+							<th><g:message code="app.meta.description" /></th>
+							<g:sortableColumn property="lastUpdated" title="${message(code: 'de.httc.plugin.repository.asset.lastUpdated')}" />
+							<g:sortableColumn property="mimeType" title="${message(code: 'app.meta.mimeType')}" />
 						</tr>
 					</thead>
 					<tbody>
 					<g:each in="${assetList}" var="asset">
 						<tr>
-							<td><g:link controller="asset" namespace="${currentNamespace}" action="show" id="${asset.id}">${fieldValue(bean: asset, field: "name")}</g:link></td>
+							<td><g:link controller="asset" action="show" id="${asset.id}">${fieldValue(bean: asset, field: "name")}</g:link></td>
 							<td><httc:abbreviate>${asset.props?."${Asset.PROP_DESCRIPTION}"}</httc:abbreviate></td>
 							<td><g:formatDate date="${asset.lastUpdated}" type="date"/></td>
 							<td>${fieldValue(bean: asset, field: "mimeType")}</td>
@@ -52,7 +52,7 @@
 			</div>
 			<g:if test="${params.max < assetCount}">
 				<div class="pagination pull-right">
-					<g:paginate total="${assetCount ?: 0}" namespace="admin" />
+					<g:paginate total="${assetCount ?: 0}" />
 				</div>
 			</g:if>
 		</g:if>

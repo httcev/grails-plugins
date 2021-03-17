@@ -9,7 +9,7 @@
 	</head>
 	<body>
 		<ol class="breadcrumb">
-			<li><g:link uri="/admin"><g:message code="default.admin.label" default="Administration" /></g:link></li>
+			<li><g:message code="default.admin.label" default="Administration" /></li>
 			<li><g:link class="list" action="index" plugin="httcTaxonomy">${entitiesName}</g:link></li>
 			<li class="active"><g:message code="default.show.label" args="[entityName]" /></li>
 		</ol>
@@ -31,7 +31,7 @@
 				<table class="table table-condensed table-bordered">
 					<tbody>
 						<tr><td><g:message code="de.httc.plugin.taxonomy.label" default="Name" />:</td><td><b><g:message code="de.httc.plugin.taxonomy.label.${taxonomy.label}" default="${taxonomy.label}"/></b></td></tr>
-						<tr><td><g:message code="de.httc.plugin.taxonomy.lastUpdated" default="Last updated" />:</td><td><g:fieldValue bean="${taxonomy}" field="lastUpdated"/></td></tr>
+						<tr><td><g:message code="app.meta.lastUpdated" default="Last updated" />:</td><td><g:fieldValue bean="${taxonomy}" field="lastUpdated"/></td></tr>
 <%--
 						<tr><td><g:message code="de.httc.plugin.taxonomy.type" default="Type" />:</td><td><g:fieldValue bean="${taxonomy}" field="type"/></td></tr>
 --%>

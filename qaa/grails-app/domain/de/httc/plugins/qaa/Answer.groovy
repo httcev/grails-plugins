@@ -12,8 +12,8 @@ class Answer extends Commentable {
 		root false
 		all = [analyzer: 'german']
 		except = ['creator', 'dateCreated', 'lastUpdated', 'ratingUsers', 'question']
-        comments component:true
-        attachments component:true
+    comments component:true
+    attachments component:true
 	}
 
 	static hasMany = [attachments:Asset, comments:Comment, ratingUsers:Long]
@@ -21,7 +21,7 @@ class Answer extends Commentable {
 	static constraints = { }
 	static mapping = {
 		text type:"text"
-		comments sort:"dateCreated", "id"
+		comments cascade: "all-delete-orphan", sort:"dateCreated", "id"
 	}
 
 	String text
