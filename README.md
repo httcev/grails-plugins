@@ -1,5 +1,7 @@
 # grails-plugins
 
+These grails plugins are required to build the KOLA server platform: https://github.com/httcev/kola
+
 **Requirements**
 
 - Java 8
