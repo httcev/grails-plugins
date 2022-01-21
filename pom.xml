@@ -18,7 +18,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<grails.version>2.5.3</grails.version>
-		<h2.version>1.4.192</h2.version>
+		<h2.version>2.1.210</h2.version>
 		<!-- github server corresponds to entry in ~/.m2/settings.xml -->
 <!--
 		<github.global.server>github</github.global.server>
